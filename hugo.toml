@@ -1,0 +1,50 @@
+baseURL = "https://harrywithani.github.io/zeroorone/"
+title = "harrywithani"
+languageCode = "en-us"
+theme = "hello-friend-ng"
+
+[pagination]
+  pagerSize = 10
+
+[params]
+  homeSubtitle = "Linux | Cyber | Code | Ideas"
+  description = "A digital lab of projects, experiments, and notes."
+  keywords = "linux, ai, cybersecurity, programming"
+  disableReadOtherPosts = true
+  enableSharingButtons = false
+  enableGlobalLanguageMenu = false
+  enableThemeToggle = true
+  defaultTheme = "dark"
+
+  dateform = "Jan 2, 2006"
+  dateformShort = "Jan 2"
+  dateformNum = "2006-01-02"
+  dateformNumTime = "2006-01-02 15:04"
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+  series = "series"
+
+[languages]
+  [languages.en]
+    title = "hello friend."
+    copyright = '<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
+    readOtherPosts = "Explore more"
+
+  [languages.en.params]
+    subtitle = "Hack the planet — one idea at a time"
+
+    [languages.en.params.logo]
+      logoText = "harrywithani"
+      logoHomeLink = "/"
+
+[[menu.main]]
+  identifier = "about"
+  name = "About"
+  url = "/about"
+
+[[menu.main]]
+  identifier = "projects"
+  name = "Projects"
+  url = "/projects"
