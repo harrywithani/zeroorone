@@ -37,7 +37,7 @@ theme = "hello-friend-ng"
 
     [languages.en.params.logo]
       logoText = "harrywithani"
-      logoHomeLink = "/"
+      logoHomeLink = "/zeroorone/"
 
 [[menu.main]]
   identifier = "about"
