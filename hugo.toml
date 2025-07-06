@@ -1,4 +1,5 @@
 baseURL = "https://harrywithani.github.io/zeroorone/"
+canonifyURLs = true
 title = "harrywithani"
 languageCode = "en-us"
 theme = "hello-friend-ng"
@@ -37,7 +38,7 @@ theme = "hello-friend-ng"
 
     [languages.en.params.logo]
       logoText = "harrywithani"
-      logoHomeLink = "/zeroorone/"
+      logoHomeLink = "/"
 
 [[menu.main]]
   identifier = "about"

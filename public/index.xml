@@ -1,27 +1,36 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Home on hello friend.</title>
-    <link>http://localhost:1313/zeroorone/</link>
-    <description>Recent content in Home on hello friend.</description>
-    <generator>Hugo</generator>
-    <language>en</language>
-    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Sun, 06 Jul 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/zeroorone/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>About Me</title>
-      <link>http://localhost:1313/zeroorone/about/</link>
-      <pubDate>Sun, 06 Jul 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/zeroorone/about/</guid>
-      <description>&lt;p&gt;Hi, I’m Harry. I build things, explore AI and Linux, and create digital tools for curious minds.&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h3 id=&#34;interests&#34;&gt;Interests&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Linux, ethical hacking, and reverse engineering&lt;/li&gt;&#xA;&lt;li&gt;AI + robotics + simulations&lt;/li&gt;&#xA;&lt;li&gt;Building tools and writing digital notes&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;&#xA;&lt;h3 id=&#34;contact&#34;&gt;Contact&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;GitHub&lt;/strong&gt;: &lt;a href=&#34;https://github.com/your-username&#34;&gt;github.com/your-username&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;LinkedIn&lt;/strong&gt;: &lt;a href=&#34;https://linkedin.com/in/your-username&#34;&gt;linkedin.com/in/your-username&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Email&lt;/strong&gt;: &lt;a href=&#34;mailto:your.email@example.com&#34;&gt;your.email@example.com&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
-    </item>
-    <item>
-      <title>Projects</title>
-      <link>http://localhost:1313/zeroorone/projects/</link>
-      <pubDate>Sun, 06 Jul 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/zeroorone/projects/</guid>
-      <description>&lt;p&gt;Here’s a collection of things I’ve built, broken, or am still working on.&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h3 id=&#34;featured-projects&#34;&gt;Featured Projects&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;strong&gt;Neural Cartographer&lt;/strong&gt;&lt;br&gt;&#xA;&lt;em&gt;An AI that generates interactive concept maps from my notes.&lt;/em&gt;&lt;br&gt;&#xA;&lt;em&gt;[Coming soon]&lt;/em&gt;&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;strong&gt;Packet Sniffer&lt;/strong&gt;&lt;br&gt;&#xA;&lt;em&gt;A lightweight Rust-based sniffer with a real-time protocol visualizer.&lt;/em&gt;&lt;br&gt;&#xA;&lt;em&gt;[Coming soon]&lt;/em&gt;&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;strong&gt;Dotfiles + Hyprland Setup&lt;/strong&gt;&lt;br&gt;&#xA;&lt;em&gt;My custom Arch Linux tiling setup with dark mode, animations, and automation.&lt;/em&gt;&lt;br&gt;&#xA;&lt;em&gt;[Coming soon]&lt;/em&gt;&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;More projects will be added here over time — stay tuned!&lt;/p&gt;</description>
-    </item>
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Home on hello friend.</title><link>https://harrywithani.github.io/zeroorone/</link><description>Recent content in Home on hello friend.</description><generator>Hugo</generator><language>en</language><copyright>&lt;a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0&lt;/a></copyright><lastBuildDate>Sun, 06 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://harrywithani.github.io/zeroorone/index.xml" rel="self" type="application/rss+xml"/><item><title>About Me</title><link>https://harrywithani.github.io/zeroorone/about/</link><pubDate>Sun, 06 Jul 2025 00:00:00 +0000</pubDate><guid>https://harrywithani.github.io/zeroorone/about/</guid><description>&lt;p>Hi, I’m Harry. I build things, explore AI and Linux, and create digital tools for curious minds.&lt;/p>
+&lt;hr>
+&lt;h3 id="interests">Interests&lt;/h3>
+&lt;ul>
+&lt;li>Linux, ethical hacking, and reverse engineering&lt;/li>
+&lt;li>AI + robotics + simulations&lt;/li>
+&lt;li>Building tools and writing digital notes&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h3 id="contact">Contact&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>GitHub&lt;/strong>: &lt;a href="https://github.com/your-username">github.com/your-username&lt;/a>&lt;/li>
+&lt;li>&lt;strong>LinkedIn&lt;/strong>: &lt;a href="https://linkedin.com/in/your-username">linkedin.com/in/your-username&lt;/a>&lt;/li>
+&lt;li>&lt;strong>Email&lt;/strong>: &lt;a href="mailto:your.email@example.com">your.email@example.com&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Projects</title><link>https://harrywithani.github.io/zeroorone/projects/</link><pubDate>Sun, 06 Jul 2025 00:00:00 +0000</pubDate><guid>https://harrywithani.github.io/zeroorone/projects/</guid><description>&lt;p>Here’s a collection of things I’ve built, broken, or am still working on.&lt;/p>
+&lt;hr>
+&lt;h3 id="featured-projects">Featured Projects&lt;/h3>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>Neural Cartographer&lt;/strong>&lt;br>
+&lt;em>An AI that generates interactive concept maps from my notes.&lt;/em>&lt;br>
+&lt;em>[Coming soon]&lt;/em>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>Packet Sniffer&lt;/strong>&lt;br>
+&lt;em>A lightweight Rust-based sniffer with a real-time protocol visualizer.&lt;/em>&lt;br>
+&lt;em>[Coming soon]&lt;/em>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>Dotfiles + Hyprland Setup&lt;/strong>&lt;br>
+&lt;em>My custom Arch Linux tiling setup with dark mode, animations, and automation.&lt;/em>&lt;br>
+&lt;em>[Coming soon]&lt;/em>&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;p>More projects will be added here over time — stay tuned!&lt;/p></description></item></channel></rss>
