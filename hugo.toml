@@ -49,3 +49,8 @@ theme = "hello-friend-ng"
   identifier = "projects"
   name = "Projects"
   url = "/projects"
+
+[[menu.main]]
+  identifier = "archive"
+  name = "Archive"
+  url = "/archive"
