@@ -8,9 +8,9 @@ theme = "hello-friend-ng"
   pagerSize = 10
 
 [params]
-  homeSubtitle = "Linux | Cyber | Code | Ideas"
+  homeSubtitle = "Linux | DevOps | Network"
   description = "A digital lab of projects, experiments, and notes."
-  keywords = "linux, ai, cybersecurity, programming"
+  keywords = "linux, ai, cybersecurity, programming, network, devops"
   disableReadOtherPosts = true
   enableSharingButtons = false
   enableGlobalLanguageMenu = false
