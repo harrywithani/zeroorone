@@ -1,0 +1,9 @@
+
+{{ $status := .Get 0 }}
+{{ $count := 0 }}
+{{ range .Site.RegularPages }}
+  {{ if and (eq .Section "projects") (eq .Params.status $status) }}
+    {{ $count = add $count 1 }}
+  {{ end }}
+{{ end }}
+{{ $count }}
