@@ -103,4 +103,3 @@ Permission values:
 3. `!!` repeats the last command
 4. `sudo !!` runs the last command with sudo
 
-For more advanced topics, see [Advanced Linux Commands]({{< ref "notes/linux/advanced-commands" >}}).
