@@ -20,12 +20,12 @@
         <div class="nav-left">
             {{ if $prevPage }}
                 <a href="{{ $prevPage.Permalink }}" class="nav-link nav-prev">
-                    <span>← Previous</span>
-                    <div class="nav-text">{{ $prevPage.Title }}</div>
+                    <span>←</span>
+                    <div class="nav-text">{{$prevPage.Title}}</div>
                 </a>
             {{ else }}
                 <div class="nav-link disabled">
-                    <span>← Previous</span>
+                    <span>←</span>
                 </div>
             {{ end }}
         </div>
@@ -33,12 +33,12 @@
         <div class="nav-right">
             {{ if $nextPage }}
                 <a href="{{ $nextPage.Permalink }}" class="nav-link nav-next">
-                    <span>Next →</span>
-                    <div class="nav-text">{{ $nextPage.Title }}</div>
+                    <div class="nav-text">{{$nextPage.Title}}</div>
+                    <span>→</span>
                 </a>
             {{ else }}
                 <div class="nav-link disabled">
-                    <span>Next →</span>
+                    <span>→</span>
                 </div>
             {{ end }}
         </div>

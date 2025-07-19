@@ -6,6 +6,4 @@ categories: ["linux"]
 icon: "🐧"
 ---
 
-# Linux Notes
-
 Everything related to Linux system administration, shell scripting, and command-line operations.

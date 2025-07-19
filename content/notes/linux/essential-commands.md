@@ -6,8 +6,6 @@ categories: ["linux"]
 tags: ["commands", "cli", "reference"]
 ---
 
-# Essential Linux Commands
-
 This is a comprehensive reference for the most commonly used Linux commands that every system administrator should know.
 
 ## File Operations
