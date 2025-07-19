@@ -21,6 +21,7 @@ theme = "hello-friend-ng"
   dateformShort = "Jan 2"
   dateformNum = "2006-01-02"
   dateformNumTime = "2006-01-02 15:04"
+  customCSS = ["css/projects.css"]
 
 [taxonomies]
   category = "categories"
