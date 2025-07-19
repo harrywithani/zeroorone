@@ -78,11 +78,11 @@ This project taught me a lot about:
 
 ## Future Improvements
 
-Integration with popular note-taking apps (Obsidian, Notion)
-Collaborative features for shared knowledge bases
-Mobile-responsive interface
-Real-time collaboration on concept maps
-Export to various graph formats
+- [ ] Integration with popular note-taking apps (Obsidian, Notion)
+- [ ] Collaborative features for shared knowledge bases
+- [ ] Mobile-responsive interface
+- [ ] Real-time collaboration on concept maps
+- [ ] Export to various graph formats
 
 ## Related Projects
 
@@ -91,7 +91,6 @@ Export to various graph formats
 
 ---
 
-**Status:** {{< project-status >}}  
-**Last Updated:** {{< .Date.Format "January 2006" >}}  
-**GitHub:** [View Source]({{< .Params.github_url >}})  
-{{< if .Params.demo_url >}}**Live Demo:** [Try It Out]({{< .Params.demo_url >}}){{< /if >}}
+**Status:** {{< project-status >}}
+
+{{< project-links >}}
