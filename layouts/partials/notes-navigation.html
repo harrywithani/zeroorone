@@ -30,12 +30,6 @@
             {{ end }}
         </div>
         
-        <div class="nav-center">
-            <a href="{{ .Parent.Permalink | default "/notes" }}" class="nav-link nav-up">
-                ↑ {{ .Parent.Title | default "All Notes" }}
-            </a>
-        </div>
-        
         <div class="nav-right">
             {{ if $nextPage }}
                 <a href="{{ $nextPage.Permalink }}" class="nav-link nav-next">
