@@ -78,16 +78,16 @@ This project taught me a lot about:
 
 ## Future Improvements
 
-- [ ] Integration with popular note-taking apps (Obsidian, Notion)
-- [ ] Collaborative features for shared knowledge bases
-- [ ] Mobile-responsive interface
-- [ ] Real-time collaboration on concept maps
-- [ ] Export to various graph formats
+Integration with popular note-taking apps (Obsidian, Notion)
+Collaborative features for shared knowledge bases
+Mobile-responsive interface
+Real-time collaboration on concept maps
+Export to various graph formats
 
 ## Related Projects
 
-- [Note Linker](/projects/note-linker/) - Complements this by creating bidirectional note links
-- [Research Pipeline](/projects/research-pipeline/) - Planned integration for academic papers
+- [Note Linker] - Complements this by creating bidirectional note links
+- [Research Pipeline] - Planned integration for academic papers
 
 ---
 
