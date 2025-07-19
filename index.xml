@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Home on hello friend.</title><link>https://harrywithani.github.io/zeroorone/</link><description>Recent content in Home on hello friend.</description><generator>Hugo</generator><language>en</language><copyright>&lt;a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0&lt;/a></copyright><lastBuildDate>Fri, 11 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://harrywithani.github.io/zeroorone/index.xml" rel="self" type="application/rss+xml"/><item><title>About Me</title><link>https://harrywithani.github.io/zeroorone/about/</link><pubDate>Fri, 11 Jul 2025 00:00:00 +0000</pubDate><guid>https://harrywithani.github.io/zeroorone/about/</guid><description>&lt;p>&lt;strong>hello, friend.&lt;/strong>&lt;br>
 I like taking systems apart — understanding how they work under the hood, and then rebuilding them better. I&amp;rsquo;m driven by curiosity, not checklists.&lt;/p>
 &lt;p>With a background in physics and data science, I gravitate toward things that require real thinking: Linux, networking, DevOps, and low-level tooling. I&amp;rsquo;m most comfortable in the terminal, whether I’m scripting automation, analyzing packet flows, or spinning up containers.&lt;/p>
-&lt;p>Right now, I’m exploring infrastructure deeply — and I plan to go even lower, into kernel development and system security.&lt;/p></description></item><item><title>Archive</title><link>https://harrywithani.github.io/zeroorone/archive/</link><pubDate>Tue, 08 Jul 2025 00:00:00 +0000</pubDate><guid>https://harrywithani.github.io/zeroorone/archive/</guid><description>&lt;hr>
-&lt;h3 id="obsidian-snippets">Obsidian Snippets&lt;/h3>
-&lt;ul>
-&lt;li>Custom theme&lt;/li>
-&lt;li>Custom admonitions&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h3 id="linux-customization">Linux Customization&lt;/h3>
-&lt;ul>
-&lt;li>Dot files&lt;/li>
-&lt;/ul></description></item><item><title>Projects</title><link>https://harrywithani.github.io/zeroorone/projects/</link><pubDate>Sun, 06 Jul 2025 00:00:00 +0000</pubDate><guid>https://harrywithani.github.io/zeroorone/projects/</guid><description>&lt;p>Here’s a collection of things I’ve built, broken, or am still working on.&lt;/p>
+&lt;p>Right now, I’m exploring infrastructure deeply — and I plan to go even lower, into kernel development and system security.&lt;/p></description></item><item><title>Projects</title><link>https://harrywithani.github.io/zeroorone/projects/</link><pubDate>Sun, 06 Jul 2025 00:00:00 +0000</pubDate><guid>https://harrywithani.github.io/zeroorone/projects/</guid><description>&lt;p>Here’s a collection of things I’ve built, broken, or am still working on.&lt;/p>
 &lt;hr>
 &lt;h3 id="featured-projects">Featured Projects&lt;/h3>
 &lt;ul>
