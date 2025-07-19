@@ -1,9 +1,9 @@
 <div class="project-footer-meta">
   <p><strong>Last Updated:</strong> {{ .Page.Date.Format "January 2006" }}</p>
-  {{ if .Page.Params.github_url }}
-  <p><strong>GitHub:</strong> <a href="{{ .Page.Params.github_url }}">View Source</a></p>
+  {{ with .Page.Params.github_url }}
+  <p><strong>GitHub:</strong> <a href="{{ . }}">View Source</a></p>
   {{ end }}
-  {{ if .Page.Params.demo_url }}
-  <p><strong>Live Demo:</strong> <a href="{{ .Page.Params.demo_url }}">Try It Out</a></p>
+  {{ with .Page.Params.demo_url }}
+  <p><strong>Live Demo:</strong> <a href="{{ . }}">Try It Out</a></p>
   {{ end }}
 </div>
