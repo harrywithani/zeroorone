@@ -1,4 +1,15 @@
 {{ define "main" }}
+<!-- TOC Sidebar - positioned outside main container -->
+{{ if .TableOfContents }}
+<div class="notes-toc-sidebar">
+    <div class="notes-toc">
+        <h4>Table of Contents</h4>
+        {{ .TableOfContents }}
+    </div>
+</div>
+{{ end }}
+
+<!-- Main content in theme's normal container -->
 <div class="post">
     {{ partial "notes-breadcrumb.html" . }}
     
@@ -16,45 +27,60 @@
         </div>
     </div>
 
-    <div class="notes-content-wrapper">
-        <div class="notes-sidebar">
-            {{ if .TableOfContents }}
-            <div class="notes-toc">
-                <h4>Table of Contents</h4>
-                {{ .TableOfContents }}
-            </div>
-            {{ end }}
-        </div>
-
-        <div class="notes-main-content">
-            <div class="post-content">
-                {{ .Content }}
-            </div>
-        </div>
+    <div class="post-content">
+        {{ .Content }}
     </div>
 
     {{ partial "notes-navigation.html" . }}
 </div>
 
 <style>
-.notes-content-wrapper {
-    display: flex;
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.notes-sidebar {
-    flex: 0 0 250px;
-    position: sticky;
-    top: 2rem;
-    height: fit-content;
-    max-height: calc(100vh - 4rem);
+.notes-toc-sidebar {
+    position: fixed;
+    left: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 250px;
+    max-height: 70vh;
     overflow-y: auto;
+    z-index: 100;
 }
 
-.notes-main-content {
-    flex: 1;
-    min-width: 0;
+/* Hide TOC on smaller screens where it would overlap */
+@media (max-width: 1400px) {
+    .notes-toc-sidebar {
+        display: none;
+    }
+}
+
+/* Show a toggle button on medium screens */
+@media (max-width: 1400px) and (min-width: 769px) {
+    .notes-toc-sidebar {
+        display: block;
+        position: fixed;
+        left: -250px;
+        transition: left 0.3s ease;
+        top: 2rem;
+        transform: none;
+    }
+    
+    .notes-toc-sidebar.open {
+        left: 1rem;
+    }
+    
+    .toc-toggle {
+        position: fixed;
+        left: 1rem;
+        top: 2rem;
+        background: var(--accent);
+        border: 1px solid var(--border);
+        color: var(--color);
+        padding: 0.5rem;
+        border-radius: 6px;
+        cursor: pointer;
+        z-index: 101;
+        font-size: 0.875rem;
+    }
 }
 
 .notes-toc {
@@ -108,19 +134,12 @@
 }
 
 @media (max-width: 768px) {
-    .notes-content-wrapper {
-        flex-direction: column;
+    .notes-toc-sidebar {
+        display: none !important;
     }
     
-    .notes-sidebar {
-        flex: none;
-        position: static;
-        max-height: none;
-        order: -1;
-    }
-    
-    .notes-toc {
-        margin-bottom: 1rem;
+    .toc-toggle {
+        display: none;
     }
 }
 
