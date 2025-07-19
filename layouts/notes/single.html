@@ -4,7 +4,9 @@
 <div class="notes-toc-sidebar">
     <div class="notes-toc">
         <h4>Table of Contents</h4>
-        {{ .TableOfContents }}
+        <div id="enhanced-toc">
+            {{ .TableOfContents }}
+        </div>
     </div>
 </div>
 {{ end }}
@@ -33,6 +35,86 @@
 
     {{ partial "notes-navigation.html" . }}
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const toc = document.getElementById('enhanced-toc');
+    if (!toc) return;
+    
+    // Find all H2 items that have H3/H4 children
+    const h2Items = toc.querySelectorAll('#TableOfContents > ul > li > ul > li');
+    
+    h2Items.forEach(function(h2Item) {
+        const nestedList = h2Item.querySelector('ul');
+        if (nestedList) {
+            // Create toggle button
+            const toggleBtn = document.createElement('span');
+            toggleBtn.className = 'toc-toggle-btn';
+            toggleBtn.innerHTML = '▶';
+            toggleBtn.title = 'Expand/Collapse subsections';
+            
+            // Insert toggle button before the link
+            const link = h2Item.querySelector('a');
+            link.parentNode.insertBefore(toggleBtn, link);
+            
+            // Add click handler
+            toggleBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                if (nestedList.classList.contains('expanded')) {
+                    nestedList.classList.remove('expanded');
+                    toggleBtn.classList.remove('expanded');
+                    toggleBtn.innerHTML = '▶';
+                } else {
+                    nestedList.classList.add('expanded');
+                    toggleBtn.classList.add('expanded');
+                    toggleBtn.innerHTML = '▼';
+                }
+            });
+            
+            // Initially collapse H3/H4 sections
+            nestedList.classList.remove('expanded');
+        }
+    });
+    
+    // Optional: Highlight current section on scroll
+    function highlightCurrentSection() {
+        const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+        const tocLinks = toc.querySelectorAll('a');
+        
+        let currentHeading = null;
+        const scrollPos = window.scrollY + 100;
+        
+        headings.forEach(function(heading) {
+            if (heading.offsetTop <= scrollPos) {
+                currentHeading = heading;
+            }
+        });
+        
+        // Remove active class from all links
+        tocLinks.forEach(link => link.classList.remove('active'));
+        
+        // Add active class to current section
+        if (currentHeading && currentHeading.id) {
+            const activeLink = toc.querySelector(`a[href="#${currentHeading.id}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+        }
+    }
+    
+    // Throttled scroll listener for performance
+    let scrollTimeout;
+    window.addEventListener('scroll', function() {
+        if (scrollTimeout) clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(highlightCurrentSection, 10);
+    });
+    
+    // Initial highlight
+    highlightCurrentSection();
+});
+</script>
 
 <style>
 .notes-toc-sidebar {
@@ -98,27 +180,130 @@
 
 .notes-toc nav#TableOfContents {
     font-size: 0.875rem;
+    position: relative;
 }
 
 .notes-toc nav#TableOfContents ul {
     list-style: none;
     padding-left: 0;
     margin: 0;
+    position: relative;
 }
 
+/* Root level (H1) - no indentation */
 .notes-toc nav#TableOfContents > ul > li {
+    margin-bottom: 0.75rem;
+    position: relative;
+}
+
+/* H2 level - first indentation with tree lines */
+.notes-toc nav#TableOfContents > ul > li > ul {
+    padding-left: 1.5rem;
+    margin-top: 0.5rem;
+    position: relative;
+}
+
+.notes-toc nav#TableOfContents > ul > li > ul::before {
+    content: '';
+    position: absolute;
+    left: 0.5rem;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--border);
+}
+
+.notes-toc nav#TableOfContents > ul > li > ul > li {
+    position: relative;
     margin-bottom: 0.5rem;
 }
 
-.notes-toc nav#TableOfContents ul ul {
-    padding-left: 1rem;
-    margin-top: 0.25rem;
+.notes-toc nav#TableOfContents > ul > li > ul > li::before {
+    content: '';
+    position: absolute;
+    left: -1rem;
+    top: 0.6rem;
+    width: 0.75rem;
+    height: 1px;
+    background: var(--border);
 }
 
-.notes-toc nav#TableOfContents ul ul li {
+.notes-toc nav#TableOfContents > ul > li > ul > li:last-child::after {
+    content: '';
+    position: absolute;
+    left: -0.5rem;
+    top: 0.6rem;
+    bottom: 0;
+    width: 1px;
+    background: var(--accent);
+}
+
+/* H3 and H4 levels - collapsible sections */
+.notes-toc nav#TableOfContents ul ul ul {
+    padding-left: 1.5rem;
+    margin-top: 0.25rem;
+    position: relative;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.notes-toc nav#TableOfContents ul ul ul.expanded {
+    max-height: 500px;
+}
+
+.notes-toc nav#TableOfContents ul ul ul::before {
+    content: '';
+    position: absolute;
+    left: 0.5rem;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--border);
+}
+
+.notes-toc nav#TableOfContents ul ul ul > li {
+    position: relative;
     margin-bottom: 0.25rem;
 }
 
+.notes-toc nav#TableOfContents ul ul ul > li::before {
+    content: '';
+    position: absolute;
+    left: -1rem;
+    top: 0.5rem;
+    width: 0.75rem;
+    height: 1px;
+    background: var(--border);
+}
+
+/* Toggle buttons for expandable sections */
+.toc-toggle-btn {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+    cursor: pointer;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    text-align: center;
+    border-radius: 2px;
+    background: var(--border);
+    color: var(--color-secondary);
+    user-select: none;
+    transition: all 0.2s ease;
+}
+
+.toc-toggle-btn:hover {
+    background: var(--color-secondary);
+    color: var(--accent);
+}
+
+.toc-toggle-btn.expanded {
+    transform: rotate(90deg);
+}
+
+/* TOC Links styling */
 .notes-toc nav#TableOfContents a {
     color: var(--color-secondary);
     text-decoration: none;
@@ -127,10 +312,38 @@
     padding: 0.25rem 0;
     border-radius: 4px;
     transition: color 0.2s ease;
+    text-align: left;
 }
 
 .notes-toc nav#TableOfContents a:hover {
     color: var(--color);
+}
+
+/* Different styling for different levels */
+.notes-toc nav#TableOfContents > ul > li > a {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--color);
+}
+
+.notes-toc nav#TableOfContents > ul > li > ul > li > a {
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--color-secondary);
+}
+
+.notes-toc nav#TableOfContents ul ul ul a {
+    font-weight: 400;
+    font-size: 0.8rem;
+    color: var(--color-secondary);
+    opacity: 0.8;
+}
+
+/* Active/current section highlighting */
+.notes-toc nav#TableOfContents a.active {
+    color: var(--color);
+    background: rgba(255, 255, 255, 0.1);
+    padding-left: 0.5rem;
 }
 
 @media (max-width: 768px) {
