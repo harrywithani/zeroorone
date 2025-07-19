@@ -82,14 +82,16 @@ netstat -tulpn         # Show listening ports
 
 ## File Permissions
 
-Understanding Linux permissions:
+Here are some examples
+
+### Understanding Linux permissions:
 
 ```bash
 chmod 755 filename      # Set permissions
 chown user:group file   # Change ownership
 ```
 
-Permission values:
+### Permission values:
 - 4 = read
 - 2 = write  
 - 1 = execute

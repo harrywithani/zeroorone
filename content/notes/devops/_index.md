@@ -1,5 +1,5 @@
 ---
-title: "DevOps Notes"
+title: "DevOps"
 date: 2025-01-20
 description: "DevOps tools, practices, CI/CD, and infrastructure automation"
 categories: ["devops"]

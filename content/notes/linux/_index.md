@@ -1,5 +1,5 @@
 ---
-title: "Linux Notes"
+title: "Linux"
 date: 2025-01-20
 description: "Linux system administration, commands, and configuration notes"
 categories: ["linux"]

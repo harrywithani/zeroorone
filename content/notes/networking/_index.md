@@ -1,5 +1,5 @@
 ---
-title: "Networking Notes"
+title: "Networking"
 date: 2025-01-20
 description: "Network protocols, security, and infrastructure notes"
 categories: ["networking"]
