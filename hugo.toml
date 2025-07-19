@@ -54,8 +54,3 @@ theme = "hello-friend-ng"
   identifier = "notes"
   name = "Notes"
   url = "/notes"
-
-[[menu.main]]
-  identifier = "archive"
-  name = "Archive"
-  url = "/archive"
