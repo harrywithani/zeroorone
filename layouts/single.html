@@ -1,0 +1,187 @@
+{{ define "main" }}
+<div class="post">
+    {{ partial "notes-breadcrumb.html" . }}
+    
+    <div class="post-header">
+        <h1 class="post-title">{{ .Title }}</h1>
+        <div class="post-meta">
+            <span class="post-date">{{ .Date.Format (.Site.Params.dateformShort | default "Jan 2") }}</span>
+            {{ with .Params.tags }}
+            <span class="post-tags">
+                {{ range . }}
+                <a href="{{ "/tags/" | relURL }}{{ . | urlize }}" class="tag">{{ . }}</a>
+                {{ end }}
+            </span>
+            {{ end }}
+        </div>
+    </div>
+
+    <div class="notes-content-wrapper">
+        <div class="notes-sidebar">
+            {{ if .TableOfContents }}
+            <div class="notes-toc">
+                <h4>Table of Contents</h4>
+                {{ .TableOfContents }}
+            </div>
+            {{ end }}
+        </div>
+
+        <div class="notes-main-content">
+            <div class="post-content">
+                {{ .Content }}
+            </div>
+        </div>
+    </div>
+
+    {{ partial "notes-navigation.html" . }}
+</div>
+
+<style>
+.notes-content-wrapper {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.notes-sidebar {
+    flex: 0 0 250px;
+    position: sticky;
+    top: 2rem;
+    height: fit-content;
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+}
+
+.notes-main-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.notes-toc {
+    background: var(--accent);
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+}
+
+.notes-toc h4 {
+    margin: 0 0 1rem 0;
+    font-size: 1rem;
+    color: var(--color);
+}
+
+.notes-toc nav#TableOfContents {
+    font-size: 0.875rem;
+}
+
+.notes-toc nav#TableOfContents ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.notes-toc nav#TableOfContents > ul > li {
+    margin-bottom: 0.5rem;
+}
+
+.notes-toc nav#TableOfContents ul ul {
+    padding-left: 1rem;
+    margin-top: 0.25rem;
+}
+
+.notes-toc nav#TableOfContents ul ul li {
+    margin-bottom: 0.25rem;
+}
+
+.notes-toc nav#TableOfContents a {
+    color: var(--color-secondary);
+    text-decoration: none;
+    line-height: 1.4;
+    display: block;
+    padding: 0.25rem 0;
+    border-radius: 4px;
+    transition: color 0.2s ease;
+}
+
+.notes-toc nav#TableOfContents a:hover {
+    color: var(--color);
+}
+
+@media (max-width: 768px) {
+    .notes-content-wrapper {
+        flex-direction: column;
+    }
+    
+    .notes-sidebar {
+        flex: none;
+        position: static;
+        max-height: none;
+        order: -1;
+    }
+    
+    .notes-toc {
+        margin-bottom: 1rem;
+    }
+}
+
+.breadcrumb {
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: var(--color-secondary);
+}
+
+.breadcrumb a {
+    color: var(--color-secondary);
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    color: var(--color);
+}
+
+.breadcrumb-separator {
+    margin: 0 0.5rem;
+}
+
+.notes-navigation {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+}
+
+.nav-links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--color-secondary);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    background: var(--accent);
+    border: 1px solid var(--border);
+    transition: all 0.2s ease;
+    max-width: 200px;
+}
+
+.nav-link:hover {
+    color: var(--color);
+    transform: translateY(-1px);
+}
+
+.nav-link.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.nav-link .nav-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+</style>
+{{ end }}

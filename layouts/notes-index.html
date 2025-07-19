@@ -1,0 +1,79 @@
+{{ define "main" }}
+<div class="post">
+    <h1 class="post-title">{{ .Title }}</h1>
+    <div class="post-content">
+        {{ .Content }}
+    </div>
+
+    <div class="notes-categories">
+        {{ range .Pages.ByTitle }}
+            {{ if eq .Type "notes" }}
+                {{ if .Params.icon }}
+                <div class="note-category-card">
+                    <a href="{{ .Permalink }}" class="category-link">
+                        <div class="category-icon">{{ .Params.icon }}</div>
+                        <h3 class="category-title">{{ .Title }}</h3>
+                        <p class="category-description">{{ .Description }}</p>
+                        <div class="category-meta">
+                            {{ $pages := where .Pages "Type" "notes" }}
+                            {{ len $pages }} {{ if eq (len $pages) 1 }}note{{ else }}notes{{ end }}
+                        </div>
+                    </a>
+                </div>
+                {{ end }}
+            {{ end }}
+        {{ end }}
+    </div>
+</div>
+
+<style>
+.notes-categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.note-category-card {
+    background: var(--accent);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid var(--border);
+}
+
+.note-category-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.category-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.category-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.category-title {
+    margin: 0.5rem 0;
+    color: var(--color);
+}
+
+.category-description {
+    color: var(--color-secondary);
+    margin: 0.5rem 0;
+    line-height: 1.5;
+}
+
+.category-meta {
+    font-size: 0.875rem;
+    color: var(--color-secondary);
+    margin-top: 1rem;
+    font-weight: 500;
+}
+</style>
+{{ end }}
