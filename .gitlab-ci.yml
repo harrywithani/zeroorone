@@ -1,9 +1,12 @@
 pages:
-  image: simonics/emacs:latest  # Or use ubuntu:latest + apt-get install emacs
+  image: ubuntu:latest
+  before_script:
+    - apt-get update && apt-get install -y emacs
   script:
+    - mkdir -p public
     - emacs -Q --script build-site.el
   artifacts:
     paths:
       - public
   only:
-    - main  # Only build when pushing to main branch
+    - main
