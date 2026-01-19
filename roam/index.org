@@ -1,0 +1,14 @@
+#+title: My Emacs Config
+#+options: toc:nil
+
+* Introduction
+
+Here's my Emacs configuration, documented and organized.
+
+* Setup Steps
+
+1. Clone the repo
+2. Copy =~/.emacs.d/lisp= files
+3. Run Emacs
+
+[[file:config.org][See full config details]]

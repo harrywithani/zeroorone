@@ -1,27 +1,9 @@
-image: silex/emacs:28-ci
-
 pages:
-  stage: deploy
-  before_script:
-    - mkdir -p public/roam
+  image: simonics/emacs:latest  # Or use ubuntu:latest + apt-get install emacs
   script:
-    # 1. Export top-level files (index.org, todo.org, etc.)
-    - emacs --batch --directory ${PWD} --eval "(progn (setq org-html-validation-link nil) (setq org-html-postamble nil))" --funcall org-html-publish-to-html *.org
-    - mv *.html public/ 2>/dev/null || echo "No top-level HTML files found"
-
-    # 2. Export Org-Roam subfolder
-    - if [ -d "roam" ]; then
-        cd roam;
-        emacs --batch --directory ${PWD}/.. --eval "(progn (setq org-html-validation-link nil) (setq org-html-postamble nil))" --funcall org-html-publish-to-html *.org;
-        mv *.html ../public/roam/ 2>/dev/null || echo "No roam HTML files found";
-        cd ..;
-      fi
-
-    # 3. Copy any images or assets so they don't break
-    - find . -name "*.png" -o -name "*.jpg" -exec cp --parents {} public/ \; 2>/dev/null || true
-
+    - emacs -Q --script build-site.el
   artifacts:
     paths:
       - public
   only:
-    - main
+    - main  # Only build when pushing to main branch
