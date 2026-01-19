@@ -1,0 +1,12 @@
+#+TITLE: My Digital Garden
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+
+* Navigation
+- [[file:todo.org][Agenda & Tasks]]
+- [[file:inbox.org][Quick Inbox]]
+
+* Recent Notes (Roam)
+- [[file:roam/202401011200_some_note.org][Topic A]]
+- [[file:roam/another_note.org][Topic B]]
+
+#+HTML: <style>#content{max-width:1000px;}</style>
