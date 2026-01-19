@@ -2,18 +2,24 @@ image: silex/emacs:28-ci
 
 pages:
   stage: deploy
-  script:
+  before_script:
     - mkdir -p public/roam
-    # 1. Export top-level files (index, todo, inbox)
-    - emacs --batch --directory . --eval "(progn (setq org-html-validation-link nil) (setq org-html-postamble nil))" --funcall org-html-publish-to-html *.org
-    - mv *.html public/
-    # 2. Export Roam folder files
-    - cd roam
-    - emacs --batch --directory .. --eval "(progn (setq org-html-validation-link nil) (setq org-html-postamble nil))" --funcall org-html-publish-to-html *.org
-    - mv *.html ../public/roam/
-    - cd ..
-    # 3. Copy any images
-    - find . -name "*.png" -o -name "*.jpg" -exec cp --parents {} public/ \;
+  script:
+    # 1. Export top-level files (index.org, todo.org, etc.)
+    - emacs --batch --directory ${PWD} --eval "(progn (setq org-html-validation-link nil) (setq org-html-postamble nil))" --funcall org-html-publish-to-html *.org
+    - mv *.html public/ 2>/dev/null || echo "No top-level HTML files found"
+
+    # 2. Export Org-Roam subfolder
+    - if [ -d "roam" ]; then
+        cd roam;
+        emacs --batch --directory ${PWD}/.. --eval "(progn (setq org-html-validation-link nil) (setq org-html-postamble nil))" --funcall org-html-publish-to-html *.org;
+        mv *.html ../public/roam/ 2>/dev/null || echo "No roam HTML files found";
+        cd ..;
+      fi
+
+    # 3. Copy any images or assets so they don't break
+    - find . -name "*.png" -o -name "*.jpg" -exec cp --parents {} public/ \; 2>/dev/null || true
+
   artifacts:
     paths:
       - public
