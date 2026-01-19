@@ -1,32 +1,3 @@
-#+title: My Digital Garden
-#+options: toc:nil
+#+TITLE: Knowledge Base
 
-Welcome to my personal knowledge base and Emacs configuration documentation.
-
-* About
-
-This is my digital garden — a collection of notes, configurations, and knowledge built with Emacs and org-mode.
-
-Everything here is:
-- Organized and searchable
-- Connected through links
-- Continuously evolving
-- Open source on [[https://gitlab.com/harrywithani/zeroorone][GitLab]]
-
-* How to Navigate
-
-Use the sidebar on the left to explore different sections. Each page is interconnected, so follow the links that interest you.
-
-* Key Sections
-
-- *Config* - My Emacs setup and customizations
-- *Notes* - Learning notes and reference material
-- *Ideas* - Work in progress and future plans
-
-* Latest Updates
-
-This site auto-updates whenever I push changes to the repository.
-
----
-
-/Made with Emacs, org-mode, and GitLab Pages/
+- [[file:new.org][Configuration Guide]]
