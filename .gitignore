@@ -1,0 +1,15 @@
+# Ignore the entire agenda folder
+agenda/
+
+# Ignore Emacs backup files (crucial for Org users)
+*~
+\#*\#
+.#*
+
+# Ignore the build artifacts
+public/
+
+# Ignore Org-Roam database files (if they are in this folder)
+*.db
+*.db-shm
+*.db-wal
