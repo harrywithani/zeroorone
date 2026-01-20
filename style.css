@@ -167,7 +167,7 @@ h3::before {
   counter-increment: section;
   content: counter(chapter) "." counter(section);
   position: absolute;
-  left: -6em;
+  left: -5.55em;
   width: 5em;
   text-align: right;
   font-weight: 400;
@@ -182,7 +182,7 @@ h4::before {
   counter-increment: subsection;
   content: counter(chapter) "." counter(section) "." counter(subsection);
   position: absolute;
-  left: -6em;
+  left: -5em;
   width: 5em;
   text-align: right;
   font-weight: 400;
@@ -387,10 +387,19 @@ dd {
 /* ---------- Mobile Responsive Overrides ---------- */
 @media screen and (max-width: 768px) {
 
-  /* 1. Reset margins so text doesn't feel cramped */
-  body {
-    padding: 1.5rem 1rem; /* Smaller side padding on phones */
-    font-size: 16px;      /* Slightly smaller text for mobile readability */
+  html {
+    font-size: 16px;
+  }
+
+  #content {
+  /* 1. Remove the desktop margins and 8em padding */
+  margin: 1rem auto !important;
+  padding-left: 1.2rem !important;  /* Match the right side */
+  padding-right: 1.2rem !important; /* Match the left side */
+
+  /* 2. Ensure it takes up the full available width */
+  max-width: 100% !important;
+  box-sizing: border-box;
   }
 
   /* 1. Reset H2 (Chapter) positioning */
