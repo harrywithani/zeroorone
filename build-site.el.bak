@@ -1,6 +1,5 @@
 (require 'org)
 (require 'ox-publish)
-(setq org-export-with-section-numbers nil)
 
 (setq org-publish-project-alist
       `(("pages"
@@ -9,24 +8,23 @@
          :publishing-directory "public/"
          :recursive t
          :publishing-function org-html-publish-to-html
-         :html-head "<link rel=\"stylesheet\" href=\"/style.css\" type=\"text/css\"/>
-                     <script src=\"/theme.js\"></script>"
+         :html-head "<link rel=\"stylesheet\" href=\"/style.css\" type=\"text/css\"/>"
          ;; --- Header (Preamble) ---
          :html-preamble "<header>
-                          <nav class='breadcrumb'>
-                            <a href='/index.html'>Home</a>
-                            <span class='breadcrumb-sep'>/</span>
-                            <span class='breadcrumb-current'>%t</span>
+                          <nav>
+                            <span class='site-title'>Org Roam Notes</span>
+                            <div class='nav-links'>
+                              <a href='/index.html'>Home</a>
+                              <a href='/about.html'>About</a>
+                            </div>
                           </nav>
-                          <button class='theme-toggle'>Dark / Light</button>
                         </header>"
-
-         :html-postamble "<p class=\"footer\">Built with Emacs</p>"
+         :html-postamble "<hr/><p class=\"footer\">Built with Emacs</p>"
          ;; --- Sitemap (File Structure) ---
          :auto-sitemap t
          :sitemap-filename "index.org"
          :sitemap-title "Knowledge Base"
-         :sitemap-sort-files alphabetically
+         :sitemap-sort-files alphabetic
          :sitemap-format-entry (lambda (entry style project)
                                  (cond ((not (directory-name-p entry))
                                         (format "[[file:%s][%s]]" entry (org-publish-find-title entry project)))

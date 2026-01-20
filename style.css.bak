@@ -1,0 +1,110 @@
+/* --- Compline Color Palette --- */
+:root {
+  --bg: #1a1d21;      /* Main Background */
+  --bg-alt: #22262b;  /* Section Background */
+  --fg: #f0efeb;      /* Primary Text */
+  --fg-alt: #ccc4b4;  /* Muted Text */
+  --base0: #0f1114;   /* Darkest Code background */
+  --base4: #3d424a;   /* Borders/Dividers */
+  --teal: #4d6b6b;    /* Accent / Headers */
+  --blue: #5a6b7a;    /* Links */
+  --yellow: #8b7e52;  /* Highlights */
+}
+
+/* Reset & Global */
+* { box-sizing: border-box; }
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: 'Inter', -apple-system, system-ui, sans-serif;
+  line-height: 1.8;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- Header Styling --- */
+header {
+  background: var(--base0); /* Darker than body for contrast */
+  border-bottom: 1px solid var(--base4);
+  padding: 1rem 0;
+  width: 100%;
+}
+
+nav {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.site-title { font-weight: bold; color: var(--yellow); font-size: 1.2rem; }
+.nav-links a { margin-left: 20px; font-size: 0.9rem; border: none; }
+
+/* --- Main Content Container --- */
+#content {
+max-width: 850px;
+margin: 2rem auto;
+padding: 0 2rem;
+}
+
+/* Typography */
+h1, h2, h3, h4 { color: var(--teal); font-weight: 600; margin-top: 2rem; }
+h1.title { color: var(--yellow); border-bottom: 1px solid var(--base4); padding-bottom: 1rem; }
+a { color: var(--blue); text-decoration: none; transition: 0.2s; }
+a:hover { color: var(--yellow); }
+
+/* --- Table of Contents (Mobile/Default) --- */
+#table-of-contents {
+background: var(--bg-alt);
+border: 1px solid var(--base4);
+padding: 1.5rem;
+border-radius: 8px;
+margin: 2rem 0;
+}
+#table-of-contents h2 { margin-top: 0; font-size: 1.1rem; color: var(--fg-alt); }
+
+/* --- Sidebar Logic (Desktop) --- */
+@media (min-width: 1200px) {
+  #content { margin-left: 300px; max-width: 800px; }
+
+  #table-of-contents {
+  position: fixed;
+  left: 2rem;
+  top: 6rem;
+  width: 250px;
+  max-height: 80vh;
+  overflow-y: auto;
+  background: transparent;
+  border: none;
+  border-left: 1px solid var(--base4);
+  border-radius: 0;
+  padding: 0 1rem;
+  margin: 0;
+  }
+}
+
+/* Code Blocks */
+pre.src {
+  background-color: var(--base0) !important;
+  color: var(--fg-alt);
+  padding: 1.2rem;
+  border-radius: 8px;
+  border: 1px solid var(--base4);
+  overflow-x: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+}
+
+/* Sitemap List styling */
+.org-ul { list-style-type: none; padding-left: 1rem; }
+.org-ul li { margin-bottom: 0.5rem; position: relative; }
+.org-ul li::before { content: "•"; color: var(--teal); position: absolute; left: -1rem; }
+
+.footer {
+  margin: 4rem 0 2rem 0;
+  color: var(--base4);
+  font-size: 0.8rem;
+  text-align: center;
+}

@@ -1,3 +1,4 @@
 #+TITLE: Knowledge Base
 
 - [[file:new.org][Configuration Guide]]
+- [[file:test.org][Testing the Compline Book Theme]]

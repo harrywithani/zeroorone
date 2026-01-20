@@ -6,8 +6,8 @@
 <!-- 2026-01-20 Tue 14:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Configuration Guide</title>
-<meta name="author" content="ekko" />
+<title>Testing the Compline Book Theme</title>
+<meta name="author" content="Your Name" />
 <meta name="generator" content="Org Mode" />
 <style type="text/css">
   #content { max-width: 60em; margin: auto; }
@@ -202,58 +202,159 @@
                           <nav class='breadcrumb'>
                             <a href='/index.html'>Home</a>
                             <span class='breadcrumb-sep'>/</span>
-                            <span class='breadcrumb-current'>Configuration Guide</span>
+                            <span class='breadcrumb-current'>Testing the Compline Book Theme</span>
                           </nav>
                           <button class='theme-toggle'>Dark / Light</button>
                         </header>
 </div>
 <div id="content" class="content">
-<h1 class="title">Configuration Guide</h1>
+<h1 class="title">Testing the Compline Book Theme</h1>
 <div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org1955f02">Core Settings</a>
+<li><a href="#org7cb7aab">Introduction</a>
 <ul>
-<li><a href="#orgf7251c3">UI</a></li>
-<li><a href="#orgb7088a9">Evil Mode</a></li>
+<li><a href="#org601fabd">The Philosophy</a></li>
 </ul>
 </li>
-<li><a href="#orgf3b290b">Org Setup</a>
+<li><a href="#orgbb96edc">Technical Setup</a>
 <ul>
-<li><a href="#orgb6cd4e5">This is a setup</a></li>
+<li><a href="#orgc8f5b4c">Emacs Lisp Code</a></li>
+<li><a href="#org21ca2c0">Styling Details</a></li>
 </ul>
 </li>
+<li><a href="#orgf0376c6">Advanced Features</a>
+<ul>
+<li><a href="#org3573fb7">Data Representation</a></li>
+<li><a href="#org2cc1ad4">Hidden Implementation</a></li>
+</ul>
+</li>
+<li><a href="#org4f3f15e">Conclusion</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org1955f02" class="outline-2">
-<h2 id="org1955f02">Core Settings</h2>
-<div class="outline-text-2" id="text-org1955f02">
-</div>
-<div id="outline-container-orgf7251c3" class="outline-3">
-<h3 id="orgf7251c3">UI</h3>
-<div class="outline-text-3" id="text-orgf7251c3">
+<div id="outline-container-org7cb7aab" class="outline-2">
+<h2 id="org7cb7aab">Introduction</h2>
+<div class="outline-text-2" id="text-org7cb7aab">
 <p>
-Details about UI setup&#x2026;
+This is a test document to verify that the CSS layout is working correctly. If the CSS is loaded, you should see "Chapter 1" to the left of this heading.
+</p>
+</div>
+<div id="outline-container-org601fabd" class="outline-3">
+<h3 id="org601fabd">The Philosophy</h3>
+<div class="outline-text-3" id="text-org601fabd">
+<p>
+The goal is to combine the aesthetic of a physical book with the dark, muted colors of the <b>Compline</b> Emacs theme.
 </p>
 </div>
 </div>
-<div id="outline-container-orgb7088a9" class="outline-3">
-<h3 id="orgb7088a9">Evil Mode</h3>
-<div class="outline-text-3" id="text-orgb7088a9">
+</div>
+<div id="outline-container-orgbb96edc" class="outline-2">
+<h2 id="orgbb96edc">Technical Setup</h2>
+<div class="outline-text-2" id="text-orgbb96edc">
 <p>
-Configuration details&#x2026;
+This section tests how code blocks and sub-sections appear.
 </p>
 </div>
+<div id="outline-container-orgc8f5b4c" class="outline-3">
+<h3 id="orgc8f5b4c">Emacs Lisp Code</h3>
+<div class="outline-text-3" id="text-orgc8f5b4c">
+<p>
+Here is a snippet of the configuration used to build this site. It should appear inside a dark box with a dotted left border.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(defun my/org-publish-success ()
+  (message "The book theme has been applied!"))
+</pre>
 </div>
 </div>
-<div id="outline-container-orgf3b290b" class="outline-2">
-<h2 id="orgf3b290b">Org Setup</h2>
-<div class="outline-text-2" id="text-orgf3b290b">
 </div>
-<div id="outline-container-orgb6cd4e5" class="outline-3">
-<h3 id="orgb6cd4e5">This is a setup</h3>
+<div id="outline-container-org21ca2c0" class="outline-3">
+<h3 id="org21ca2c0">Styling Details</h3>
+<div class="outline-text-3" id="text-org21ca2c0">
+<ul class="org-ul">
+<li><b>Bold text</b> for emphasis.</li>
+<li><i>Italic text</i> for definitions.</li>
+<li><code>Monospace</code> for inline variables.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf0376c6" class="outline-2">
+<h2 id="orgf0376c6">Advanced Features</h2>
+<div class="outline-text-2" id="text-orgf0376c6">
+<p>
+This section tests tables and folding details.
+</p>
+</div>
+<div id="outline-container-org3573fb7" class="outline-3">
+<h3 id="org3573fb7">Data Representation</h3>
+<div class="outline-text-3" id="text-org3573fb7">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Feature</th>
+<th scope="col" class="org-left">Status</th>
+<th scope="col" class="org-left">Color Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Background</td>
+<td class="org-left">Working</td>
+<td class="org-left">#1a1d21</td>
+</tr>
+
+<tr>
+<td class="org-left">Header Accent</td>
+<td class="org-left">Testing</td>
+<td class="org-left">#4d6b6b</td>
+</tr>
+
+<tr>
+<td class="org-left">Link Visibility</td>
+<td class="org-left">Pending</td>
+<td class="org-left">#5a6b7a</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org2cc1ad4" class="outline-3">
+<h3 id="org2cc1ad4">Hidden Implementation</h3>
+<div class="outline-text-3" id="text-org2cc1ad4">
+<div class="details" id="orgdea30f4">
+<div class="summary" id="org53450af">
+<p>
+Technical Metadata
+</p>
+
+</div>
+<p>
+This content is tucked away inside a details tag. It uses the `details` and `summary` CSS selectors we defined to keep the "book" look clean.
+</p>
+
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org4f3f15e" class="outline-2">
+<h2 id="org4f3f15e">Conclusion</h2>
+<div class="outline-text-2" id="text-org4f3f15e">
+<p>
+If the text is readable and the margins are wide (centered), the theme is successful.
+</p>
 </div>
 </div>
 </div>

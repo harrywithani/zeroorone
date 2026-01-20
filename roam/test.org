@@ -1,0 +1,46 @@
+#+TITLE: Testing the Compline Book Theme
+#+AUTHOR: Your Name
+
+
+* Introduction
+This is a test document to verify that the CSS layout is working correctly. If the CSS is loaded, you should see "Chapter 1" to the left of this heading.
+
+** The Philosophy
+The goal is to combine the aesthetic of a physical book with the dark, muted colors of the *Compline* Emacs theme.
+
+* Technical Setup
+This section tests how code blocks and sub-sections appear.
+
+** Emacs Lisp Code
+Here is a snippet of the configuration used to build this site. It should appear inside a dark box with a dotted left border.
+
+#+begin_src elisp
+(defun my/org-publish-success ()
+  (message "The book theme has been applied!"))
+#+end_src
+
+** Styling Details
+- *Bold text* for emphasis.
+- /Italic text/ for definitions.
+- ~Monospace~ for inline variables.
+
+* Advanced Features
+This section tests tables and folding details.
+
+** Data Representation
+| Feature          | Status    | Color Code |
+|------------------+-----------+------------|
+| Background       | Working   | #1a1d21    |
+| Header Accent    | Testing   | #4d6b6b    |
+| Link Visibility  | Pending   | #5a6b7a    |
+
+** Hidden Implementation
+#+begin_details
+#+begin_summary
+Technical Metadata
+#+end_summary
+This content is tucked away inside a details tag. It uses the `details` and `summary` CSS selectors we defined to keep the "book" look clean.
+#+end_details
+
+* Conclusion
+If the text is readable and the margins are wide (centered), the theme is successful.
