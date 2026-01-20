@@ -5,7 +5,6 @@ pages:
   script:
     - mkdir -p public
     - emacs -Q --script build-site.el
-    - emacs -Q --script generate-sidebar.el
   artifacts:
     paths:
       - public
