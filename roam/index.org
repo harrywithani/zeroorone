@@ -1,4 +1,5 @@
 #+TITLE: Knowledge Base
 
 - [[file:new.org][Configuration Guide]]
+- [[file:org-agenda.org][Org Agenda]]
 - [[file:test.org][Testing the Compline Book Theme]]

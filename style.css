@@ -143,8 +143,8 @@ h4 {
 
 h2 {
   position: relative;
-  margin-top: 3rem;
   counter-reset: section subsection;
+  margin-top: 3rem;
 }
 
 h2::before {
@@ -161,7 +161,6 @@ h2::before {
 
 h3 {
   position: relative;
-  margin-top: 2rem;
 }
 
 h3::before {
@@ -297,15 +296,13 @@ pre.src::before {
   color: var(--muted);
   font-family: "Inter", sans-serif;
   font-weight: 400;
-
-  /* --- The Fix --- */
-  visibility: visible !important;
-  opacity: 1 !important;
 }
 
 pre.src-elisp::before { content: "LISP"; }
 pre.src-org::before   { content: "ORG"; }
 pre.src-sh::before    { content: "SH"; }
+
+
 /* ---------- Margin notes ---------- */
 
 aside,
@@ -351,4 +348,103 @@ table {
   text-align: center;
   font-size: 0.8em;
   color: var(--muted);
+}
+
+
+/* Tighten list indentation */
+ul, ol {
+  padding-left: 1.2em; /* Just enough space for the bullet */
+  margin-left: 0;
+}
+
+/* Optional: Ensure list items themselves don't have extra margin */
+li {
+  margin-bottom: 0.2em;
+}
+
+
+/* Fix Description Lists ( - =key= :: Value ) */
+dl {
+  display: grid;
+  grid-template-columns: max-content auto; /* Key takes min width, Value takes rest */
+  gap: 0.5em 1em; /* Vertical gap, Horizontal gap */
+  align-items: baseline; /* Aligns text cleanly */
+  margin: 1em 0;
+}
+
+dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+
+dd {
+  grid-column: 2;
+  margin: 0; /* Remove default browser margin */
+}
+
+
+
+/* ---------- Mobile Responsive Overrides ---------- */
+@media screen and (max-width: 768px) {
+
+  /* 1. Reset margins so text doesn't feel cramped */
+  body {
+    padding: 1.5rem 1rem; /* Smaller side padding on phones */
+    font-size: 16px;      /* Slightly smaller text for mobile readability */
+  }
+
+  /* 1. Reset H2 (Chapter) positioning */
+  h2 {
+    margin-top: 2.5rem;
+    position: static; /* Remove the "anchor" behavior */
+  }
+
+  h2::before {
+    position: static;   /* Put the number back in the text flow */
+    display: block;    /* Put "CHAPTER X" on its own line above the title */
+    text-align: left;  /* Align it to the left like normal text */
+    width: auto;
+    margin-bottom: 0.2em;
+    font-size: 0.8rem; /* Make the label slightly smaller */
+  }
+
+  /* 2. Reset H3 and H4 (Section numbers) */
+  h3, h4 {
+    position: static;
+  }
+
+  h3::before, h4::before {
+    position: static;
+    display: inline-block; /* Keep "1.1" on the same line as the title */
+    text-align: left;
+    width: auto;
+    margin-right: 0.5em; /* Add a little space before the title text */
+    color: var(--muted);
+  }
+
+  /* 3. Adjust spacing for mobile */
+  h2, h3, h4 {
+    letter-spacing: 0.02em; /* Tighten up spacing slightly for smaller screens */
+  }
+
+  /* 2. Fix the Code Blocks */
+  pre.src {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding: 1em;
+    overflow-x: auto;   /* Ensure code scrolls sideways, not off-screen */
+    font-size: 0.8em;   /* Make code text smaller so more fits */
+  }
+
+  /* 3. Hide the floating labels on mobile */
+  /* Since there's no room on the left of the screen for "LISP" or "ORG" */
+  pre.src::before {
+    display: none !important;
+  }
+
+  /* 5. Ensure images/videos don't overflow the screen */
+  img, video {
+    max-width: 100%;
+    height: auto;
+  }
 }
