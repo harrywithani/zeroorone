@@ -1,0 +1,90 @@
+:PROPERTIES:
+:ID:       c5b00cea-c246-44c3-a084-fba3f8f87c1e
+:CREATED: [2026-01-20 Tue 19:29]
+:END:
+#+title: Org Agenda
+#+author: Hann Harri 
+
+* Basic Usage
+
+** Open the agenda
+Press =SPC o a= (or =C-c a=). This opens the agenda dispatcher:
+
+- =a= :: Agenda (week view with scheduled items)
+- =t= :: Todo list (all open TODOs)
+- =d= :: Dashboard (custom view)
+  - Shows this week
+  - Next tasks
+  - Waiting items
+
+* Key Workflow Commands
+
+** Creating and scheduling tasks
+
+1. Create a task in =~/org/todo.org=:
+   #+begin_src org
+   * TODO Write report
+   #+end_src
+
+2. Schedule the task  
+   Place the cursor on the task headline and press =C-c C-s=.  
+   Pick a date to make it appear in the agenda.
+
+3. Set a deadline (optional)  
+   Press =C-c C-d=.  
+   - *Scheduled* = when you plan to work on it  
+   - *Deadline* = must be done *by* this date
+
+4. Mark task as done  
+   Press =C-c C-t= and select =DONE=.  
+   Completion time is automatically logged.
+
+* Configuration Improvements
+
+The enhanced configuration provides:
+
+- *Custom agenda views*  
+  =org-agenda-custom-commands=
+  - =d= :: Dashboard
+  - =t= :: Today
+  - =n= :: Next
+  - =w= :: Waiting
+
+- *Better logging*  
+  =org-log-done= timestamps task completion in a hidden drawer
+
+- *Smart skipping*  
+  Completed tasks do not clutter the agenda
+
+- *Deadline warnings*  
+  Deadlines are flagged 7 days in advance
+
+* Suggested File Structure
+
+#+begin_example
+~/org/inbox.org  - Quick capture dump
+~/org/todo.org   - Main task list (organized by project)
+~/org/notes.org  - Reference / knowledge notes
+#+end_example
+
+Use a GTD-style workflow:
+- Capture everything quickly into =inbox.org=
+- Periodically process and move items into =todo.org=
+
+* Pro Tips
+
+- Use *tags* like =:work:=, =:home:=, =:urgent:=  
+  Filter with:
+  =C-c a m work=
+
+- Keep =~/org/roam= separate for your knowledge base
+
+- Use a =WAIT= TODO state for tasks blocked by others
+
+- Check your dashboard daily:
+  =SPC o a= then =d=
+
+* Practice
+
+Create a few test tasks in =~/org/todo.org= and schedule them.  
+The agenda workflow will feel natural very quickly.
