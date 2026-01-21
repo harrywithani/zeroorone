@@ -18,11 +18,11 @@
 }
 
 body.dark {
-  --bg: #1a1d21;      /* Main Background */
+  --bg: #182533;      /* Main Background */
   --bg-alt: #22262b;  /* Section Background */
-  --fg: #f0efeb;      /* Primary Text */
-  --muted: #ccc4b4;
-  --accent: #9fa8ff;
+  --fg: #ACBAC4;      /* Primary Text */
+  --muted: #526D82;
+  --accent: #76ABAE;
   --code-bg: #151820;
   --code-fg: #cdd6f4;
   --table-alt: #161a22;
@@ -48,7 +48,7 @@ body {
 #content {
 max-width: 680px;
 margin: 4rem auto;
-padding-left: 4em;
+padding-left: 8em;
 padding-right: 2em;
 }
 
@@ -57,7 +57,7 @@ padding-right: 2em;
 header {
   max-width: 680px;
   margin: 2rem auto 0 auto;
-  padding-left: 4em;
+  padding-left: 8em;
   padding-right: 2em;
   display: flex;
   justify-content: space-between;
@@ -356,6 +356,35 @@ ul, ol {
   padding-left: 1.2em; /* Just enough space for the bullet */
   margin-left: 0;
 }
+
+/* Target list items and apply muted color to their content */
+ul, ol {
+  padding-left: 1.2em;
+  margin-left: 0;
+}
+
+/* Style the bullets/numbers themselves */
+ul li::marker,
+ol li::marker {
+  color: var(--muted); /* Or any specific muted color like #666 */
+}
+
+/* Style the text content of the list items
+ul li,
+ol li {
+  color: #333;  Or your default text color
+}
+*/
+
+/* If you have nested lists or complex items, you might need more specific targeting
+ul ul li::marker,
+ol ol li::marker {
+
+  color: #999;
+}
+*/
+
+
 
 /* Optional: Ensure list items themselves don't have extra margin */
 li {
