@@ -48,7 +48,7 @@ body {
 #content {
 max-width: 680px;
 margin: 4rem auto;
-padding-left: 8em;
+padding-left: 4em;
 padding-right: 2em;
 }
 
@@ -57,7 +57,7 @@ padding-right: 2em;
 header {
   max-width: 680px;
   margin: 2rem auto 0 auto;
-  padding-left: 8em;
+  padding-left: 4em;
   padding-right: 2em;
   display: flex;
   justify-content: space-between;
@@ -400,6 +400,22 @@ dd {
   /* 2. Ensure it takes up the full available width */
   max-width: 100% !important;
   box-sizing: border-box;
+  }
+
+  header {
+    max-width: 680px;
+    margin: 2rem auto 0 auto;
+    padding-left: 1em;
+    padding-right: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .breadcrumb {
+    font-size: 0.6em;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
   }
 
   /* 1. Reset H2 (Chapter) positioning */

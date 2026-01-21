@@ -402,6 +402,22 @@ dd {
   box-sizing: border-box;
   }
 
+  header {
+    max-width: 680px;
+    margin: 2rem auto 0 auto;
+    padding-left: 1em;
+    padding-right: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .breadcrumb {
+    font-size: 0.6em;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+  }
+
   /* 1. Reset H2 (Chapter) positioning */
   h2 {
     margin-top: 2.5rem;
