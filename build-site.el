@@ -41,14 +41,13 @@
          :publishing-directory "docs"
          :recursive t
          :publishing-function org-html-publish-to-html
-         :html-head "<link rel=\"stylesheet\" href=\"/style.css\" type=\"text/css\"/>
-                     <script src=\"/theme.js\"></script>"
+         :html-head "<link rel=\"stylesheet\" href=\"/zeroorone/style.css\" type=\"text/css\"/>
+                     <script src=\"/zeroorone/theme.js\"></script>"
 
-         ;; --- Header + The New Hidden Sidebar ---
 ;; --- Header + The Hidden Sidebar ---
          :html-preamble "<header>
                           <nav class='breadcrumb'>
-                            <a href='/index.html'>Home</a>
+ 			    <a href='/zeroorone/index.html'>Home</a>
                             <span class='breadcrumb-sep'>/</span>
                             <span class='breadcrumb-current'>%t</span>
                           </nav>
