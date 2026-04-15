@@ -1,0 +1,39 @@
+:PROPERTIES:
+:ID: d44350f1-5d07-407e-ab5a-8ae406e4530b
+:CREATED: [2026-04-14 Tue 10:27]
+:END:
+#+title: http-intro
+
+** What is HTTP?
+Hyper Text Transfer Protocol (HTTP) is like a conversation between a client and a server, where every interaction is a request and a respone. HTTP is stateless that means it doesn't remember anything about previous transactions (a request and a response). When a client sends a request =GET /profile=  the server responds with the header and if the client requests =GET /order= the server doesn't know they are the same clients. So how does a server know it's the same person who islogged in? This is usually handled through tokens and cookies. 
+
+
+** Anatomy of an HTTP Request
+
+#+begin_src text
+GET /users/123 HTTP/1.1
+Host: example.com
+User-Agent: curl/8.0
+Authorization: Bearer abc123
+#+end_src
+
+** HTTPS?
+
+Hyper Text Transfer Protocol Secure
+Data is encrypted by SSL/TLS
+Secure Socket Layer
+Transport Security Layer
+
+** HTTP Methods
+*** GET
+*** POST
+*** PUT
+*** DELETE
+
+** HTTP Header Fields
+- method
+-  path
+-  protocol
+
+  General, Response, request
+  

@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID: 052bdb00-b75f-424d-bdab-ffad3e0a450f
+:CREATED: [2026-01-27 Tue 20:19]
+:END:
+#+title: Scripting
+
+* Main Goal
+Learn Python + Bash + Go as tools while understanding:
+
+- where memory lives
+- what’s on the stack vs heap
+- what’s contiguous vs scattered
+- how OS + runtime mediate everything

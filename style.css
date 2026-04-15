@@ -3,8 +3,30 @@
  *   ========================================================= */
 
 /* ---------- Font imports ---------- */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono:wght@400&display=swap');
 
+/* --- 1. THE BODY (Your Notes Content) --- */
+body {
+  margin: 0;
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  background-color: var(--bg);
+  color: var(--fg);
+  counter-reset: chapter section subsection;
+}
+
+/* --- 2. THE HEADERS (Plus Jakarta Sans) --- */
+h1, h2, h3, h4, .sidebar-header h3 {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* --- 3. THE CODE --- */
+code, pre, .org-tag {
+  font-family: 'JetBrains Mono', monospace;
+}
 /* ---------- CSS variables ---------- */
 
 :root {
@@ -32,15 +54,6 @@ body.dark {
 
 html {
   font-size: 17px;
-}
-
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--fg);
-  font-family: "Inter", system-ui, sans-serif;
-  line-height: 1.65;
-  counter-reset: chapter section subsection;
 }
 
 /* ---------- Layout ---------- */
@@ -370,19 +383,19 @@ ol li::marker {
 }
 
 /* Style the text content of the list items
-ul li,
-ol li {
-  color: #333;  Or your default text color
-}
-*/
+ * ul li,
+ * ol li {
+ *  color: #333;  Or your default text color
+ * }
+ */
 
 /* If you have nested lists or complex items, you might need more specific targeting
-ul ul li::marker,
-ol ol li::marker {
-
-  color: #999;
-}
-*/
+ * ul ul li::marker,
+ * ol ol li::marker {
+ *
+ *  color: #999;
+ * }
+ */
 
 
 
@@ -442,7 +455,7 @@ dd {
   }
 
   .breadcrumb {
-    font-size: 0.6em;
+    font-size: 0.7em;
     text-transform: uppercase;
     letter-spacing: 0.01em;
   }
@@ -501,4 +514,195 @@ dd {
     max-width: 100%;
     height: auto;
   }
+}
+
+/* =========================================
+ C LEAN HEADER CONTROLS & ICONS                  *
+ ========================================= */
+.controls, .breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Groups all buttons to look identical: minimal, borderless, unicode */
+.sidebar-toggle, .theme-toggle, .toc-toggle, .sidebar-close, .toc-close {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 0.8rem; /* Slightly larger for clean unicode icons */
+  font-family: inherit;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-toggle:hover, .theme-toggle:hover, .toc-toggle:hover, .sidebar-close:hover, .toc-close:hover {
+  color: var(--fg);
+}
+
+/* =========================================
+ D RAWER BACKGROUND & HEADING FIXES              *
+ ========================================= */
+/* Fixes the transparent background in light mode */
+:root {
+  --drawer-bg: #f5f5f5; /* Solid light mode background */
+}
+body.dark {
+  --drawer-bg: var(--bg-alt); /* Solid dark mode background */
+}
+
+#left-sidebar, #table-of-contents {
+background: var(--drawer-bg); /* Forces drawers to be completely opaque */
+}
+
+/* Strip Chapter Numbers from Drawer Headers */
+.sidebar-header h3 {
+  position: static;
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--fg);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+/* Kills the "1." numbering before titles */
+.sidebar-header h3::before, .sidebar-header h2::before {
+  content: none !important;
+}
+/* Hides the ugly default Org-mode TOC title */
+#table-of-contents > h2 {
+display: none !important;
+}
+
+/* =========================================
+ T OC - RIGHT DRAWER (Desktop & Mobile)          *
+ ========================================= */
+@media screen and (min-width: 1024px) {
+  #table-of-contents {
+  position: fixed;
+  top: 6rem;
+  right: 2rem;
+  width: 250px;
+  max-height: calc(100vh - 8rem);
+  overflow-y: auto;
+  font-size: 0.75rem;
+  border-left: 2px solid var(--table-alt);
+  padding-left: 1rem;
+  border-radius: 8px;
+  background: var(--bg);
+  }
+  #content { padding-right: 20px; }
+}
+
+@media screen and (max-width: 1023px) {
+  #table-of-contents {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 80%;
+  max-width: 300px;
+  height: 100vh;
+  z-index: 1000;
+  padding: 2rem;
+  overflow-y: auto;
+  }
+  #table-of-contents.active {
+  display: block;
+  animation: slideIn 0.3s ease forwards;
+  }
+  @keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+  }
+}
+
+/* =========================================
+ L EFT SIDEBAR - SEARCH DRAWER                   *
+ ========================================= */
+#left-sidebar {
+position: fixed;
+top: 0;
+left: -400px; /* Hidden off-screen by default */
+width: 320px;
+height: 100vh;
+border-right: 1px solid var(--muted);
+padding: 2rem 1.5rem;
+overflow-y: auto;
+z-index: 2000;
+transition: left 0.3s ease; /* Slide animation */
+box-sizing: border-box;
+}
+
+#left-sidebar.active { left: 0; }
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+/* --- Search Input & Tags --- */
+#sidebar-search {
+width: 100%;
+padding: 10px 15px;
+background: var(--bg);
+border: 1px solid #3d424a;
+color: var(--fg);
+margin-bottom: 1.5rem;
+outline: none;
+font-family: inherit;
+box-sizing: border-box;
+}
+#sidebar-search:focus { border-color: var(--accent); }
+
+.org-tag {
+  display: inline-block;
+  background: #2a2e33;
+  color: var(--muted);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  margin-left: 8px;
+  border: 1px solid #3d424a;
+}
+
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.tag-filter {
+  background: var(--bg);
+  color: var(--muted);
+  border: 1px solid #3d424a;
+  padding: 2px 5px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.tag-filter:hover, .tag-filter.active {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+
+/* --- Search Results --- */
+#sidebar-results { list-style: none; padding: 0; margin-top: 1.5rem; }
+#sidebar-results li {
+margin-bottom: 1rem;
+line-height: 1.4;
+border-bottom: 1px solid #3d424a;
+padding-bottom: 0.5rem;
+}
+#sidebar-results a {
+font-weight: 600;
+display: block;
+color: var(--fg);
+text-decoration: none;
+}
+#sidebar-results a:hover { color: var(--accent); }
+
+/* Prevents SVGs from stealing the click events from the buttons */
+.sidebar-toggle svg, .theme-toggle svg, .toc-toggle svg, .sidebar-close svg, .toc-close svg {
+  pointer-events: none;
 }
