@@ -30,7 +30,7 @@
                       (cons "tags" (or tags (vector)))
                       (cons "content" content))
                 index))))
-    (with-temp-file "public/search.json"
+    (with-temp-file "docs/search.json"
       (insert (json-encode index)))))
 
 ;; --- Publish Config ---
@@ -38,7 +38,7 @@
       `(("pages"
          :base-directory "roam/"
          :base-extension "org"
-         :publishing-directory "public/"
+         :publishing-directory "docs"
          :recursive t
          :publishing-function org-html-publish-to-html
          :html-head "<link rel=\"stylesheet\" href=\"/style.css\" type=\"text/css\"/>
@@ -101,7 +101,7 @@
         ("static"
          :base-directory "./"
          :base-extension "css\\|js\\|png\\|jpg"
-         :publishing-directory "public/"
+         :publishing-directory "docs"
          :publishing-function org-publish-attachment)
 
         ("website" :components ("pages" "static"))))

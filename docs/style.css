@@ -1,0 +1,708 @@
+/* =========================================================
+ *   ORG BOOK THEME — LIGHT / DARK
+ *   ========================================================= */
+
+/* ---------- Font imports ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono:wght@400&display=swap');
+
+/* --- 1. THE BODY (Your Notes Content) --- */
+body {
+  margin: 0;
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  background-color: var(--bg);
+  color: var(--fg);
+  counter-reset: chapter section subsection;
+}
+
+/* --- 2. THE HEADERS (Plus Jakarta Sans) --- */
+h1, h2, h3, h4, .sidebar-header h3 {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* --- 3. THE CODE --- */
+code, pre, .org-tag {
+  font-family: 'JetBrains Mono', monospace;
+}
+/* ---------- CSS variables ---------- */
+
+:root {
+  --bg: #ffffff;
+  --fg: #111111;
+  --muted: #888888;
+  --accent: #303f9f;
+  --code-bg: #fbfbfb;
+  --code-fg: #00008b;
+  --table-alt: #f9f9f9;
+}
+
+body.dark {
+  --bg: #182533;      /* Main Background */
+  --bg-alt: #22262b;  /* Section Background */
+  --fg: #ACBAC4;      /* Primary Text */
+  --muted: #526D82;
+  --accent: #76ABAE;
+  --code-bg: #151820;
+  --code-fg: #cdd6f4;
+  --table-alt: #161a22;
+}
+
+/* ---------- Base ---------- */
+
+html {
+  font-size: 17px;
+}
+
+/* ---------- Layout ---------- */
+
+#content {
+max-width: 680px;
+margin: 4rem auto;
+padding-left: 8em;
+padding-right: 2em;
+}
+
+/* ---------- Header ---------- */
+
+header {
+  max-width: 680px;
+  margin: 2rem auto 0 auto;
+  padding-left: 8em;
+  padding-right: 2em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.breadcrumb {
+  font-size: 0.8em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.breadcrumb a {
+  color: var(--muted);
+}
+
+.breadcrumb-current {
+  color: var(--fg);
+}
+
+.breadcrumb-sep {
+  margin: 0 0.3em;
+  color: var(--muted);
+}
+
+.site-title {
+  font-variant: small-caps;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+/* ---------- Dark mode button ---------- */
+
+.theme-toggle {
+  cursor: pointer;
+  background: none;
+  border: 1px solid var(--bg);
+  outline: none;
+  color: var(--muted);
+  font-size: 0.8em;
+  padding: 0.25em 0.5em;
+  text-transform: uppercase;
+}
+
+
+/* ---------- Titles ---------- */
+
+h1.title {
+  text-align: left;
+}
+
+h1.title {
+  font-size: 1.8rem;
+}
+
+h2 {
+  font-size: 1.3rem;
+}
+
+h3 {
+  font-size: 1.05rem;
+}
+
+h4 {
+  font-size: 0.95rem;
+}
+
+#table-of-contents {
+font-size: 0.9rem;
+}
+
+
+h1.title,
+h2,
+h3,
+h4 {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+/* ---------- Chapter headings (ONLY h2 numbered) ---------- */
+
+h2 {
+  position: relative;
+  counter-reset: section subsection;
+  margin-top: 3rem;
+}
+
+h2::before {
+  counter-increment: chapter;
+  content: "CHAPTER " counter(chapter);
+  position: absolute;
+  left: -7em;
+  width: 6.5em;
+  text-align: right;
+  font-weight: 400;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+h3 {
+  position: relative;
+}
+
+h3::before {
+  counter-increment: section;
+  content: counter(chapter) "." counter(section);
+  position: absolute;
+  left: -5.55em;
+  width: 5em;
+  text-align: right;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+h4 {
+  position: relative;
+}
+
+h4::before {
+  counter-increment: subsection;
+  content: counter(chapter) "." counter(section) "." counter(subsection);
+  position: absolute;
+  left: -5em;
+  width: 5em;
+  text-align: right;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+
+/* ---------- TOC ---------- */
+#table-of-contents h2::before {
+content: none;
+}
+
+#table-of-contents {
+margin-bottom: 3rem;
+}
+
+#table-of-contents {
+counter-reset: toc-chapter;
+}
+
+/* number ONLY top-level TOC entries */
+#text-table-of-contents > ul > li {
+position: relative;
+padding-left: 2.5em;
+}
+
+#text-table-of-contents > ul > li::before {
+counter-increment: toc-chapter;
+content: counter(toc-chapter);
+position: absolute;
+left: 0;
+width: 2em;
+text-align: right;
+color: var(--muted);
+}
+
+/* no numbering for lower levels */
+#text-table-of-contents ul ul li::before {
+content: none;
+}
+
+
+#table-of-contents ul {
+list-style: none;
+padding-left: 0;
+}
+
+#table-of-contents li {
+margin-bottom: 0.3em;
+}
+
+/* Indentation reflects structure ONLY */
+#table-of-contents ul ul {
+padding-left: 1.5em;
+}
+
+#table-of-contents {
+text-transform: uppercase;
+letter-spacing: 0.05em;
+}
+
+
+/* ---------- Links ---------- */
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Inline code ---------- */
+
+code {
+  background: var(--code-bg);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.9em;
+  padding: 0.1em 0.3em;
+}
+
+/* ---------- Code blocks ---------- */
+
+pre {
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-left: 2px dotted var(--accent);
+  padding: 0.6em;
+  margin: 1.5em 0;
+  line-height: 1.35;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.85em;
+  overflow-x: auto;
+  border-radius: 0px;
+}
+
+pre.src {
+  position: relative;
+  overflow: visible;
+}
+
+pre.src::before {
+  position: absolute;
+  left: -8em;
+  width: 7em;
+  top: 0;
+  text-align: right;
+  font-variant: small-caps;
+  background: var(--bg);
+  color: var(--muted);
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+}
+
+pre.src-elisp::before { content: "LISP"; }
+pre.src-org::before   { content: "ORG"; }
+pre.src-sh::before    { content: "SH"; }
+
+
+/* ---------- Margin notes ---------- */
+
+aside,
+span.note {
+  position: absolute;
+  left: -7.5em;
+  width: 6.5em;
+  font-size: 0.8em;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* ---------- Tables ---------- */
+
+table {
+  width: 100%;
+  margin: 1.5em 0;
+  border-collapse: collapse;
+}
+
+tr:nth-child(even) {
+  background: var(--table-alt);
+}
+/* This targets the actual table, the header cells, and the data cells */
+table, th, td {
+  text-align: left !important;
+}
+
+/* Specifically target the header row which is usually the culprit */
+thead th {
+  text-align: left !important;
+}
+
+/* Ensure the table doesn't try to center itself in the page */
+table {
+  margin-left: 0 !important;
+  margin-right: auto !important;
+}
+/* ---------- Footer ---------- */
+
+.footer {
+  margin: 4rem 0 2rem 0;
+  text-align: center;
+  font-size: 0.8em;
+  color: var(--muted);
+}
+
+
+/* Tighten list indentation */
+ul, ol {
+  padding-left: 1.2em; /* Just enough space for the bullet */
+  margin-left: 0;
+}
+
+/* Target list items and apply muted color to their content */
+ul, ol {
+  padding-left: 1.2em;
+  margin-left: 0;
+}
+
+/* Style the bullets/numbers themselves */
+ul li::marker,
+ol li::marker {
+  color: var(--muted); /* Or any specific muted color like #666 */
+}
+
+/* Style the text content of the list items
+ * ul li,
+ * ol li {
+ *  color: #333;  Or your default text color
+ * }
+ */
+
+/* If you have nested lists or complex items, you might need more specific targeting
+ * ul ul li::marker,
+ * ol ol li::marker {
+ *
+ *  color: #999;
+ * }
+ */
+
+
+
+/* Optional: Ensure list items themselves don't have extra margin */
+li {
+  margin-bottom: 0.2em;
+}
+
+
+/* Fix Description Lists ( - =key= :: Value ) */
+dl {
+  display: grid;
+  grid-template-columns: max-content auto; /* Key takes min width, Value takes rest */
+  gap: 0.5em 1em; /* Vertical gap, Horizontal gap */
+  align-items: baseline; /* Aligns text cleanly */
+  margin: 1em 0;
+}
+
+dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+
+dd {
+  grid-column: 2;
+  margin: 0; /* Remove default browser margin */
+}
+
+
+
+/* ---------- Mobile Responsive Overrides ---------- */
+@media screen and (max-width: 768px) {
+
+  html {
+    font-size: 16px;
+  }
+
+  #content {
+  /* 1. Remove the desktop margins and 8em padding */
+  margin: 1rem auto !important;
+  padding-left: 1.2rem !important;  /* Match the right side */
+  padding-right: 1.2rem !important; /* Match the left side */
+
+  /* 2. Ensure it takes up the full available width */
+  max-width: 100% !important;
+  box-sizing: border-box;
+  }
+
+  header {
+    max-width: 680px;
+    margin: 2rem auto 0 auto;
+    padding-left: 1em;
+    padding-right: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .breadcrumb {
+    font-size: 0.7em;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+  }
+
+  /* 1. Reset H2 (Chapter) positioning */
+  h2 {
+    margin-top: 2.5rem;
+    position: static; /* Remove the "anchor" behavior */
+  }
+
+  h2::before {
+    position: static;   /* Put the number back in the text flow */
+    display: block;    /* Put "CHAPTER X" on its own line above the title */
+    text-align: left;  /* Align it to the left like normal text */
+    width: auto;
+    margin-bottom: 0.2em;
+    font-size: 0.8rem; /* Make the label slightly smaller */
+  }
+
+  /* 2. Reset H3 and H4 (Section numbers) */
+  h3, h4 {
+    position: static;
+  }
+
+  h3::before, h4::before {
+    position: static;
+    display: inline-block; /* Keep "1.1" on the same line as the title */
+    text-align: left;
+    width: auto;
+    margin-right: 0.5em; /* Add a little space before the title text */
+    color: var(--muted);
+  }
+
+  /* 3. Adjust spacing for mobile */
+  h2, h3, h4 {
+    letter-spacing: 0.02em; /* Tighten up spacing slightly for smaller screens */
+  }
+
+  /* 2. Fix the Code Blocks */
+  pre.src {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding: 1em;
+    overflow-x: auto;   /* Ensure code scrolls sideways, not off-screen */
+    font-size: 0.8em;   /* Make code text smaller so more fits */
+  }
+
+  /* 3. Hide the floating labels on mobile */
+  /* Since there's no room on the left of the screen for "LISP" or "ORG" */
+  pre.src::before {
+    display: none !important;
+  }
+
+  /* 5. Ensure images/videos don't overflow the screen */
+  img, video {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* =========================================
+ C LEAN HEADER CONTROLS & ICONS                  *
+ ========================================= */
+.controls, .breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Groups all buttons to look identical: minimal, borderless, unicode */
+.sidebar-toggle, .theme-toggle, .toc-toggle, .sidebar-close, .toc-close {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 0.8rem; /* Slightly larger for clean unicode icons */
+  font-family: inherit;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-toggle:hover, .theme-toggle:hover, .toc-toggle:hover, .sidebar-close:hover, .toc-close:hover {
+  color: var(--fg);
+}
+
+/* =========================================
+ D RAWER BACKGROUND & HEADING FIXES              *
+ ========================================= */
+/* Fixes the transparent background in light mode */
+:root {
+  --drawer-bg: #f5f5f5; /* Solid light mode background */
+}
+body.dark {
+  --drawer-bg: var(--bg-alt); /* Solid dark mode background */
+}
+
+#left-sidebar, #table-of-contents {
+background: var(--drawer-bg); /* Forces drawers to be completely opaque */
+}
+
+/* Strip Chapter Numbers from Drawer Headers */
+.sidebar-header h3 {
+  position: static;
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--fg);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+/* Kills the "1." numbering before titles */
+.sidebar-header h3::before, .sidebar-header h2::before {
+  content: none !important;
+}
+/* Hides the ugly default Org-mode TOC title */
+#table-of-contents > h2 {
+display: none !important;
+}
+
+/* =========================================
+ T OC - RIGHT DRAWER (Desktop & Mobile)          *
+ ========================================= */
+@media screen and (min-width: 1024px) {
+  #table-of-contents {
+  position: fixed;
+  top: 6rem;
+  right: 2rem;
+  width: 250px;
+  max-height: calc(100vh - 8rem);
+  overflow-y: auto;
+  font-size: 0.75rem;
+  border-left: 2px solid var(--table-alt);
+  padding-left: 1rem;
+  border-radius: 8px;
+  background: var(--bg);
+  }
+  #content { padding-right: 20px; }
+}
+
+@media screen and (max-width: 1023px) {
+  #table-of-contents {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 80%;
+  max-width: 300px;
+  height: 100vh;
+  z-index: 1000;
+  padding: 2rem;
+  overflow-y: auto;
+  }
+  #table-of-contents.active {
+  display: block;
+  animation: slideIn 0.3s ease forwards;
+  }
+  @keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+  }
+}
+
+/* =========================================
+ L EFT SIDEBAR - SEARCH DRAWER                   *
+ ========================================= */
+#left-sidebar {
+position: fixed;
+top: 0;
+left: -400px; /* Hidden off-screen by default */
+width: 320px;
+height: 100vh;
+border-right: 1px solid var(--muted);
+padding: 2rem 1.5rem;
+overflow-y: auto;
+z-index: 2000;
+transition: left 0.3s ease; /* Slide animation */
+box-sizing: border-box;
+}
+
+#left-sidebar.active { left: 0; }
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+/* --- Search Input & Tags --- */
+#sidebar-search {
+width: 100%;
+padding: 10px 15px;
+background: var(--bg);
+border: 1px solid #3d424a;
+color: var(--fg);
+margin-bottom: 1.5rem;
+outline: none;
+font-family: inherit;
+box-sizing: border-box;
+}
+#sidebar-search:focus { border-color: var(--accent); }
+
+.org-tag {
+  display: inline-block;
+  background: #2a2e33;
+  color: var(--muted);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  margin-left: 8px;
+  border: 1px solid #3d424a;
+}
+
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.tag-filter {
+  background: var(--bg);
+  color: var(--muted);
+  border: 1px solid #3d424a;
+  padding: 2px 5px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.tag-filter:hover, .tag-filter.active {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+
+/* --- Search Results --- */
+#sidebar-results { list-style: none; padding: 0; margin-top: 1.5rem; }
+#sidebar-results li {
+margin-bottom: 1rem;
+line-height: 1.4;
+border-bottom: 1px solid #3d424a;
+padding-bottom: 0.5rem;
+}
+#sidebar-results a {
+font-weight: 600;
+display: block;
+color: var(--fg);
+text-decoration: none;
+}
+#sidebar-results a:hover { color: var(--accent); }
+
+/* Prevents SVGs from stealing the click events from the buttons */
+.sidebar-toggle svg, .theme-toggle svg, .toc-toggle svg, .sidebar-close svg, .toc-close svg {
+  pointer-events: none;
+}

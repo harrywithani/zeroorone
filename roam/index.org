@@ -1,5 +1,8 @@
 #+TITLE: Knowledge Base
 
 - [[file:new.org][Configuration Guide]]
+- [[file:http-intro.org][http-intro]]
+- [[file:into-git.org][Into-Git]]
 - [[file:org-agenda.org][Org Agenda]]
+- [[file:scripting.org][Scripting]]
 - [[file:test.org][Testing the Compline Book Theme]]
