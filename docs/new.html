@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-04-16 Thu 18:06 -->
+<!-- 2026-04-16 Thu 18:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Configuration Guide</title>
@@ -249,52 +249,73 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgc309660">Core Settings</a>
+<li><a href="#org499726c">Core Settings</a>
 <ul>
-<li><a href="#org52505d3">UI</a></li>
-<li><a href="#org25d11ce">Evil Mode</a></li>
+<li><a href="#orgf3ff587">UI</a></li>
+<li><a href="#org8f44a75">Evil Mode</a></li>
 </ul>
 </li>
-<li><a href="#org220708d">Org Setup</a>
+<li><a href="#orgd755c60">Org Setup</a>
 <ul>
-<li><a href="#org9b87a6e">This is a setup</a></li>
+<li><a href="#org2a97ac5">This is a setup</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgc309660" class="outline-2">
-<h2 id="orgc309660">Core Settings</h2>
-<div class="outline-text-2" id="text-orgc309660">
+<div id="outline-container-org499726c" class="outline-2">
+<h2 id="org499726c">Core Settings</h2>
+<div class="outline-text-2" id="text-org499726c">
 </div>
-<div id="outline-container-org52505d3" class="outline-3">
-<h3 id="org52505d3">UI</h3>
-<div class="outline-text-3" id="text-org52505d3">
+<div id="outline-container-orgf3ff587" class="outline-3">
+<h3 id="orgf3ff587">UI</h3>
+<div class="outline-text-3" id="text-orgf3ff587">
 <p>
 Details about UI setup&#x2026;
 </p>
 </div>
 </div>
-<div id="outline-container-org25d11ce" class="outline-3">
-<h3 id="org25d11ce">Evil Mode</h3>
-<div class="outline-text-3" id="text-org25d11ce">
+<div id="outline-container-org8f44a75" class="outline-3">
+<h3 id="org8f44a75">Evil Mode</h3>
+<div class="outline-text-3" id="text-org8f44a75">
 <p>
 Configuration details&#x2026;
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org220708d" class="outline-2">
-<h2 id="org220708d">Org Setup</h2>
-<div class="outline-text-2" id="text-org220708d">
+<div id="outline-container-orgd755c60" class="outline-2">
+<h2 id="orgd755c60">Org Setup</h2>
+<div class="outline-text-2" id="text-orgd755c60">
 </div>
-<div id="outline-container-org9b87a6e" class="outline-3">
-<h3 id="org9b87a6e">This is a setup</h3>
+<div id="outline-container-org2a97ac5" class="outline-3">
+<h3 id="org2a97ac5">This is a setup</h3>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="footer">Built with Emacs</p>
+                         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+                          <script>
+                          window.addEventListener("DOMContentLoaded", () => {
+                            document.querySelectorAll("pre.src").forEach(pre => {
+                              const classes = Array.from(pre.classList);
+                              const langClass = classes.find(c => c.startsWith("src-"));
+                              if (!langClass) return;
+
+                              const lang = langClass.replace("src-", "");
+
+                              const code = document.createElement("code");
+                              code.className = "language-" + lang;
+                              code.textContent = pre.textContent;
+
+                              pre.innerHTML = "";
+                              pre.appendChild(code);
+                            });
+
+                            hljs.highlightAll();
+                          });
+                          </script>
 </div>
 </body>
 </html>

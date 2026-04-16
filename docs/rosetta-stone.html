@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-04-16 Thu 18:06 -->
+<!-- 2026-04-16 Thu 18:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>rosetta-stone</title>
@@ -249,26 +249,26 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgf03d7bc">Variables &amp; Typing</a>
+<li><a href="#org85d69f1">Variables &amp; Typing</a>
 <ul>
 <li>
 <ul>
-<li><a href="#org99a3fd1">Python Implementation</a></li>
-<li><a href="#orge6dd67b">Bash Implementation</a></li>
-<li><a href="#orgce7eded">Go Implementation</a></li>
-<li><a href="#org36cbf9d">Exceptions &amp; Paradigm Shifts</a></li>
+<li><a href="#orgfb68f0e">Python Implementation</a></li>
+<li><a href="#org33dff86">Bash Implementation</a></li>
+<li><a href="#org6998ab5">Go Implementation</a></li>
+<li><a href="#orgbb08b4a">Exceptions &amp; Paradigm Shifts</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org66278fa">Control Flow (If / Else)</a>
+<li><a href="#org0571af2">Control Flow (If / Else)</a>
 <ul>
 <li>
 <ul>
-<li><a href="#org1245360">Python Implementation</a></li>
-<li><a href="#orgb9bb79a">Bash Implementation</a></li>
-<li><a href="#orge3e326c">Go Implementation</a></li>
-<li><a href="#org6e4e2f9">Exceptions &amp; Paradigm Shifts</a></li>
+<li><a href="#org5aabb7f">Python Implementation</a></li>
+<li><a href="#org5422e13">Bash Implementation</a></li>
+<li><a href="#org455c03a">Go Implementation</a></li>
+<li><a href="#org9040f12">Exceptions &amp; Paradigm Shifts</a></li>
 </ul>
 </li>
 </ul>
@@ -276,16 +276,16 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-orgf03d7bc" class="outline-2">
-<h2 id="orgf03d7bc">Variables &amp; Typing</h2>
-<div class="outline-text-2" id="text-orgf03d7bc">
+<div id="outline-container-org85d69f1" class="outline-2">
+<h2 id="org85d69f1">Variables &amp; Typing</h2>
+<div class="outline-text-2" id="text-org85d69f1">
 <p>
 How we declare, store, and modify data in memory, and how the language tracks the "type" of that data.
 </p>
 </div>
-<div id="outline-container-org99a3fd1" class="outline-4">
-<h4 id="org99a3fd1">Python Implementation</h4>
-<div class="outline-text-4" id="text-org99a3fd1">
+<div id="outline-container-orgfb68f0e" class="outline-4">
+<h4 id="orgfb68f0e">Python Implementation</h4>
+<div class="outline-text-4" id="text-orgfb68f0e">
 <p>
 Python uses dynamic typing. The interpreter figures out the type at runtime based on the value you assign.
 </p>
@@ -304,9 +304,9 @@ MAX_CONNECTIONS = 100
 </div>
 </div>
 </div>
-<div id="outline-container-orge6dd67b" class="outline-4">
-<h4 id="orge6dd67b">Bash Implementation</h4>
-<div class="outline-text-4" id="text-orge6dd67b">
+<div id="outline-container-org33dff86" class="outline-4">
+<h4 id="org33dff86">Bash Implementation</h4>
+<div class="outline-text-4" id="text-org33dff86">
 <p>
 Bash treats almost everything as a string unless told otherwise. It is highly dependent on environment variables and exact syntax.
 </p>
@@ -328,9 +328,9 @@ echo "My name is $name"
 </div>
 </div>
 </div>
-<div id="outline-container-orgce7eded" class="outline-4">
-<h4 id="orgce7eded">Go Implementation</h4>
-<div class="outline-text-4" id="text-orgce7eded">
+<div id="outline-container-org6998ab5" class="outline-4">
+<h4 id="org6998ab5">Go Implementation</h4>
+<div class="outline-text-4" id="text-org6998ab5">
 <p>
 Go is statically typed. The compiler must know the type of every variable before the program runs.
 </p>
@@ -359,9 +359,9 @@ func main() {
 </div>
 </div>
 </div>
-<div id="outline-container-org36cbf9d" class="outline-4">
-<h4 id="org36cbf9d">Exceptions &amp; Paradigm Shifts</h4>
-<div class="outline-text-4" id="text-org36cbf9d">
+<div id="outline-container-orgbb08b4a" class="outline-4">
+<h4 id="orgbb08b4a">Exceptions &amp; Paradigm Shifts</h4>
+<div class="outline-text-4" id="text-orgbb08b4a">
 <ul class="org-ul">
 <li>In Bash, <code>name = "Elliot"</code> will throw an error because Bash thinks <code>name</code> is a command and <code>=</code> is the first argument.</li>
 <li>In Python and Bash, you can declare a variable and never use it. If you do this in Go, <b>the program will not compile</b>. Go enforces clean code at the compiler level.</li>
@@ -370,16 +370,16 @@ func main() {
 </div>
 </div>
 </div>
-<div id="outline-container-org66278fa" class="outline-2">
-<h2 id="org66278fa">Control Flow (If / Else)</h2>
-<div class="outline-text-2" id="text-org66278fa">
+<div id="outline-container-org0571af2" class="outline-2">
+<h2 id="org0571af2">Control Flow (If / Else)</h2>
+<div class="outline-text-2" id="text-org0571af2">
 <p>
 Evaluating a boolean condition (True/False) to branch the execution path of the program.
 </p>
 </div>
-<div id="outline-container-org1245360" class="outline-4">
-<h4 id="org1245360">Python Implementation</h4>
-<div class="outline-text-4" id="text-org1245360">
+<div id="outline-container-org5aabb7f" class="outline-4">
+<h4 id="org5aabb7f">Python Implementation</h4>
+<div class="outline-text-4" id="text-org5aabb7f">
 <p>
 Python relies entirely on colons and strict whitespace indentation to define the block of code.
 </p>
@@ -397,9 +397,9 @@ else:
 </div>
 </div>
 </div>
-<div id="outline-container-orgb9bb79a" class="outline-4">
-<h4 id="orgb9bb79a">Bash Implementation</h4>
-<div class="outline-text-4" id="text-orgb9bb79a">
+<div id="outline-container-org5422e13" class="outline-4">
+<h4 id="org5422e13">Bash Implementation</h4>
+<div class="outline-text-4" id="text-org5422e13">
 <p>
 Bash uses bracket syntax for testing conditions. It requires explicit keywords (<code>then</code>, <code>elif</code>, <code>else</code>, and <code>fi</code>) to open and close blocks.
 </p>
@@ -419,9 +419,9 @@ fi
 </div>
 </div>
 </div>
-<div id="outline-container-orge3e326c" class="outline-4">
-<h4 id="orge3e326c">Go Implementation</h4>
-<div class="outline-text-4" id="text-orge3e326c">
+<div id="outline-container-org455c03a" class="outline-4">
+<h4 id="org455c03a">Go Implementation</h4>
+<div class="outline-text-4" id="text-org455c03a">
 <p>
 Go drops the parentheses around the condition (unlike C/C++) but enforces strict curly brace placement.
 </p>
@@ -446,9 +446,9 @@ func main() {
 </div>
 </div>
 </div>
-<div id="outline-container-org6e4e2f9" class="outline-4">
-<h4 id="org6e4e2f9">Exceptions &amp; Paradigm Shifts</h4>
-<div class="outline-text-4" id="text-org6e4e2f9">
+<div id="outline-container-org9040f12" class="outline-4">
+<h4 id="org9040f12">Exceptions &amp; Paradigm Shifts</h4>
+<div class="outline-text-4" id="text-org9040f12">
 <ul class="org-ul">
 <li><p>
 <b>Go's Initializer Statement:</b> This is a massive paradigm shift from Python. Go allows you to declare a variable <i>inside</i> the <code>if</code> statement itself. The variable is only available inside that specific <code>if/else</code> block. This is how Go handles almost all error checking:
@@ -472,6 +472,27 @@ if err := processData(); err != nil {
 </div>
 <div id="postamble" class="status">
 <p class="footer">Built with Emacs</p>
+                         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+                          <script>
+                          window.addEventListener("DOMContentLoaded", () => {
+                            document.querySelectorAll("pre.src").forEach(pre => {
+                              const classes = Array.from(pre.classList);
+                              const langClass = classes.find(c => c.startsWith("src-"));
+                              if (!langClass) return;
+
+                              const lang = langClass.replace("src-", "");
+
+                              const code = document.createElement("code");
+                              code.className = "language-" + lang;
+                              code.textContent = pre.textContent;
+
+                              pre.innerHTML = "";
+                              pre.appendChild(code);
+                            });
+
+                            hljs.highlightAll();
+                          });
+                          </script>
 </div>
 </body>
 </html>

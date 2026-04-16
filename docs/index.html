@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-04-16 Thu 18:06 -->
+<!-- 2026-04-16 Thu 18:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Knowledge Base</title>
@@ -257,6 +257,27 @@
 </div>
 <div id="postamble" class="status">
 <p class="footer">Built with Emacs</p>
+                         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+                          <script>
+                          window.addEventListener("DOMContentLoaded", () => {
+                            document.querySelectorAll("pre.src").forEach(pre => {
+                              const classes = Array.from(pre.classList);
+                              const langClass = classes.find(c => c.startsWith("src-"));
+                              if (!langClass) return;
+
+                              const lang = langClass.replace("src-", "");
+
+                              const code = document.createElement("code");
+                              code.className = "language-" + lang;
+                              code.textContent = pre.textContent;
+
+                              pre.innerHTML = "";
+                              pre.appendChild(code);
+                            });
+
+                            hljs.highlightAll();
+                          });
+                          </script>
 </div>
 </body>
 </html>
