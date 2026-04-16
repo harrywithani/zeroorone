@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-04-16 Thu 17:58 -->
+<!-- 2026-04-16 Thu 18:03 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>rosetta-stone</title>
@@ -249,26 +249,26 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgc0d878f">Variables &amp; Typing</a>
+<li><a href="#org44549b9">Variables &amp; Typing</a>
 <ul>
 <li>
 <ul>
-<li><a href="#orga0b1886">Python Implementation</a></li>
-<li><a href="#org105dccf">Bash Implementation</a></li>
-<li><a href="#orgd1ca2f4">Go Implementation</a></li>
-<li><a href="#org816b419">Exceptions &amp; Paradigm Shifts</a></li>
+<li><a href="#org3deccc0">Python Implementation</a></li>
+<li><a href="#org395a28d">Bash Implementation</a></li>
+<li><a href="#org91fb7ee">Go Implementation</a></li>
+<li><a href="#org25f5c5e">Exceptions &amp; Paradigm Shifts</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgd143910">Control Flow (If / Else)</a>
+<li><a href="#org8be13aa">Control Flow (If / Else)</a>
 <ul>
 <li>
 <ul>
-<li><a href="#org565160b">Python Implementation</a></li>
-<li><a href="#orgb343da8">Bash Implementation</a></li>
-<li><a href="#org5fecc60">Go Implementation</a></li>
-<li><a href="#orgfee0a9e">Exceptions &amp; Paradigm Shifts</a></li>
+<li><a href="#orgf52f940">Python Implementation</a></li>
+<li><a href="#orgbc66909">Bash Implementation</a></li>
+<li><a href="#orgb20eb2d">Go Implementation</a></li>
+<li><a href="#orgbc6b8fb">Exceptions &amp; Paradigm Shifts</a></li>
 </ul>
 </li>
 </ul>
@@ -276,61 +276,61 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-orgc0d878f" class="outline-2">
-<h2 id="orgc0d878f">Variables &amp; Typing</h2>
-<div class="outline-text-2" id="text-orgc0d878f">
+<div id="outline-container-org44549b9" class="outline-2">
+<h2 id="org44549b9">Variables &amp; Typing</h2>
+<div class="outline-text-2" id="text-org44549b9">
 <p>
 How we declare, store, and modify data in memory, and how the language tracks the "type" of that data.
 </p>
 </div>
-<div id="outline-container-orga0b1886" class="outline-4">
-<h4 id="orga0b1886">Python Implementation</h4>
-<div class="outline-text-4" id="text-orga0b1886">
+<div id="outline-container-org3deccc0" class="outline-4">
+<h4 id="org3deccc0">Python Implementation</h4>
+<div class="outline-text-4" id="text-org3deccc0">
 <p>
 Python uses dynamic typing. The interpreter figures out the type at runtime based on the value you assign.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"># Declaration and assignment
-name = "Elliot"
-age = 25
+<pre class="src src-python"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Declaration and assignment
+</span><span style="font-weight: bold; font-style: italic;">name</span> = <span style="font-style: italic;">"Elliot"</span>
+<span style="font-weight: bold; font-style: italic;">age</span> = 25
 
-# Re-assignment (can even change types)
-age = "Twenty  Five" 
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Re-assignment (can even change types)
+</span><span style="font-weight: bold; font-style: italic;">age</span> = <span style="font-style: italic;">"Twenty  Five"</span> 
 
-# Constants (No strict enforcement, just convention)
-MAX_CONNECTIONS = 100
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Constants (No strict enforcement, just convention)
+</span><span style="font-weight: bold; font-style: italic;">MAX_CONNECTIONS</span> = 100
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org105dccf" class="outline-4">
-<h4 id="org105dccf">Bash Implementation</h4>
-<div class="outline-text-4" id="text-org105dccf">
+<div id="outline-container-org395a28d" class="outline-4">
+<h4 id="org395a28d">Bash Implementation</h4>
+<div class="outline-text-4" id="text-org395a28d">
 <p>
 Bash treats almost everything as a string unless told otherwise. It is highly dependent on environment variables and exact syntax.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"># Declaration (NO spaces around the equals sign!)
-name="Elliot"
-age=55
+<pre class="src src-sh"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Declaration (NO spaces around the equals sign!)
+</span><span style="font-weight: bold; font-style: italic;">name</span>=<span style="font-style: italic;">"Elliot"</span>
+<span style="font-weight: bold; font-style: italic;">age</span>=55
 
-# Re-assignment
-age=26
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Re-assignment
+</span><span style="font-weight: bold; font-style: italic;">age</span>=26
 
-# Constants
-readonly MAX_CONNECTIONS=100
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Constants
+</span><span style="font-weight: bold;">readonly</span> <span style="font-weight: bold; font-style: italic;">MAX_CONNECTIONS</span>=100
 
-# Usage (Requires the $ prefix to read the value)
-echo "My name is $name"
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Usage (Requires the $ prefix to read the value)
+</span><span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"My name is $name"</span>
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgd1ca2f4" class="outline-4">
-<h4 id="orgd1ca2f4">Go Implementation</h4>
-<div class="outline-text-4" id="text-orgd1ca2f4">
+<div id="outline-container-org91fb7ee" class="outline-4">
+<h4 id="org91fb7ee">Go Implementation</h4>
+<div class="outline-text-4" id="text-org91fb7ee">
 <p>
 Go is statically typed. The compiler must know the type of every variable before the program runs.
 </p>
@@ -359,9 +359,9 @@ func main() {
 </div>
 </div>
 </div>
-<div id="outline-container-org816b419" class="outline-4">
-<h4 id="org816b419">Exceptions &amp; Paradigm Shifts</h4>
-<div class="outline-text-4" id="text-org816b419">
+<div id="outline-container-org25f5c5e" class="outline-4">
+<h4 id="org25f5c5e">Exceptions &amp; Paradigm Shifts</h4>
+<div class="outline-text-4" id="text-org25f5c5e">
 <ul class="org-ul">
 <li>In Bash, <code>name = "Elliot"</code> will throw an error because Bash thinks <code>name</code> is a command and <code>=</code> is the first argument.</li>
 <li>In Python and Bash, you can declare a variable and never use it. If you do this in Go, <b>the program will not compile</b>. Go enforces clean code at the compiler level.</li>
@@ -370,58 +370,58 @@ func main() {
 </div>
 </div>
 </div>
-<div id="outline-container-orgd143910" class="outline-2">
-<h2 id="orgd143910">Control Flow (If / Else)</h2>
-<div class="outline-text-2" id="text-orgd143910">
+<div id="outline-container-org8be13aa" class="outline-2">
+<h2 id="org8be13aa">Control Flow (If / Else)</h2>
+<div class="outline-text-2" id="text-org8be13aa">
 <p>
 Evaluating a boolean condition (True/False) to branch the execution path of the program.
 </p>
 </div>
-<div id="outline-container-org565160b" class="outline-4">
-<h4 id="org565160b">Python Implementation</h4>
-<div class="outline-text-4" id="text-org565160b">
+<div id="outline-container-orgf52f940" class="outline-4">
+<h4 id="orgf52f940">Python Implementation</h4>
+<div class="outline-text-4" id="text-orgf52f940">
 <p>
 Python relies entirely on colons and strict whitespace indentation to define the block of code.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">status_code = 404
+<pre class="src src-python"><span style="font-weight: bold; font-style: italic;">status_code</span> = 404
 
-if status_code == 200:
-    print("Success")
-elif status_code == 404:
-    print("Not Found")
-else:
-    print("Unknown Error")
+<span style="font-weight: bold;">if</span> status_code == 200:
+    <span style="font-weight: bold;">print</span>(<span style="font-style: italic;">"Success"</span>)
+<span style="font-weight: bold;">elif</span> status_code == 404:
+    <span style="font-weight: bold;">print</span>(<span style="font-style: italic;">"Not Found"</span>)
+<span style="font-weight: bold;">else</span>:
+    <span style="font-weight: bold;">print</span>(<span style="font-style: italic;">"Unknown Error"</span>)
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgb343da8" class="outline-4">
-<h4 id="orgb343da8">Bash Implementation</h4>
-<div class="outline-text-4" id="text-orgb343da8">
+<div id="outline-container-orgbc66909" class="outline-4">
+<h4 id="orgbc66909">Bash Implementation</h4>
+<div class="outline-text-4" id="text-orgbc66909">
 <p>
 Bash uses bracket syntax for testing conditions. It requires explicit keywords (<code>then</code>, <code>elif</code>, <code>else</code>, and <code>fi</code>) to open and close blocks.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">status_code=404
+<pre class="src src-sh"><span style="font-weight: bold; font-style: italic;">status_code</span>=404
 
-# Spaces INSIDE the brackets are strictly required
-if [ "$status_code" -eq 200 ]; then
-    echo "Success"
-elif [ "$status_code" -eq 404 ]; then
-    echo "Not Found"
-else
-    echo "Unknown Error"
-fi
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Spaces INSIDE the brackets are strictly required
+</span><span style="font-weight: bold;">if</span> [ <span style="font-style: italic;">"$status_code"</span> -eq 200 ]; <span style="font-weight: bold;">then</span>
+    <span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"Success"</span>
+<span style="font-weight: bold;">elif</span> [ <span style="font-style: italic;">"$status_code"</span> -eq 404 ]; <span style="font-weight: bold;">then</span>
+    <span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"Not Found"</span>
+<span style="font-weight: bold;">else</span>
+    <span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"Unknown Error"</span>
+<span style="font-weight: bold;">fi</span>
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org5fecc60" class="outline-4">
-<h4 id="org5fecc60">Go Implementation</h4>
-<div class="outline-text-4" id="text-org5fecc60">
+<div id="outline-container-orgb20eb2d" class="outline-4">
+<h4 id="orgb20eb2d">Go Implementation</h4>
+<div class="outline-text-4" id="text-orgb20eb2d">
 <p>
 Go drops the parentheses around the condition (unlike C/C++) but enforces strict curly brace placement.
 </p>
@@ -446,9 +446,9 @@ func main() {
 </div>
 </div>
 </div>
-<div id="outline-container-orgfee0a9e" class="outline-4">
-<h4 id="orgfee0a9e">Exceptions &amp; Paradigm Shifts</h4>
-<div class="outline-text-4" id="text-orgfee0a9e">
+<div id="outline-container-orgbc6b8fb" class="outline-4">
+<h4 id="orgbc6b8fb">Exceptions &amp; Paradigm Shifts</h4>
+<div class="outline-text-4" id="text-orgbc6b8fb">
 <ul class="org-ul">
 <li><p>
 <b>Go's Initializer Statement:</b> This is a massive paradigm shift from Python. Go allows you to declare a variable <i>inside</i> the <code>if</code> statement itself. The variable is only available inside that specific <code>if/else</code> block. This is how Go handles almost all error checking:

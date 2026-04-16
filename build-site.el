@@ -4,6 +4,13 @@
 
 (setq org-export-with-section-numbers nil)
 
+(require 'package)
+(package-initialize)
+
+(unless (package-installed-p 'htmlize)
+  (package-refresh-contents)
+  (package-install 'htmlize))
+
 ;; --- The Content Search Indexer ---
 (defun my/generate-search-index ()
   "Reads all org files and generates a full-text search.json index."
