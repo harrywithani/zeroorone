@@ -1,6 +1,18 @@
 /* =========================================================
  *   ORG BOOK THEME — LIGHT / DARK
  *   ========================================================= */
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css">
+<!-- Add syntax highlighting -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<style>
+  /* Your existing styles... */
+  code { color: #e83e8c; }
+  pre { background: var(--form-element-background-color); }
+</style>
 
 /* ---------- Font imports ---------- */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono:wght@400&display=swap');
@@ -37,6 +49,12 @@ code, pre, .org-tag {
   --code-bg: #fbfbfb;
   --code-fg: #00008b;
   --table-alt: #f9f9f9;
+  --syntax-keyword: #4c566a; /* Muted Slate */
+  --syntax-string:  #607252; /* Dim Olive */
+  --syntax-comment: #8c92a4; /* Faded Gray-Blue */
+  --syntax-number:  #8b5b56; /* Muted Brick Red */
+  --syntax-var:     #5e6a7c; /* Slate Blue */
+  --syntax-func:    #405a7e; /* Deeper Indigo */
 }
 
 body.dark {
@@ -48,6 +66,12 @@ body.dark {
   --code-bg: #151820;
   --code-fg: #cdd6f4;
   --table-alt: #161a22;
+  --syntax-keyword: #81a1c1; /* Soft Blue */
+  --syntax-string:  #a3be8c; /* Soft Green */
+  --syntax-comment: #616e88; /* Dim Gray */
+  --syntax-number:  #d08770; /* Soft Orange */
+  --syntax-var:     #88c0d0; /* Soft Teal */
+  --syntax-func:    #8fbcbb; /* Minty Teal */
 }
 
 /* ---------- Base ---------- */
@@ -705,4 +729,45 @@ text-decoration: none;
 /* Prevents SVGs from stealing the click events from the buttons */
 .sidebar-toggle svg, .theme-toggle svg, .toc-toggle svg, .sidebar-close svg, .toc-close svg {
   pointer-events: none;
+}
+
+
+/* Reset highlight.js backgrounds to match your theme */
+.hljs {
+  background: var(--code-bg) !important;
+  color: var(--code-fg) !important;
+  overflow-x: auto;
+}
+
+/* Apply the variables to highlight.js classes */
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-built_in {
+  color: var(--syntax-keyword);
+  font-weight: 500;
+}
+
+.hljs-string,
+.hljs-title,
+.hljs-section {
+  color: var(--syntax-string);
+}
+
+.hljs-comment {
+  color: var(--syntax-comment);
+  font-style: italic;
+}
+
+.hljs-number,
+.hljs-literal {
+  color: var(--syntax-number);
+}
+
+.hljs-variable,
+.hljs-attr {
+  color: var(--syntax-var);
+}
+
+.hljs-function {
+  color: var(--syntax-func);
 }

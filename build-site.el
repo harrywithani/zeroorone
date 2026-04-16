@@ -90,7 +90,28 @@
                           <div id='sidebar-tags' class='tag-cloud'></div>
                           <ul id='sidebar-results'></ul>
                         </aside>"
-         :html-postamble "<p class=\"footer\">Built with Emacs</p>"
+         :html-postamble "<p class=\"footer\">Built with Emacs</p>
+                         <script src=\"https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js\"></script>
+                          <script>
+                          window.addEventListener(\"DOMContentLoaded\", () => {
+                            document.querySelectorAll(\"pre.src\").forEach(pre => {
+                              const classes = Array.from(pre.classList);
+                              const langClass = classes.find(c => c.startsWith(\"src-\"));
+                              if (!langClass) return;
+
+                              const lang = langClass.replace(\"src-\", \"\");
+
+                              const code = document.createElement(\"code\");
+                              code.className = \"language-\" + lang;
+                              code.textContent = pre.textContent;
+
+                              pre.innerHTML = \"\";
+                              pre.appendChild(code);
+                            });
+
+                            hljs.highlightAll();
+                          });
+                          </script>"
          :auto-sitemap t
          :sitemap-filename "index.org"
          :sitemap-title "Knowledge Base"
