@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-04-16 Thu 18:03 -->
+<!-- 2026-04-16 Thu 18:06 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>http-intro</title>
@@ -249,32 +249,32 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgfb495a9">What is HTTP?</a></li>
-<li><a href="#orga11b7b5">Anatomy of an HTTP Request</a></li>
-<li><a href="#org27a2394">HTTPS?</a></li>
-<li><a href="#org6fca730">HTTP Methods</a>
+<li><a href="#org2740a36">What is HTTP?</a></li>
+<li><a href="#orgaa2bb10">Anatomy of an HTTP Request</a></li>
+<li><a href="#orge5b135c">HTTPS?</a></li>
+<li><a href="#org8c9ff86">HTTP Methods</a>
 <ul>
-<li><a href="#org04582bb">GET</a></li>
-<li><a href="#orgc744fa0">POST</a></li>
-<li><a href="#org2c274a5">PUT</a></li>
-<li><a href="#orgf36a112">DELETE</a></li>
+<li><a href="#org5fe3cc9">GET</a></li>
+<li><a href="#org93ca1bf">POST</a></li>
+<li><a href="#org95f1074">PUT</a></li>
+<li><a href="#orgf95d0b8">DELETE</a></li>
 </ul>
 </li>
-<li><a href="#org99a22b0">HTTP Header Fields</a></li>
+<li><a href="#org885affa">HTTP Header Fields</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgfb495a9" class="outline-2">
-<h2 id="orgfb495a9">What is HTTP?</h2>
-<div class="outline-text-2" id="text-orgfb495a9">
+<div id="outline-container-org2740a36" class="outline-2">
+<h2 id="org2740a36">What is HTTP?</h2>
+<div class="outline-text-2" id="text-org2740a36">
 <p>
 Hyper Text Transfer Protocol (HTTP) is like a conversation between a client and a server, where every interaction is a request and a respone. HTTP is stateless that means it doesn't remember anything about previous transactions (a request and a response). When a client sends a request <code>GET /profile</code>  the server responds with the header and if the client requests <code>GET /order</code> the server doesn't know they are the same clients. So how does a server know it's the same person who islogged in? This is usually handled through tokens and cookies. 
 </p>
 </div>
 </div>
-<div id="outline-container-orga11b7b5" class="outline-2">
-<h2 id="orga11b7b5">Anatomy of an HTTP Request</h2>
-<div class="outline-text-2" id="text-orga11b7b5">
+<div id="outline-container-orgaa2bb10" class="outline-2">
+<h2 id="orgaa2bb10">Anatomy of an HTTP Request</h2>
+<div class="outline-text-2" id="text-orgaa2bb10">
 <div class="org-src-container">
 <pre class="src src-text">GET /users/123 HTTP/1.1
 Host: example.com
@@ -284,9 +284,9 @@ Authorization: Bearer abc123
 </div>
 </div>
 </div>
-<div id="outline-container-org27a2394" class="outline-2">
-<h2 id="org27a2394">HTTPS?</h2>
-<div class="outline-text-2" id="text-org27a2394">
+<div id="outline-container-orge5b135c" class="outline-2">
+<h2 id="orge5b135c">HTTPS?</h2>
+<div class="outline-text-2" id="text-orge5b135c">
 <p>
 Hyper Text Transfer Protocol Secure
 Data is encrypted by SSL/TLS
@@ -295,26 +295,26 @@ Transport Security Layer
 </p>
 </div>
 </div>
-<div id="outline-container-org6fca730" class="outline-2">
-<h2 id="org6fca730">HTTP Methods</h2>
-<div class="outline-text-2" id="text-org6fca730">
+<div id="outline-container-org8c9ff86" class="outline-2">
+<h2 id="org8c9ff86">HTTP Methods</h2>
+<div class="outline-text-2" id="text-org8c9ff86">
 </div>
-<div id="outline-container-org04582bb" class="outline-3">
-<h3 id="org04582bb">GET</h3>
+<div id="outline-container-org5fe3cc9" class="outline-3">
+<h3 id="org5fe3cc9">GET</h3>
 </div>
-<div id="outline-container-orgc744fa0" class="outline-3">
-<h3 id="orgc744fa0">POST</h3>
+<div id="outline-container-org93ca1bf" class="outline-3">
+<h3 id="org93ca1bf">POST</h3>
 </div>
-<div id="outline-container-org2c274a5" class="outline-3">
-<h3 id="org2c274a5">PUT</h3>
+<div id="outline-container-org95f1074" class="outline-3">
+<h3 id="org95f1074">PUT</h3>
 </div>
-<div id="outline-container-orgf36a112" class="outline-3">
-<h3 id="orgf36a112">DELETE</h3>
+<div id="outline-container-orgf95d0b8" class="outline-3">
+<h3 id="orgf95d0b8">DELETE</h3>
 </div>
 </div>
-<div id="outline-container-org99a22b0" class="outline-2">
-<h2 id="org99a22b0">HTTP Header Fields</h2>
-<div class="outline-text-2" id="text-org99a22b0">
+<div id="outline-container-org885affa" class="outline-2">
+<h2 id="org885affa">HTTP Header Fields</h2>
+<div class="outline-text-2" id="text-org885affa">
 <ul class="org-ul">
 <li>method</li>
 <li>path</li>
@@ -331,27 +331,6 @@ General, Response, request
 </div>
 <div id="postamble" class="status">
 <p class="footer">Built with Emacs</p>
-                         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-                          <script>
-                          window.addEventListener("DOMContentLoaded", () => {
-                            document.querySelectorAll("pre.src").forEach(pre => {
-                              const classes = Array.from(pre.classList);
-                              const langClass = classes.find(c => c.startsWith("src-"));
-                              if (!langClass) return;
-
-                              const lang = langClass.replace("src-", "");
-
-                              const code = document.createElement("code");
-                              code.className = "language-" + lang;
-                              code.textContent = pre.textContent;
-
-                              pre.innerHTML = "";
-                              pre.appendChild(code);
-                            });
-
-                            hljs.highlightAll();
-                          });
-                          </script>
 </div>
 </body>
 </html>
