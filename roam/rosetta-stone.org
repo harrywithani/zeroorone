@@ -1,0 +1,141 @@
+:PROPERTIES:
+:ID: 4447af37-b7e6-49ba-929b-82ee0e9e093e
+:CREATED: [2026-04-16 Thu 12:44]
+:END:
+#+title: rosetta-stone
+
+** Variables & Typing
+How we declare, store, and modify data in memory, and how the language tracks the "type" of that data.
+
+**** Python Implementation
+Python uses dynamic typing. The interpreter figures out the type at runtime based on the value you assign.
+
+#+begin_src python
+# Declaration and assignment
+name = "Elliot"
+age = 25
+
+# Re-assignment (can even change types)
+age = "Twenty  Five" 
+
+# Constants (No strict enforcement, just convention)
+MAX_CONNECTIONS = 100
+#+end_src
+
+**** Bash Implementation
+Bash treats almost everything as a string unless told otherwise. It is highly dependent on environment variables and exact syntax.
+
+#+begin_src sh
+# Declaration (NO spaces around the equals sign!)
+name="Elliot"
+age=55
+
+# Re-assignment
+age=26
+
+# Constants
+readonly MAX_CONNECTIONS=100
+
+# Usage (Requires the $ prefix to read the value)
+echo "My name is $name"
+#+end_src
+
+**** Go Implementation
+Go is statically typed. The compiler must know the type of every variable before the program runs.
+
+#+begin_src go
+package main
+
+import "fmt"
+
+func main() {
+    // Standard declaration with explicit type
+    var name string = "Elliot"
+    
+    // Short declaration (Type is inferred at compile time)
+    age := 25 
+
+    // Re-assignment (Must use = not :=, and must match original type)
+    age = 26 
+
+    // Constants
+    const maxConnections = 100
+
+    fmt.Println(name, age)
+}
+#+end_src
+
+**** Exceptions & Paradigm Shifts
+- In Bash, =name = "Elliot"= will throw an error because Bash thinks =name= is a command and === is the first argument.
+- In Python and Bash, you can declare a variable and never use it. If you do this in Go, *the program will not compile*. Go enforces clean code at the compiler level.
+- In Go, =:== declares a /new/ variable and assigns it. === only assigns a value to an /already existing/ variable. Using =:== on a variable that already exists will throw an error.
+
+
+** Control Flow (If / Else)
+Evaluating a boolean condition (True/False) to branch the execution path of the program.
+
+**** Python Implementation
+Python relies entirely on colons and strict whitespace indentation to define the block of code.
+
+#+begin_src python
+status_code = 404
+
+if status_code == 200:
+    print("Success")
+elif status_code == 404:
+    print("Not Found")
+else:
+    print("Unknown Error")
+#+end_src
+
+**** Bash Implementation
+Bash uses bracket syntax for testing conditions. It requires explicit keywords (=then=, =elif=, =else=, and =fi=) to open and close blocks.
+
+#+begin_src sh
+status_code=404
+
+# Spaces INSIDE the brackets are strictly required
+if [ "$status_code" -eq 200 ]; then
+    echo "Success"
+elif [ "$status_code" -eq 404 ]; then
+    echo "Not Found"
+else
+    echo "Unknown Error"
+fi
+#+end_src
+
+**** Go Implementation
+Go drops the parentheses around the condition (unlike C/C++) but enforces strict curly brace placement.
+
+#+begin_src go
+package main
+
+import "fmt"
+
+func main() {
+    statusCode := 404
+
+    if statusCode == 200 {
+        fmt.Println("Success")
+    } else if statusCode == 404 {
+        fmt.Println("Not Found")
+    } else {
+        fmt.Println("Unknown Error")
+    }
+}
+#+end_src
+
+**** Exceptions & Paradigm Shifts
+- *Go's Initializer Statement:* This is a massive paradigm shift from Python. Go allows you to declare a variable /inside/ the =if= statement itself. The variable is only available inside that specific =if/else= block. This is how Go handles almost all error checking:
+  #+begin_src go
+  // Calls a function, assigns the result to err, then immediately checks if err is not nil
+  if err := processData(); err != nil {
+      fmt.Println("Failed:", err)
+      // handle error
+  }
+  // 'err' no longer exists down here
+  #+end_src
+
+- *Go's Strict Braces:* In Go, the opening curly brace ={= *must* be on the same line as the =if= or =else= keyword. If you press Enter and put the ={= on the next line, the Go compiler will fail.
+- *Bash String vs. Integer Comparisons:* Python and Go use ==== for both strings and numbers. Bash requires different operators. Use =-eq=, =-lt=, =-gt= for numbers, but use === or =!== for strings. Example: =if [ "$name" = "Elliot" ]; then=.
+
