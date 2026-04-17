@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-04-17 Fri 12:05 -->
+<!-- 2026-04-17 Fri 12:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>go-rust</title>
@@ -249,13 +249,13 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org0dbdfe5">Word Frequency Counter</a></li>
+<li><a href="#org38f9b6f">Word Frequency Counter</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org0dbdfe5" class="outline-2">
-<h2 id="org0dbdfe5">Word Frequency Counter</h2>
-<div class="outline-text-2" id="text-org0dbdfe5">
+<div id="outline-container-org38f9b6f" class="outline-2">
+<h2 id="org38f9b6f">Word Frequency Counter</h2>
+<div class="outline-text-2" id="text-org38f9b6f">
 <p>
 <b>Go</b>
 </p>
@@ -285,13 +285,16 @@
     }
     freq
 }
-#+end_src rust
+</pre>
+</div>
 
-A string ~s~ is defined as the input for the function. Go uses a map ~map[string]int~ for paired values, like dictionary in python. Rust uses HashMap that takes a ~String~ and a 32-bit integer. Go and Rust requires that you define the output type in the function. 
+<p>
+A string <code>s</code> is defined as the input for the function. Go uses a map <code>map[string]int</code> for paired values, like dictionary in python. Rust uses HashMap that takes a <code>String</code> and a 32-bit integer. Go and Rust requires that you define the output type in the function. 
 This is how it's defined in python but it's not necessary (dynamic typing).
+</p>
 
-#+begin_src python 
-def wordFreq(s: str) -&gt; dict[str, int]:
+<div class="org-src-container">
+<pre class="src src-python">def wordFreq(s: str) -&gt; dict[str, int]:
 </pre>
 </div>
 
@@ -314,8 +317,8 @@ This would also work, but it could panic if the word doesn’t exist in the map 
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="org7440b34"></a>Why use &amp;str instead of String?<br />
-<div class="outline-text-5" id="text-org7440b34">
+<li><a id="org4f93387"></a>Why use &amp;str instead of String?<br />
+<div class="outline-text-5" id="text-org4f93387">
 <p>
 <code>&amp;str</code> is a <i>string slice</i> in Rust. It’s a reference to a string, but it does not own the string data. It’s a borrowed view into the string and <code>s</code> is just the name of the parameter that represents this string slice.
 A <code>String</code> is owned, meaning it has its own memory allocation while a <code>&amp;str</code> is a borrowed reference

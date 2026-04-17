@@ -30,7 +30,7 @@ fn word_freq(s: &str) -> HashMap<String, i32> {
     }
     freq
 }
-#+end_src rust
+#+end_src
 
 A string ~s~ is defined as the input for the function. Go uses a map ~map[string]int~ for paired values, like dictionary in python. Rust uses HashMap that takes a ~String~ and a 32-bit integer. Go and Rust requires that you define the output type in the function. 
 This is how it's defined in python but it's not necessary (dynamic typing).
