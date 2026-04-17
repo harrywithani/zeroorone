@@ -6,7 +6,7 @@
 <!-- 2026-04-17 Fri 12:05 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>rosetta-stone</title>
+<title>go-rust</title>
 <meta name="generator" content="Org Mode" />
 <style type="text/css">
   #content { max-width: 60em; margin: auto; }
@@ -201,7 +201,7 @@
                           <nav class='breadcrumb'>
  			    <a href='/zeroorone/index.html'>Home</a>
                             <span class='breadcrumb-sep'>/</span>
-                            <span class='breadcrumb-current'>rosetta-stone</span>
+                            <span class='breadcrumb-current'>go-rust</span>
                           </nav>
                           <div class='controls'>
                             <button class='sidebar-toggle' title='Search'>
@@ -244,230 +244,94 @@
                         </aside>
 </div>
 <div id="content" class="content">
-<h1 class="title">rosetta-stone</h1>
+<h1 class="title">go-rust</h1>
 <div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgf7a87f2">Variables &amp; Typing</a>
-<ul>
-<li>
-<ul>
-<li><a href="#org8051f32">Python Implementation</a></li>
-<li><a href="#orgf2b41d6">Bash Implementation</a></li>
-<li><a href="#orgdd22bb9">Go Implementation</a></li>
-<li><a href="#orgb2f6c2e">Exceptions &amp; Paradigm Shifts</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org8510edd">Control Flow (If / Else)</a>
-<ul>
-<li>
-<ul>
-<li><a href="#orgd0e3d73">Python Implementation</a></li>
-<li><a href="#orgcc3bbf0">Bash Implementation</a></li>
-<li><a href="#org8872849">Go Implementation</a></li>
-<li><a href="#org99ca1fd">Exceptions &amp; Paradigm Shifts</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li><a href="#org0dbdfe5">Word Frequency Counter</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgf7a87f2" class="outline-2">
-<h2 id="orgf7a87f2">Variables &amp; Typing</h2>
-<div class="outline-text-2" id="text-orgf7a87f2">
+<div id="outline-container-org0dbdfe5" class="outline-2">
+<h2 id="org0dbdfe5">Word Frequency Counter</h2>
+<div class="outline-text-2" id="text-org0dbdfe5">
 <p>
-How we declare, store, and modify data in memory, and how the language tracks the "type" of that data.
+<b>Go</b>
 </p>
-</div>
-<div id="outline-container-org8051f32" class="outline-4">
-<h4 id="org8051f32">Python Implementation</h4>
-<div class="outline-text-4" id="text-org8051f32">
-<p>
-Python uses dynamic typing. The interpreter figures out the type at runtime based on the value you assign.
-</p>
-
 <div class="org-src-container">
-<pre class="src src-python"># Declaration and assignment
-name = "Elliot"
-age = 25
+<pre class="src src-go">func wordFreq(s string) map[string]int {
+        freq := make(map[string]int)
+        words := strings.Split(s, " ")
 
-# Re-assignment (can even change types)
-age = "Twenty  Five" 
-
-# Constants (No strict enforcement, just convention)
-MAX_CONNECTIONS = 100
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-orgf2b41d6" class="outline-4">
-<h4 id="orgf2b41d6">Bash Implementation</h4>
-<div class="outline-text-4" id="text-orgf2b41d6">
-<p>
-Bash treats almost everything as a string unless told otherwise. It is highly dependent on environment variables and exact syntax.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh"># Declaration (NO spaces around the equals sign!)
-name="Elliot"
-age=55
-
-# Re-assignment
-age=26
-
-# Constants
-readonly MAX_CONNECTIONS=100
-
-# Usage (Requires the $ prefix to read the value)
-echo "My name is $name"
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-orgdd22bb9" class="outline-4">
-<h4 id="orgdd22bb9">Go Implementation</h4>
-<div class="outline-text-4" id="text-orgdd22bb9">
-<p>
-Go is statically typed. The compiler must know the type of every variable before the program runs.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-go">package main
-
-import "fmt"
-
-func main() {
-    // Standard declaration with explicit type
-    var name string = "Elliot"
-
-    // Short declaration (Type is inferred at compile time)
-    age := 25 
-
-    // Re-assignment (Must use = not :=, and must match original type)
-    age = 26 
-
-    // Constants
-    const maxConnections = 100
-
-    fmt.Println(name, age)
+        for _, word := range words {
+                freq[word]++
+        }
+        return freq
 }
 </pre>
 </div>
-</div>
-</div>
-<div id="outline-container-orgb2f6c2e" class="outline-4">
-<h4 id="orgb2f6c2e">Exceptions &amp; Paradigm Shifts</h4>
-<div class="outline-text-4" id="text-orgb2f6c2e">
-<ul class="org-ul">
-<li>In Bash, <code>name = "Elliot"</code> will throw an error because Bash thinks <code>name</code> is a command and <code>=</code> is the first argument.</li>
-<li>In Python and Bash, you can declare a variable and never use it. If you do this in Go, <b>the program will not compile</b>. Go enforces clean code at the compiler level.</li>
-<li>In Go, <code>:=</code> declares a <i>new</i> variable and assigns it. <code>=</code> only assigns a value to an <i>already existing</i> variable. Using <code>:=</code> on a variable that already exists will throw an error.</li>
-</ul>
-</div>
-</div>
-</div>
-<div id="outline-container-org8510edd" class="outline-2">
-<h2 id="org8510edd">Control Flow (If / Else)</h2>
-<div class="outline-text-2" id="text-org8510edd">
-<p>
-Evaluating a boolean condition (True/False) to branch the execution path of the program.
-</p>
-</div>
-<div id="outline-container-orgd0e3d73" class="outline-4">
-<h4 id="orgd0e3d73">Python Implementation</h4>
-<div class="outline-text-4" id="text-orgd0e3d73">
-<p>
-Python relies entirely on colons and strict whitespace indentation to define the block of code.
-</p>
 
+<p>
+<b>Rust</b>
+</p>
 <div class="org-src-container">
-<pre class="src src-python">status_code = 404
+<pre class="src src-rust">fn word_freq(s: &amp;str) -&gt; HashMap&lt;String, i32&gt; {
+    let mut freq = HashMap::new();
 
-if status_code == 200:
-    print("Success")
-elif status_code == 404:
-    print("Not Found")
-else:
-    print("Unknown Error")
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-orgcc3bbf0" class="outline-4">
-<h4 id="orgcc3bbf0">Bash Implementation</h4>
-<div class="outline-text-4" id="text-orgcc3bbf0">
-<p>
-Bash uses bracket syntax for testing conditions. It requires explicit keywords (<code>then</code>, <code>elif</code>, <code>else</code>, and <code>fi</code>) to open and close blocks.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh">status_code=404
-
-# Spaces INSIDE the brackets are strictly required
-if [ "$status_code" -eq 200 ]; then
-    echo "Success"
-elif [ "$status_code" -eq 404 ]; then
-    echo "Not Found"
-else
-    echo "Unknown Error"
-fi
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-org8872849" class="outline-4">
-<h4 id="org8872849">Go Implementation</h4>
-<div class="outline-text-4" id="text-org8872849">
-<p>
-Go drops the parentheses around the condition (unlike C/C++) but enforces strict curly brace placement.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-go">package main
-
-import "fmt"
-
-func main() {
-    statusCode := 404
-
-    if statusCode == 200 {
-        fmt.Println("Success")
-    } else if statusCode == 404 {
-        fmt.Println("Not Found")
-    } else {
-        fmt.Println("Unknown Error")
+    for word in s.split_whitespace() {
+        let count = freq.entry(word.to_string()).or_insert(0);
+        *count += 1;
     }
+    freq
 }
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-org99ca1fd" class="outline-4">
-<h4 id="org99ca1fd">Exceptions &amp; Paradigm Shifts</h4>
-<div class="outline-text-4" id="text-org99ca1fd">
-<ul class="org-ul">
-<li><p>
-<b>Go's Initializer Statement:</b> This is a massive paradigm shift from Python. Go allows you to declare a variable <i>inside</i> the <code>if</code> statement itself. The variable is only available inside that specific <code>if/else</code> block. This is how Go handles almost all error checking:
-</p>
-<div class="org-src-container">
-<pre class="src src-go">// Calls a function, assigns the result to err, then immediately checks if err is not nil
-if err := processData(); err != nil {
-    fmt.Println("Failed:", err)
-    // handle error
-}
-// 'err' no longer exists down here
-</pre>
-</div></li>
+#+end_src rust
 
-<li><b>Go's Strict Braces:</b> In Go, the opening curly brace <code>{</code> <b>must</b> be on the same line as the <code>if</code> or <code>else</code> keyword. If you press Enter and put the <code>{</code> on the next line, the Go compiler will fail.</li>
-<li><b>Bash String vs. Integer Comparisons:</b> Python and Go use <code>==</code> for both strings and numbers. Bash requires different operators. Use <code>-eq</code>, <code>-lt</code>, <code>-gt</code> for numbers, but use <code>=</code> or <code>!=</code> for strings. Example: <code>if [ "$name" = "Elliot" ]; then</code>.</li>
+A string ~s~ is defined as the input for the function. Go uses a map ~map[string]int~ for paired values, like dictionary in python. Rust uses HashMap that takes a ~String~ and a 32-bit integer. Go and Rust requires that you define the output type in the function. 
+This is how it's defined in python but it's not necessary (dynamic typing).
+
+#+begin_src python 
+def wordFreq(s: str) -&gt; dict[str, int]:
+</pre>
+</div>
+
+
+<p>
+<code>entry(word.to_string())</code>: checks if the word exists in the HashMap and, if it does, returns a mutable reference to the value. If it doesn’t exist, it inserts the default value (0 in this case). The <code>or_insert</code> method is used to either get the current value or insert the default one.
+</p>
+
+<p>
+The <code>entry()</code> API is not strictly necessary in Rust for simple cases. You could also do:
+<code>freq[word.to_string()] += 1;</code>
+</p>
+
+<p>
+This would also work, but it could panic if the word doesn’t exist in the map yet, whereas the <code>entry()</code> approach prevents that and gives more control (especially when inserting default values).
+</p>
+
+<p>
+<code>to_string()</code> converts the <code>&amp;str</code> (borrowed string slice) into an owned <code>String</code>. This is needed because HashMap in Rust uses <code>String</code> as the key type, and <code>&amp;str</code> is not compatible directly as a key in the map.
+</p>
+</div>
+<ul class="org-ul">
+<li><a id="org7440b34"></a>Why use &amp;str instead of String?<br />
+<div class="outline-text-5" id="text-org7440b34">
+<p>
+<code>&amp;str</code> is a <i>string slice</i> in Rust. It’s a reference to a string, but it does not own the string data. It’s a borrowed view into the string and <code>s</code> is just the name of the parameter that represents this string slice.
+A <code>String</code> is owned, meaning it has its own memory allocation while a <code>&amp;str</code> is a borrowed reference
+When you use <code>&amp;str</code>, you're passing around references to the data, not owning it. This can lead to better performance and memory management, as Rust doesn't need to copy or allocate extra memory.
+<code>String</code> is for when you need to own the string data, especially if you're going to mutate or store it elsewhere.
+</p>
+
+<p>
+#+begin<sub>src</sub> rust
+let s = "hello";   <i>/ This is a &amp;str, borrowed
+let owned<sub>s</sub> = String::from("hello"); /</i> This is an owned String
+#+end<sub>src</sub> rust
+</p>
+</div>
+</li>
 </ul>
-</div>
-</div>
 </div>
 </div>
 <div id="postamble" class="status">

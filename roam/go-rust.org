@@ -1,0 +1,62 @@
+:PROPERTIES:
+:ID: 5acf2f26-498f-451e-b67f-d59469684f43
+:CREATED: [2026-04-17 Fri 11:25]
+:END:
+#+title: go-rust
+
+** Word Frequency Counter
+
+*Go*
+#+begin_src go
+func wordFreq(s string) map[string]int {
+	freq := make(map[string]int)
+	words := strings.Split(s, " ")
+
+	for _, word := range words {
+		freq[word]++
+	}
+	return freq
+}
+#+end_src
+
+*Rust*
+#+begin_src rust
+fn word_freq(s: &str) -> HashMap<String, i32> {
+    let mut freq = HashMap::new();
+
+    for word in s.split_whitespace() {
+        let count = freq.entry(word.to_string()).or_insert(0);
+        *count += 1;
+    }
+    freq
+}
+#+end_src rust
+
+A string ~s~ is defined as the input for the function. Go uses a map ~map[string]int~ for paired values, like dictionary in python. Rust uses HashMap that takes a ~String~ and a 32-bit integer. Go and Rust requires that you define the output type in the function. 
+This is how it's defined in python but it's not necessary (dynamic typing).
+  
+#+begin_src python 
+def wordFreq(s: str) -> dict[str, int]:
+#+end_src 
+
+
+~entry(word.to_string())~: checks if the word exists in the HashMap and, if it does, returns a mutable reference to the value. If it doesn’t exist, it inserts the default value (0 in this case). The ~or_insert~ method is used to either get the current value or insert the default one.
+
+The ~entry()~ API is not strictly necessary in Rust for simple cases. You could also do:
+~freq[word.to_string()] += 1;~
+
+This would also work, but it could panic if the word doesn’t exist in the map yet, whereas the ~entry()~ approach prevents that and gives more control (especially when inserting default values).
+
+~to_string()~ converts the ~&str~ (borrowed string slice) into an owned ~String~. This is needed because HashMap in Rust uses ~String~ as the key type, and ~&str~ is not compatible directly as a key in the map.
+
+***** Why use &str instead of String?
+
+~&str~ is a /string slice/ in Rust. It’s a reference to a string, but it does not own the string data. It’s a borrowed view into the string and ~s~ is just the name of the parameter that represents this string slice.
+A ~String~ is owned, meaning it has its own memory allocation while a ~&str~ is a borrowed reference
+When you use ~&str~, you're passing around references to the data, not owning it. This can lead to better performance and memory management, as Rust doesn't need to copy or allocate extra memory.
+~String~ is for when you need to own the string data, especially if you're going to mutate or store it elsewhere.
+
+#+begin_src rust
+let s = "hello";   // This is a &str, borrowed
+let owned_s = String::from("hello"); // This is an owned String
+#+end_src rust
