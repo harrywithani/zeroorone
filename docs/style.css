@@ -42,6 +42,7 @@ code, pre, .org-tag {
   --syntax-number:  #8b5b56; /* Muted Brick Red */
   --syntax-var:     #5e6a7c; /* Slate Blue */
   --syntax-func:    #405a7e; /* Deeper Indigo */
+  --tag-bg: #e2e8f0; /* Soft gray for Light Mode */
 }
 
 body.dark {
@@ -59,6 +60,7 @@ body.dark {
   --syntax-number:  #d08770; /* Soft Orange */
   --syntax-var:     #88c0d0; /* Soft Teal */
   --syntax-func:    #8fbcbb; /* Minty Teal */
+  --tag-bg: #2a2e33; /* Dark slate for Dark Mode */
 }
 
 /* ---------- Base ---------- */
@@ -75,6 +77,35 @@ margin: 4rem auto;
 padding-left: 8em;
 padding-right: 2em;
 }
+
+/* =========================================
+   SITEMAP / INDEX PAGE UPGRADES
+   ========================================= */
+
+/* Target the list specifically on the home/sitemap page */
+#content > ul {
+  list-style: none !important;
+  padding-left: 0;
+  margin-top: 2rem;
+}
+
+#content > ul > li {
+  margin-bottom: 0.5rem;
+  border-radius: 6px;
+  background: var(--bg);
+}
+
+/* Optional: Subtle label for the automated list */
+#content > h1.title + ul::before {
+  content: "LATEST NOTES";
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+}
+
 
 /* ---------- Header ---------- */
 
@@ -173,7 +204,7 @@ h2 {
 
 h2::before {
   counter-increment: chapter;
-  content: "CHAPTER " counter(chapter);
+  content: counter(chapter);
   position: absolute;
   left: -7em;
   width: 6.5em;
@@ -207,11 +238,73 @@ h4::before {
   content: counter(chapter) "." counter(section) "." counter(subsection);
   position: absolute;
   left: -5em;
-  width: 5em;
+  width: 4.5em;
   text-align: right;
   font-weight: 400;
   color: var(--muted);
 }
+
+h5 {
+  font-size: 1.05rem;
+  color: var(--muted);
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+h5::before {
+  content: none;
+}
+
+/* =========================================
+   ADMONITIONS / CALLOUTS
+   ========================================= */
+.tip, .org-tip, 
+.note, .org-note, 
+.warning, .org-warning {
+  padding: 1rem 1rem;
+  margin-top: 1px;
+  margin: 1rem 0;
+  background: var(--bg-alt); /* Ensure your --bg-alt is slightly different from --bg! */
+  border: solid 1px;
+  line-height: 1.6;
+}
+
+/* Remove default margin from paragraphs inside the box */
+.tip p, .org-tip p, 
+.note p, .org-note p, 
+.warning p, .org-warning p {
+  margin: 0; 
+}
+
+/* Assign the specific border colors */
+.tip, .org-tip         { border-color: var(--syntax-string); } /* Olive/Green */
+.note, .org-note       { border-color: var(--syntax-keyword); } /* Slate/Blue */
+.warning, .org-warning { border-color: var(--syntax-number); } /* Brick/Orange */
+
+.tip b:first-child, .tip strong:first-child,
+.org-tip b:first-child, .org-tip strong:first-child,
+.note b:first-child, .note strong:first-child,
+.org-note b:first-child, .org-note strong:first-child,
+.warning b:first-child, .warning strong:first-child,
+.org-warning b:first-child, .org-warning strong:first-child {
+  display: block;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 0;
+  margin-top: -17px;
+  margin-left: -17px;
+  margin-right: -17px;
+  padding-left: 5px;
+  color: var(--fg);
+  background: var(--tag-bg);
+}
+
+
 
 
 /* ---------- TOC ---------- */
@@ -435,7 +528,15 @@ dd {
   margin: 0; /* Remove default browser margin */
 }
 
-
+/* =========================================
+   IMAGE BOUNDARIES
+   ========================================= */
+#content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem 0; /* Gives images some breathing room */
+}
 
 /* ---------- Mobile Responsive Overrides ---------- */
 @media screen and (max-width: 768px) {
@@ -473,17 +574,15 @@ dd {
 
   /* 1. Reset H2 (Chapter) positioning */
   h2 {
-    margin-top: 2.5rem;
     position: static; /* Remove the "anchor" behavior */
   }
 
   h2::before {
     position: static;   /* Put the number back in the text flow */
-    display: block;    /* Put "CHAPTER X" on its own line above the title */
+    display: inline-block; /* Keep "1.1" on the same line as the title */
     text-align: left;  /* Align it to the left like normal text */
     width: auto;
-    margin-bottom: 0.2em;
-    font-size: 0.8rem; /* Make the label slightly smaller */
+    margin-right: 0.5em;
   }
 
   /* 2. Reset H3 and H4 (Section numbers) */
@@ -672,7 +771,7 @@ box-sizing: border-box;
 
 .org-tag {
   display: inline-block;
-  background: #2a2e33;
+  background: var(--tag-bg);
   color: var(--muted);
   font-family: "JetBrains Mono", monospace;
   font-size: 0.75rem;
@@ -719,42 +818,24 @@ text-decoration: none;
 }
 
 
-/* Reset highlight.js backgrounds to match your theme */
-.hljs {
+/* =========================================
+   EMACS NATIVE SYNTAX HIGHLIGHTING
+   ========================================= */
+pre.src {
   background: var(--code-bg);
   color: var(--code-fg);
+  padding: 1rem;
   overflow-x: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
 }
 
-/* Apply the variables to highlight.js classes */
-.hljs-keyword,
-.hljs-selector-tag,
-.hljs-built_in {
-  color: var(--syntax-keyword);
-  font-weight: 500;
-}
-
-.hljs-string,
-.hljs-title,
-.hljs-section {
-  color: var(--syntax-string);
-}
-
-.hljs-comment {
-  color: var(--syntax-comment);
-  font-style: italic;
-}
-
-.hljs-number,
-.hljs-literal {
-  color: var(--syntax-number);
-}
-
-.hljs-variable,
-.hljs-attr {
-  color: var(--syntax-var);
-}
-
-.hljs-function {
-  color: var(--syntax-func);
-}
+/* Emacs htmlize classes mapped to your muted aesthetic */
+.org-keyword { color: var(--syntax-keyword); font-weight: 600; }
+.org-string  { color: var(--syntax-string); }
+.org-comment { color: var(--syntax-comment); font-style: italic; }
+.org-type    { color: var(--syntax-var); }
+.org-variable-name { color: var(--syntax-number); }
+.org-function-name { color: var(--syntax-func); font-weight: 600;}
+.org-constant { color: var(--syntax-number); }
+.org-builtin { color: var(--syntax-func); }

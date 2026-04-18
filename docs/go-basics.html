@@ -6,7 +6,7 @@
 <!-- 2026-04-18 Sat 13:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Into-Git</title>
+<title>go-basics</title>
 <meta name="generator" content="Org Mode" />
 <style type="text/css">
   #content { max-width: 60em; margin: auto; }
@@ -202,7 +202,7 @@
     <nav class='breadcrumb'>
       <a href='/zeroorone/index.html'>Home</a>
       <span class='breadcrumb-sep'>/</span>
-      <span class='breadcrumb-current'>Into-Git</span>
+      <span class='breadcrumb-current'>go-basics</span>
     </nav>
     <div class='controls'>
       <button class='sidebar-toggle' title='Search'>
@@ -245,268 +245,119 @@
   </aside>
 </div>
 <div id="content" class="content">
-<h1 class="title">Into-Git</h1>
+<h1 class="title">go-basics</h1>
 <div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgdbdec8c"><b>Commit Quality: Commits should contain changes related to a <b>*single topic</b></b> to maintain clarity and ease of understanding for both current and future collaborators.</a></li>
+<li><a href="#org1bf1cf8">Slice ([]string)</a></li>
+<li><a href="#org3c0be9f">Map (actual dictionary)</a></li>
+<li><a href="#orgc1284e3">Flag</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgdbdec8c" class="outline-2">
-<h2 id="orgdbdec8c"><b>Commit Quality: Commits should contain changes related to a <b>*single topic</b></b> to maintain clarity and ease of understanding for both current and future collaborators.</h2>
-<div class="outline-text-2" id="text-orgdbdec8c">
-<ul class="org-ul">
-<li><b><b>Selective Staging:</b></b> The Git staging area enables adding <b><b>specific files or even parts of files</b></b> (`git add -p`) to ensure commits stay focused.</li>
-<li><b><b>Commit Message Best Practices:</b></b>
-<ul class="org-ul">
-<li>Keep the <b><b>subject line concise</b></b>, ideally under 80 characters.</li>
-<li>Use the commit message body to answer:
-<ul class="org-ul">
-<li><b>What changed?</b></li>
-<li><b>Why was the change made?</b></li>
-<li><b>Are there any notable implications or points to watch out for?</b></li>
-</ul></li>
-<li>A clear message aids code review and future maintenance.:</li>
-</ul></li>
-</ul>
-
 <p>
-#### Branching Strategies
-</p>
-<ul class="org-ul">
-<li>Git provides tools but <b><b>does not enforce branching conventions</b></b>; teams must define and document their own strategies.</li>
-<li>Branch conventions help avoid conflicts, improve project organization, and assist onboarding.</li>
-<li>Two extreme workflow models:
-<ul class="org-ul">
-<li><b><b>Always Be Integrating (ABI):</b></b> A single branch where all commits are integrated frequently. Requires small commits and strong testing/QA to maintain quality.</li>
-<li><b><b>Multiple Branch Types:</b></b> Separate branches for features, releases, experiments, and different deployment states (e.g., develop, staging, production). More complex but flexible.</li>
-</ul></li>
-<li><b><b>Long-running branches:</b></b> Exist throughout the project lifecycle (e.g., `main`, `develop`, `staging`). Direct commits are usually avoided; changes come through merges or rebases.</li>
-<li><b><b>Short-lived branches:</b></b> Created for specific tasks like features, bug fixes, or experiments; deleted after integration.</li>
-</ul>
-
-<p>
-#### Popular Branching Workflows
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-left" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">Workflow</th>
-<th scope="col" class="org-left">Description</th>
-<th scope="col" class="org-left">Branch Types</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left">GitHub Flow</td>
-<td class="org-left">Simple, single long-running branch (`main`), all work done in short-lived branches for features or fixes.</td>
-<td class="org-left">1 long-running (`main`), many short-lived</td>
-</tr>
-
-<tr>
-<td class="org-left">Git Flow</td>
-<td class="org-left">Structured with `main`, `develop`, release, and feature branches. Supports release management and QA.</td>
-<td class="org-left">Multiple long-running and short-lived branches</td>
-</tr>
-</tbody>
-</table>
-
-<ul class="org-ul">
-<li>Tools like Tower GUI can simplify following branching workflows by automating common tasks.</li>
-</ul>
-
-<p>
-#### Pull Requests (PRs)
-</p>
-<ul class="org-ul">
-<li>PRs are <b><b>not a core Git feature</b></b> but provided by hosting platforms (GitHub, GitLab, Bitbucket).</li>
-<li>Purpose:
-<ul class="org-ul">
-<li>Facilitate <b><b>code review and collaboration</b></b> by inviting feedback before merging.</li>
-<li>Enable contributions to repositories where you have no direct write access (via forks).</li>
-</ul></li>
-<li>Workflow example:
-<ul class="org-ul">
-<li>Fork a repository.</li>
-<li>Create a feature branch.</li>
-<li>Make and commit changes.</li>
-<li>Push branch to your fork.</li>
-<li>Open a PR to propose merging changes back to the original repository.</li>
-</ul></li>
-<li>PR interfaces vary by platform but share the same principles.</li>
-</ul>
-
-<p>
-#### Merge Conflicts
-</p>
-<ul class="org-ul">
-<li>Occur during integration actions like merge, rebase, cherry-pick, pull, or stash application.</li>
-<li>Typical cause: <b><b>Contradictory changes</b></b>, e.g., same line altered differently or file modified in one branch and deleted in another.</li>
-<li>Git detects conflicts and <b><b>halts the operation</b></b>, requiring manual resolution.</li>
-<li>Conflict markers in files:
-<ul class="org-ul">
-<li>`&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD` - current branch changes</li>
-<li>`=======` - separator</li>
-<li>`&gt;&gt;&gt;&gt;&gt;&gt;&gt; other-branch` - incoming branch changes</li>
-</ul></li>
-<li>Resolution:
-<ul class="org-ul">
-<li>Manually edit files to choose or combine changes.</li>
-<li>Use GUI tools (e.g., Tower) or dedicated merge tools for visualization and easier conflict resolution.</li>
-</ul></li>
-<li>You can <b><b>abort merge or rebase conflicts</b></b> anytime using commands like `git merge &#x2013;abort` or `git rebase &#x2013;abort`.</li>
-<li>After resolving conflicts, commit the changes to complete the integration.</li>
-</ul>
-
-<p>
-#### Integrating Branches: Merge vs. Rebase
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-left" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">Feature</th>
-<th scope="col" class="org-left">Merge</th>
-<th scope="col" class="org-left">Rebase</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left">Resulting History</td>
-<td class="org-left">Creates a <b><b>merge commit</b></b> connecting branches, retaining branch structure</td>
-<td class="org-left">Rewrites commit history to create a <b><b>linear history</b></b> without merge commits</td>
-</tr>
-
-<tr>
-<td class="org-left">Use Case</td>
-<td class="org-left">Common for shared branches, preserves context of branch topology</td>
-<td class="org-left">Ideal for cleaning local commit history before integration</td>
-</tr>
-
-<tr>
-<td class="org-left">Risks</td>
-<td class="org-left">Can clutter history with merge commits</td>
-<td class="org-left">Rewriting history can cause issues if commits are already pushed/shared</td>
-</tr>
-
-<tr>
-<td class="org-left">Command</td>
-<td class="org-left">`git merge &lt;branch&gt;`</td>
-<td class="org-left">`git rebase &lt;branch&gt;`</td>
-</tr>
-</tbody>
-</table>
-
-<ul class="org-ul">
-<li><b><b>Important rule:</b></b> Avoid rebasing commits that have been pushed to shared repositories to prevent conflicts for collaborators.</li>
-</ul>
-
-<p>
-&#x2014;
+What is this?
+os.Args is a []string (slice of strings)
+It contains everything typed in the command
 </p>
 
 <p>
-### Timeline Table of Topics Covered
+Index	Value
+os.Args[0]	program name
+os.Args[1]	first argument
+os.Args[2]	second argument
 </p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-left" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">Timestamp Range</th>
-<th scope="col" class="org-left">Topic</th>
-<th scope="col" class="org-left">Key Points</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left">00:00:00 – 00:03:00</td>
-<td class="org-left">Introduction &amp; Commit Basics</td>
-<td class="org-left">Importance of focused commits, selective staging (`git add -p`)</td>
-</tr>
-
-<tr>
-<td class="org-left">00:06:00 – 00:08:10</td>
-<td class="org-left">Commit message best practices</td>
-<td class="org-left">Concise subject, detailed body explaining what, why, and special notes</td>
-</tr>
-
-<tr>
-<td class="org-left">00:08:15 – 00:12:17</td>
-<td class="org-left">Branching strategies overview</td>
-<td class="org-left">Team conventions, long-running vs. short-lived branches</td>
-</tr>
-
-<tr>
-<td class="org-left">00:12:20 – 00:16:37</td>
-<td class="org-left">Popular branching workflows</td>
-<td class="org-left">GitHub Flow (simple), Git Flow (structured with develop and release branches)</td>
-</tr>
-
-<tr>
-<td class="org-left">00:17:22 – 00:24:43</td>
-<td class="org-left">Pull requests &amp; forks</td>
-<td class="org-left">Purpose, workflow, example using GitHub and Ruby on Rails repository</td>
-</tr>
-
-<tr>
-<td class="org-left">00:24:44 – 00:33:49</td>
-<td class="org-left">Merge conflicts &amp; resolution</td>
-<td class="org-left">Causes, detection, manual and GUI-based resolution, aborting conflicts</td>
-</tr>
-
-<tr>
-<td class="org-left">00:33:55 – 00:40:38</td>
-<td class="org-left">Merge vs. rebase</td>
-<td class="org-left">How merge works (merge commits), how rebase rewrites history, when to use each</td>
-</tr>
-</tbody>
-</table>
-
+<div id="outline-container-org1bf1cf8" class="outline-2">
+<h2 id="org1bf1cf8">Slice ([]string)</h2>
+<div class="outline-text-2" id="text-org1bf1cf8">
 <p>
-&#x2014;
+A []string (slice of strings) is:
 </p>
 
 <p>
-### Core Concepts Explained
+an ordered list of values
 </p>
 
-<ul class="org-ul">
-<li><b><b>Git staging area:</b></b> Buffer zone to choose exactly which changes to include in the next commit.</li>
-<li><b><b>Long-running branches:</b></b> Persistent branches representing main development or deployment stages.</li>
-<li><b><b>Short-lived branches:</b></b> Temporary branches for isolated work, deleted after integration.</li>
-<li><b><b>Pull requests:</b></b> Mechanism for code review and collaboration on Git hosting platforms.</li>
-<li><b><b>Merge conflict:</b></b> Occurs when two branches have incompatible changes that Git cannot automatically reconcile.</li>
-<li><b><b>Merge commit:</b></b> A commit automatically created by Git to join two divergent branches.</li>
-<li><b><b>Rebase:</b></b> Reapplies commits on top of another branch to create a linear history, rewriting commit hashes.</li>
-</ul>
+<p>
+Indexes are automatic positions, not keys you define
+You don’t choose the index, Go assigns it (0, 1, 2&#x2026;)
+args := []string{"a", "b", "c"}
+args[0] // "a"
+</p>
+</div>
+</div>
+<div id="outline-container-org3c0be9f" class="outline-2">
+<h2 id="org3c0be9f">Map (actual dictionary)</h2>
+<div class="outline-text-2" id="text-org3c0be9f">
+<p>
+m := map[string]string{
+	"name": "john",
+}
+</p>
+
+<p>
+m["name"] // "john"
+</p>
+</div>
+</div>
+<div id="outline-container-orgc1284e3" class="outline-2">
+<h2 id="orgc1284e3">Flag</h2>
+<div class="outline-text-2" id="text-orgc1284e3">
+<p>
+package main
+</p>
+
+<p>
+import (
+	"flag"
+	"fmt"
+)
+</p>
+
+<p>
+func main() {
+	file := flag.String("file", "", "file to read")
+	flag.Parse()
+</p>
+
+<p>
+	fmt.Println(*file)
+}
+</p>
+
+<p>
+Part	Meaning
+"file"	flag name → -file
+""	default value
+"file to read"	help description
+</p>
+
+<p>
+go run main.go -file=abc.txt
+</p>
+
+
+<div class="note" id="org3f59031">
+<p>
+This is a note
+</p>
+
+</div>
+
+<div class="warning" id="org58a5c66">
+<p>
+Be careful here
+</p>
+
+</div>
+
+<div class="tip" id="org8d068be">
+<p>
+This is a tip
+</p>
+
+</div>
 </div>
 </div>
 </div>

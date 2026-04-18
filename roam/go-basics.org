@@ -1,0 +1,70 @@
+:PROPERTIES:
+:ID: f8bdd294-b1ec-48c6-b997-39246c63d481
+:CREATED: [2026-04-17 Fri 23:30]
+:END:
+#+title: go-basics
+
+What is this?
+os.Args is a []string (slice of strings)
+It contains everything typed in the command
+
+Index	Value
+os.Args[0]	program name
+os.Args[1]	first argument
+os.Args[2]	second argument
+
+*** Slice ([]string)
+A []string (slice of strings) is:
+
+an ordered list of values
+
+Indexes are automatic positions, not keys you define
+You don’t choose the index, Go assigns it (0, 1, 2...)
+args := []string{"a", "b", "c"}
+args[0] // "a"
+
+
+*** Map (actual dictionary)
+
+m := map[string]string{
+	"name": "john",
+}
+
+m["name"] // "john"
+
+
+*** Flag
+
+package main
+
+import (
+	"flag"
+	"fmt"
+)
+
+func main() {
+	file := flag.String("file", "", "file to read")
+	flag.Parse()
+
+	fmt.Println(*file)
+}
+
+Part	Meaning
+"file"	flag name → -file
+""	default value
+"file to read"	help description
+
+go run main.go -file=abc.txt
+
+
+#+begin_note
+This is a note
+#+end_note
+
+#+begin_warning
+Be careful here
+#+end_warning
+
+#+begin_tip
+This is a tip
+#+end_tip

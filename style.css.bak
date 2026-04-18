@@ -78,35 +78,6 @@ padding-left: 8em;
 padding-right: 2em;
 }
 
-/* =========================================
-   SITEMAP / INDEX PAGE UPGRADES
-   ========================================= */
-
-/* Target the list specifically on the home/sitemap page */
-#content > ul {
-  list-style: none !important;
-  padding-left: 0;
-  margin-top: 2rem;
-}
-
-#content > ul > li {
-  margin-bottom: 0.5rem;
-  border-radius: 6px;
-  background: var(--bg);
-}
-
-/* Optional: Subtle label for the automated list */
-#content > h1.title + ul::before {
-  content: "LATEST NOTES";
-  display: block;
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--muted);
-  letter-spacing: 0.1em;
-  margin-bottom: 1rem;
-}
-
-
 /* ---------- Header ---------- */
 
 header {

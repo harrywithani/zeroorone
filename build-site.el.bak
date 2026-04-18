@@ -4,15 +4,12 @@
                          ("elpa"  . "https://elpa.gnu.org/packages/")))
 (package-initialize)
 
-;; Auto-install required packages
-(dolist (pkg '(htmlize go-mode rust-mode))
-  (unless (package-installed-p pkg)
-    (package-refresh-contents)
-    (package-install pkg)))
+;; Install htmlize if it's not already present
+(unless (package-installed-p 'htmlize)
+  (package-refresh-contents)
+  (package-install 'htmlize))
 
-(require 'htmlize)
-(require 'go-mode)
-(require 'rust-mode)
+(require 'htmlize) ;; Now we can safely require it
 ;; --- End Setup ---
 
 (require 'org)
@@ -116,44 +113,7 @@
       (insert (json-encode index)))))
 
 ;; ---------------------------------------------------------
-;; METADATA INJECTOR (Fixes missing Tags and Dates)
-;; ---------------------------------------------------------
-(defun my/org-inject-metadata (backend)
-  "Injects date and tags into the exported HTML directly under the title."
-  (when (eq backend 'html)
-    (save-excursion
-      (goto-char (point-min))
-      (let ((tags nil)
-            (date nil))
-        ;; Grab Tags
-        (when (re-search-forward "^#\\+[fF][iI][lL][eE][tT][aA][gG][sS]:\\s-*\\(.*\\)" nil t)
-          (setq tags (split-string (match-string 1) ":" t)))
-        (goto-char (point-min))
-        ;; Grab Date
-        (when (re-search-forward "^#\\+[dD][aA][tT][eE]:\\s-*\\(.*\\)" nil t)
-          (setq date (match-string 1)))
-        
-        ;; If we found either, inject HTML right after the Title
-        (when (or tags date)
-          (goto-char (point-min))
-          (if (re-search-forward "^#\\+[tT][iI][tT][lL][eE]:.*$" nil t)
-              (forward-line 1)
-            (goto-char (point-min)))
-          (insert "\n#+BEGIN_EXPORT html\n<div class=\"post-meta\">\n")
-          (when date
-            (insert (format "<span class=\"post-date\" style=\"color: var(--muted); margin-right: 15px; font-size: 0.85rem;\">%s</span>" date)))
-          (when tags
-            (insert "<span class=\"post-tags\">")
-            (dolist (tag tags)
-              (insert (format "<span class=\"org-tag\">#%s</span> " tag)))
-            (insert "</span>\n"))
-          (insert "</div>\n#+END_EXPORT\n"))))))
-
-(add-hook 'org-export-before-parsing-hook 'my/org-inject-metadata)
-
-
-;; ---------------------------------------------------------
-;; PUBLISH CONFIGURATION (Fixes H5 and Image paths)
+;; PUBLISH CONFIGURATION
 ;; ---------------------------------------------------------
 (setq org-publish-project-alist
       `(("pages"
@@ -162,34 +122,25 @@
          :publishing-directory "docs"
          :recursive t
          :publishing-function org-html-publish-to-html
-         :headline-levels 6              ;; <-- FIX: Allows H5 and H6 to render as headers, not bullets!
          :html-head "<link rel=\"stylesheet\" href=\"/zeroorone/style.css\" type=\"text/css\"/>\n<script src=\"/zeroorone/theme.js\"></script>"
+         
+         ;; Injecting the clean variables here
          :html-preamble ,my/html-preamble
          :html-postamble ,my/html-postamble
-	 :auto-sitemap t
+         
+         :auto-sitemap t
          :sitemap-filename "index.org"
-         :sitemap-title "hello friend."
-         :sitemap-sort-files anti-chronologically  ;; <-- Puts your freshest notes at the top!
-         :sitemap-style list
+         :sitemap-title "Knowledge Base"
+         :sitemap-sort-files alphabetically
          :with-toc t)
 
-	;; 1. Grabs CSS and JS from your root folder
-        ("static-root"
+        ("static"
          :base-directory "./"
-         :base-extension "css\\|js"
+         :base-extension "css\\|js\\|png\\|jpg"
          :publishing-directory "docs"
          :publishing-function org-publish-attachment)
 
-        ;; 2. Grabs Images from your roam/ folder
-        ("static-images"
-         :base-directory "roam/"
-         :base-extension "png\\|jpg\\|jpeg\\|gif"
-         :publishing-directory "docs"
-         :recursive t
-         :publishing-function org-publish-attachment)
-
-        ;; Combine them all into the final website build
-        ("website" :components ("pages" "static-root" "static-images"))))
+        ("website" :components ("pages" "static"))))
 
 (org-publish-all t)
 (my/generate-search-index)

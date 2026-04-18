@@ -1,13 +1,22 @@
 document.addEventListener("DOMContentLoaded", async () => {
   // --- 1. Basic Toggles ---
+  const metaTheme = document.getElementById("theme-color-meta");
+  const updateMeta = (isDark) => {
+    if (metaTheme) metaTheme.setAttribute("content", isDark ? "#1a1b26" : "#f5f5f5"); // Replace with your exact dark/light background hex codes
+  };
+
   const body = document.body;
-  if (localStorage.getItem("theme") === "dark") body.classList.add("dark");
+  if (localStorage.getItem("theme") === "dark") {
+    body.classList.add("dark");
+    updateMeta(true);
+  }
 
   const themeBtn = document.querySelector(".theme-toggle");
   if (themeBtn) {
     themeBtn.onclick = () => {
-      body.classList.toggle("dark");
-      localStorage.setItem("theme", body.classList.contains("dark") ? "dark" : "light");
+      const isDark = body.classList.toggle("dark");
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+      updateMeta(isDark);
     };
   }
 

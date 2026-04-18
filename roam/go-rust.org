@@ -49,14 +49,15 @@ This would also work, but it could panic if the word doesn’t exist in the map 
 
 ~to_string()~ converts the ~&str~ (borrowed string slice) into an owned ~String~. This is needed because HashMap in Rust uses ~String~ as the key type, and ~&str~ is not compatible directly as a key in the map.
 
-***** Why use &str instead of String?
+
+#+begin_note
+*Why use &str instead of String?*
 
 ~&str~ is a /string slice/ in Rust. It’s a reference to a string, but it does not own the string data. It’s a borrowed view into the string and ~s~ is just the name of the parameter that represents this string slice.
 A ~String~ is owned, meaning it has its own memory allocation while a ~&str~ is a borrowed reference
 When you use ~&str~, you're passing around references to the data, not owning it. This can lead to better performance and memory management, as Rust doesn't need to copy or allocate extra memory.
 ~String~ is for when you need to own the string data, especially if you're going to mutate or store it elsewhere.
 
-#+begin_src rust
-let s = "hello";   // This is a &str, borrowed
-let owned_s = String::from("hello"); // This is an owned String
-#+end_src rust
+~let s = "hello";~   This is a &str, borrowed
+~let owned_s = String::from("hello");~  This is an owned String
+#+end_note
