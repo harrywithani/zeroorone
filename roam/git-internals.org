@@ -1,0 +1,119 @@
+:PROPERTIES:
+:ID: 4150f1d1-be4f-43b3-808e-2dded5332a59
+:CREATED: [2026-04-18 Sat 23:51]
+:END:
+#+title: git-internals
+
+** What happens inside .git/ 
+
+Let's explore a ~.git/~ directory
+
+#+begin_src bash
+ls -a .git
+#+end_src
+
+| Directory/File | Purpose                                                  |
+|----------------+----------------------------------------------------------|
+| =objects/=     | Stores all the Git objects (commits, blobs, trees, tags) |
+| =refs/=        | Stores references to commits (like =main=)               |
+| =HEAD=         | Points to the current branch                             |
+| =config=       | Local repo config                                        |
+| =hooks/=       | Scripts that run on certain Git events                   |
+
+** So what are git objects?
+
+When you work with Git, every piece of your project's history is stored as something called a "Git object". To understand this better, imagine Git as a smart photo archive for your code. Every time you take a snapshot of your project using git commit, it stores the content of your files as individual photos (called blobs), records how your folders are organized (using trees), and writes a detailed caption describing when the snapshot was taken, who took it, and what changed (stored as commits). Each of these components gets a unique fingerprint so Git can find and reference them later.
+
+Git runs every piece of content through a SHA-1 hash function, which produces a 40-character string that serves as that object's permanent ID. This hash is like a fingerprint where no two different pieces of content will ever produce the same hash, and the same content will always produce the exact same hash.
+
+Wait, it doesn't stop there. Git doesn't just hash your raw file content. Before creating the hash, Git adds a small header that describes what type of object it is and how big the content is. For example, if you have a file containing "hello friend", Git first creates a string that looks like ~blob 12\0hello friend~ (where =blob= indicates the type, =12= is the number of characters, =\0= is a null separator, and then comes your actual content). Only then does it calculate the SHA-1 hash.
+
+
+***** Git's Content-Addressed Storage System
+Git operates as a content-addressed storage system. This means that instead of storing files by their names or locations, Git stores everything based on its content. The SHA-1 hash of each object serves as both its unique identifier and its storage address within the =.git/objects/= directory.
+
+This means identical content is never stored twice. Git can quickly determine whether it already has a particular piece of content just by calculating its hash. And, if any stored content gets corrupted, its hash won't match anymore, and Git will know something went wrong.
+
+
+***** How Git Avoids Duplication
+Let's walk through a practical example to see how Git's deduplication works. Suppose you create a file called greeting.txt with the content "hello friend" and commit it to your repository. Git calculates the hash of this content and stores it as a blob object.
+
+Later, you decide to create another file called message.txt with exactly the same content: "hello friend." When you add this new file to Git, something interesting happens. Git calculates the hash of the new file's content and discovers it's identical to the hash of the blob it created earlier. Instead of creating a new blob object, Git simply references the existing one.
+
+From Git's perspective, both files point to the same blob object in its object database. The only thing that changes is the tree objects (which we'll explore later) that record the different filenames and their locations in your project structure. This means your Git repository stores the content "hello friend" only once, even though it appears in multiple files across potentially many commits.
+
+#+begin_src bash
+                ┌────────────────────┐
+                │     Commit         │
+                │--------------------│
+                │ Author, Timestamp  │
+                │ Message            │
+                │ Points to → Tree   │────┐
+                └────────────────────┘    │
+                                          ▼
+                                 ┌────────────────────┐
+                                 │       Tree         │
+                                 │--------------------│
+                                 │ "hello.txt" → Blob │◄─┐
+                                 │ "subdir/"   → Tree │  │
+                                 └────────────────────┘  │
+                                                         ▼
+                                        ┌────────────────────┐
+                                        │       Blob         │
+                                        │--------------------│
+                                        │ File content only  │
+                                        │ "hello friend"     │
+                                        └────────────────────┘
+#+end_src
+
+| Type     | What it Represents | Analogy                                   |
+|----------+--------------------+-------------------------------------------|
+| =blob=   | File content       | The actual photo of a file                |
+| =tree=   | Directory snapshot | A folder, listing file names + blobs      |
+| =commit= | A snapshot in time | A pointer to the root tree + metadata     |
+| =tag=    | Named pointer      | A post-it stuck on a commit saying “v1.0” |
+
+So Git isn’t saving diffs. It saves the full structure of the project at each commit (with hashing and compression).
+
+** So what is git index?
+
+Git index is like the shopping cart of your changes. 
+ You can:
+- change your shopping list (working dir)
+- add items to your cart (index via =git add=)
+- remove items (=git restore --staged=)
+- checkout (=git commit=) to get your final receipt (commit object)
+
+
+When you =git add= a file, Git:
+
+1. Hash the content to get the blob hash
+2. Store that blob in =.git/objects/= if it’s new
+3. Add an entry to .git/index:
+   - File path: file.txt
+   - Blob SHA: (e.g., a8b1f8...)
+   - Metadata: permissions, size, timestamp
+     
+
+Everything staged is stored in one binary file =.git/index=
+It's structured like a table/list, with one entry per file, containing path, mode (permissions), SHA-1 hash (of blob)
+timestamps and size, stage (for merge cases)
+
+#+begin_src text
+.git/index
+┌────────────────────────────────────────────┐
+│   File Path   │  Mode  │ Blob SHA │  Stage │
+├───────────────┼────────┼──────────┼────────┤
+│ file.txt      │ 100644 │ a8b1f8…  │    0   │
+└───────────────┴────────┴──────────┴────────┘
+#+end_src
+
+#+begin_quote
+The =Stage= is usually 0 (unless in a merge).
+#+end_quote
+
+
+git ls-files --stage
+git rev-list --all --objects
+git cat-file -t e7fbc32     # Shows type (commit, tree, blob)
+git cat-file -p e7fbc32     # Pretty-print the object

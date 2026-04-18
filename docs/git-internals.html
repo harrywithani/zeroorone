@@ -6,7 +6,7 @@
 <!-- 2026-04-19 Sun 01:17 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Scripting</title>
+<title>git-internals</title>
 <meta name="generator" content="Org Mode" />
 <style type="text/css">
   #content { max-width: 60em; margin: auto; }
@@ -202,7 +202,7 @@
     <nav class='breadcrumb'>
       <a href='/zeroorone/index.html'>Home</a>
       <span class='breadcrumb-sep'>/</span>
-      <span class='breadcrumb-current'>Scripting</span>
+      <span class='breadcrumb-current'>git-internals</span>
     </nav>
     <div class='controls'>
       <button class='sidebar-toggle' title='Search'>
@@ -245,28 +245,262 @@
   </aside>
 </div>
 <div id="content" class="content">
-<h1 class="title">Scripting</h1>
+<h1 class="title">git-internals</h1>
 <div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgb9ca145">Main Goal</a></li>
+<li><a href="#org03b1972">What happens inside .git/</a></li>
+<li><a href="#org3b4990d">So what are git objects?</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#orgaccaade">Git's Content-Addressed Storage System</a></li>
+<li><a href="#orgfcbec19">How Git Avoids Duplication</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org6fe49e3">So what is git index?</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgb9ca145" class="outline-2">
-<h2 id="orgb9ca145">Main Goal</h2>
-<div class="outline-text-2" id="text-orgb9ca145">
+<div id="outline-container-org03b1972" class="outline-2">
+<h2 id="org03b1972">What happens inside .git/</h2>
+<div class="outline-text-2" id="text-org03b1972">
 <p>
-Learn Python + Bash + Go as tools while understanding:
+Let's explore a <code>.git/</code> directory
 </p>
 
+<div class="org-src-container">
+<pre class="src src-bash">ls -a .git
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Directory/File</th>
+<th scope="col" class="org-left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>objects/</code></td>
+<td class="org-left">Stores all the Git objects (commits, blobs, trees, tags)</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>refs/</code></td>
+<td class="org-left">Stores references to commits (like <code>main</code>)</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>HEAD</code></td>
+<td class="org-left">Points to the current branch</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>config</code></td>
+<td class="org-left">Local repo config</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>hooks/</code></td>
+<td class="org-left">Scripts that run on certain Git events</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org3b4990d" class="outline-2">
+<h2 id="org3b4990d">So what are git objects?</h2>
+<div class="outline-text-2" id="text-org3b4990d">
+<p>
+When you work with Git, every piece of your project's history is stored as something called a "Git object". To understand this better, imagine Git as a smart photo archive for your code. Every time you take a snapshot of your project using git commit, it stores the content of your files as individual photos (called blobs), records how your folders are organized (using trees), and writes a detailed caption describing when the snapshot was taken, who took it, and what changed (stored as commits). Each of these components gets a unique fingerprint so Git can find and reference them later.
+</p>
+
+<p>
+Git runs every piece of content through a SHA-1 hash function, which produces a 40-character string that serves as that object's permanent ID. This hash is like a fingerprint where no two different pieces of content will ever produce the same hash, and the same content will always produce the exact same hash.
+</p>
+
+<p>
+Wait, it doesn't stop there. Git doesn't just hash your raw file content. Before creating the hash, Git adds a small header that describes what type of object it is and how big the content is. For example, if you have a file containing "hello friend", Git first creates a string that looks like <code>blob 12\0hello friend</code> (where <code>blob</code> indicates the type, <code>12</code> is the number of characters, <code>\0</code> is a null separator, and then comes your actual content). Only then does it calculate the SHA-1 hash.
+</p>
+</div>
+<div id="outline-container-orgaccaade" class="outline-5">
+<h5 id="orgaccaade">Git's Content-Addressed Storage System</h5>
+<div class="outline-text-5" id="text-orgaccaade">
+<p>
+Git operates as a content-addressed storage system. This means that instead of storing files by their names or locations, Git stores everything based on its content. The SHA-1 hash of each object serves as both its unique identifier and its storage address within the <code>.git/objects/</code> directory.
+</p>
+
+<p>
+This means identical content is never stored twice. Git can quickly determine whether it already has a particular piece of content just by calculating its hash. And, if any stored content gets corrupted, its hash won't match anymore, and Git will know something went wrong.
+</p>
+</div>
+</div>
+<div id="outline-container-orgfcbec19" class="outline-5">
+<h5 id="orgfcbec19">How Git Avoids Duplication</h5>
+<div class="outline-text-5" id="text-orgfcbec19">
+<p>
+Let's walk through a practical example to see how Git's deduplication works. Suppose you create a file called greeting.txt with the content "hello friend" and commit it to your repository. Git calculates the hash of this content and stores it as a blob object.
+</p>
+
+<p>
+Later, you decide to create another file called message.txt with exactly the same content: "hello friend." When you add this new file to Git, something interesting happens. Git calculates the hash of the new file's content and discovers it's identical to the hash of the blob it created earlier. Instead of creating a new blob object, Git simply references the existing one.
+</p>
+
+<p>
+From Git's perspective, both files point to the same blob object in its object database. The only thing that changes is the tree objects (which we'll explore later) that record the different filenames and their locations in your project structure. This means your Git repository stores the content "hello friend" only once, even though it appears in multiple files across potentially many commits.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">&#9484;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9488;
+&#9474;     Commit         &#9474;
+&#9474;--------------------&#9474;
+&#9474; Author, Timestamp  &#9474;
+&#9474; Message            &#9474;
+&#9474; Points to &#8594; Tree   &#9474;&#9472;&#9472;&#9472;&#9472;&#9488;
+&#9492;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9496;    &#9474;
+                          &#9660;
+                 &#9484;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9488;
+                 &#9474;       Tree         &#9474;
+                 &#9474;--------------------&#9474;
+                 &#9474; <span class="org-string">"hello.txt"</span> &#8594; Blob &#9474;&#9668;&#9472;&#9488;
+                 &#9474; <span class="org-string">"subdir/"</span>   &#8594; Tree &#9474;  &#9474;
+                 &#9492;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9496;  &#9474;
+                                         &#9660;
+                        &#9484;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9488;
+                        &#9474;       Blob         &#9474;
+                        &#9474;--------------------&#9474;
+                        &#9474; File content only  &#9474;
+                        &#9474; <span class="org-string">"hello friend"</span>     &#9474;
+                        &#9492;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9496;
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Type</th>
+<th scope="col" class="org-left">What it Represents</th>
+<th scope="col" class="org-left">Analogy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>blob</code></td>
+<td class="org-left">File content</td>
+<td class="org-left">The actual photo of a file</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>tree</code></td>
+<td class="org-left">Directory snapshot</td>
+<td class="org-left">A folder, listing file names + blobs</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>commit</code></td>
+<td class="org-left">A snapshot in time</td>
+<td class="org-left">A pointer to the root tree + metadata</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>tag</code></td>
+<td class="org-left">Named pointer</td>
+<td class="org-left">A post-it stuck on a commit saying “v1.0”</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+So Git isn’t saving diffs. It saves the full structure of the project at each commit (with hashing and compression).
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org6fe49e3" class="outline-2">
+<h2 id="org6fe49e3">So what is git index?</h2>
+<div class="outline-text-2" id="text-org6fe49e3">
+<p>
+Git index is like the shopping cart of your changes. 
+ You can:
+</p>
 <ul class="org-ul">
-<li>where memory lives</li>
-<li>what’s on the stack vs heap</li>
-<li>what’s contiguous vs scattered</li>
-<li>how OS + runtime mediate everything</li>
+<li>change your shopping list (working dir)</li>
+<li>add items to your cart (index via <code>git add</code>)</li>
+<li>remove items (<code>git restore --staged</code>)</li>
+<li>checkout (<code>git commit</code>) to get your final receipt (commit object)</li>
 </ul>
+
+
+<p>
+When you <code>git add</code> a file, Git:
+</p>
+
+<ol class="org-ol">
+<li>Hash the content to get the blob hash</li>
+<li>Store that blob in <code>.git/objects/</code> if it’s new</li>
+<li>Add an entry to .git/index:
+<ul class="org-ul">
+<li>File path: file.txt</li>
+<li>Blob SHA: (e.g., a8b1f8&#x2026;)</li>
+<li>Metadata: permissions, size, timestamp</li>
+</ul></li>
+</ol>
+
+
+<p>
+Everything staged is stored in one binary file <code>.git/index</code>
+It's structured like a table/list, with one entry per file, containing path, mode (permissions), SHA-1 hash (of blob)
+timestamps and size, stage (for merge cases)
+</p>
+
+<div class="org-src-container">
+<pre class="src src-text">.git/index
+&#9484;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9488;
+&#9474;   File Path   &#9474;  Mode  &#9474; Blob SHA &#9474;  Stage &#9474;
+&#9500;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9532;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9532;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9532;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9508;
+&#9474; file.txt      &#9474; 100644 &#9474; a8b1f8&#8230;  &#9474;    0   &#9474;
+&#9492;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9524;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9524;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9524;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9496;
+</pre>
+</div>
+
+<blockquote>
+<p>
+The <code>Stage</code> is usually 0 (unless in a merge).
+</p>
+</blockquote>
+
+
+<p>
+git ls-files &#x2013;stage
+git rev-list &#x2013;all &#x2013;objects
+git cat-file -t e7fbc32     # Shows type (commit, tree, blob)
+git cat-file -p e7fbc32     # Pretty-print the object
+</p>
 </div>
 </div>
 </div>

@@ -1,10 +1,11 @@
 #+TITLE: hello friend.
 
+- [[file:into-git.org][Into-Git]]
+- [[file:git-internals.org][git-internals]]
 - [[file:go-rust.org][go-rust]]
 - [[file:go-basics.org][go-basics]]
 - [[file:rosetta-stone.org][rosetta-stone]]
 - [[file:http-intro.org][http-intro]]
-- [[file:into-git.org][Into-Git]]
 - [[file:scripting.org][Scripting]]
 - [[file:test.org][Testing the Compline Book Theme]]
 - [[file:org-agenda.org][Org Agenda]]
