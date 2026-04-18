@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-04-18 Sat 13:16 -->
+<!-- 2026-04-18 Sat 13:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>rosetta-stone</title>
@@ -250,26 +250,26 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org5d52658">Variables &amp; Typing</a>
+<li><a href="#orgeccd101">Variables &amp; Typing</a>
 <ul>
 <li>
 <ul>
-<li><a href="#org58bde77">Python Implementation</a></li>
-<li><a href="#org54fac0d">Bash Implementation</a></li>
-<li><a href="#orgdf496b0">Go Implementation</a></li>
-<li><a href="#orge8eedd0">Exceptions &amp; Paradigm Shifts</a></li>
+<li><a href="#orgc82825c">Python Implementation</a></li>
+<li><a href="#orgf97cca4">Bash Implementation</a></li>
+<li><a href="#orgb8dcee8">Go Implementation</a></li>
+<li><a href="#orgef1c53a">Exceptions &amp; Paradigm Shifts</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org4ef8822">Control Flow (If / Else)</a>
+<li><a href="#org6112213">Control Flow (If / Else)</a>
 <ul>
 <li>
 <ul>
-<li><a href="#orgfde6eae">Python Implementation</a></li>
-<li><a href="#orgf6621f5">Bash Implementation</a></li>
-<li><a href="#org3578471">Go Implementation</a></li>
-<li><a href="#org14f1475">Exceptions &amp; Paradigm Shifts</a></li>
+<li><a href="#org8c499fb">Python Implementation</a></li>
+<li><a href="#org74cb8ab">Bash Implementation</a></li>
+<li><a href="#org17516bb">Go Implementation</a></li>
+<li><a href="#orga6ae5b4">Exceptions &amp; Paradigm Shifts</a></li>
 </ul>
 </li>
 </ul>
@@ -277,16 +277,16 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org5d52658" class="outline-2">
-<h2 id="org5d52658">Variables &amp; Typing</h2>
-<div class="outline-text-2" id="text-org5d52658">
+<div id="outline-container-orgeccd101" class="outline-2">
+<h2 id="orgeccd101">Variables &amp; Typing</h2>
+<div class="outline-text-2" id="text-orgeccd101">
 <p>
 How we declare, store, and modify data in memory, and how the language tracks the "type" of that data.
 </p>
 </div>
-<div id="outline-container-org58bde77" class="outline-4">
-<h4 id="org58bde77">Python Implementation</h4>
-<div class="outline-text-4" id="text-org58bde77">
+<div id="outline-container-orgc82825c" class="outline-4">
+<h4 id="orgc82825c">Python Implementation</h4>
+<div class="outline-text-4" id="text-orgc82825c">
 <p>
 Python uses dynamic typing. The interpreter figures out the type at runtime based on the value you assign.
 </p>
@@ -305,9 +305,9 @@ Python uses dynamic typing. The interpreter figures out the type at runtime base
 </div>
 </div>
 </div>
-<div id="outline-container-org54fac0d" class="outline-4">
-<h4 id="org54fac0d">Bash Implementation</h4>
-<div class="outline-text-4" id="text-org54fac0d">
+<div id="outline-container-orgf97cca4" class="outline-4">
+<h4 id="orgf97cca4">Bash Implementation</h4>
+<div class="outline-text-4" id="text-orgf97cca4">
 <p>
 Bash treats almost everything as a string unless told otherwise. It is highly dependent on environment variables and exact syntax.
 </p>
@@ -329,9 +329,9 @@ Bash treats almost everything as a string unless told otherwise. It is highly de
 </div>
 </div>
 </div>
-<div id="outline-container-orgdf496b0" class="outline-4">
-<h4 id="orgdf496b0">Go Implementation</h4>
-<div class="outline-text-4" id="text-orgdf496b0">
+<div id="outline-container-orgb8dcee8" class="outline-4">
+<h4 id="orgb8dcee8">Go Implementation</h4>
+<div class="outline-text-4" id="text-orgb8dcee8">
 <p>
 Go is statically typed. The compiler must know the type of every variable before the program runs.
 </p>
@@ -360,9 +360,9 @@ Go is statically typed. The compiler must know the type of every variable before
 </div>
 </div>
 </div>
-<div id="outline-container-orge8eedd0" class="outline-4">
-<h4 id="orge8eedd0">Exceptions &amp; Paradigm Shifts</h4>
-<div class="outline-text-4" id="text-orge8eedd0">
+<div id="outline-container-orgef1c53a" class="outline-4">
+<h4 id="orgef1c53a">Exceptions &amp; Paradigm Shifts</h4>
+<div class="outline-text-4" id="text-orgef1c53a">
 <ul class="org-ul">
 <li>In Bash, <code>name = "Elliot"</code> will throw an error because Bash thinks <code>name</code> is a command and <code>=</code> is the first argument.</li>
 <li>In Python and Bash, you can declare a variable and never use it. If you do this in Go, <b>the program will not compile</b>. Go enforces clean code at the compiler level.</li>
@@ -371,16 +371,16 @@ Go is statically typed. The compiler must know the type of every variable before
 </div>
 </div>
 </div>
-<div id="outline-container-org4ef8822" class="outline-2">
-<h2 id="org4ef8822">Control Flow (If / Else)</h2>
-<div class="outline-text-2" id="text-org4ef8822">
+<div id="outline-container-org6112213" class="outline-2">
+<h2 id="org6112213">Control Flow (If / Else)</h2>
+<div class="outline-text-2" id="text-org6112213">
 <p>
 Evaluating a boolean condition (True/False) to branch the execution path of the program.
 </p>
 </div>
-<div id="outline-container-orgfde6eae" class="outline-4">
-<h4 id="orgfde6eae">Python Implementation</h4>
-<div class="outline-text-4" id="text-orgfde6eae">
+<div id="outline-container-org8c499fb" class="outline-4">
+<h4 id="org8c499fb">Python Implementation</h4>
+<div class="outline-text-4" id="text-org8c499fb">
 <p>
 Python relies entirely on colons and strict whitespace indentation to define the block of code.
 </p>
@@ -398,9 +398,9 @@ Python relies entirely on colons and strict whitespace indentation to define the
 </div>
 </div>
 </div>
-<div id="outline-container-orgf6621f5" class="outline-4">
-<h4 id="orgf6621f5">Bash Implementation</h4>
-<div class="outline-text-4" id="text-orgf6621f5">
+<div id="outline-container-org74cb8ab" class="outline-4">
+<h4 id="org74cb8ab">Bash Implementation</h4>
+<div class="outline-text-4" id="text-org74cb8ab">
 <p>
 Bash uses bracket syntax for testing conditions. It requires explicit keywords (<code>then</code>, <code>elif</code>, <code>else</code>, and <code>fi</code>) to open and close blocks.
 </p>
@@ -420,9 +420,9 @@ Bash uses bracket syntax for testing conditions. It requires explicit keywords (
 </div>
 </div>
 </div>
-<div id="outline-container-org3578471" class="outline-4">
-<h4 id="org3578471">Go Implementation</h4>
-<div class="outline-text-4" id="text-org3578471">
+<div id="outline-container-org17516bb" class="outline-4">
+<h4 id="org17516bb">Go Implementation</h4>
+<div class="outline-text-4" id="text-org17516bb">
 <p>
 Go drops the parentheses around the condition (unlike C/C++) but enforces strict curly brace placement.
 </p>
@@ -447,9 +447,9 @@ Go drops the parentheses around the condition (unlike C/C++) but enforces strict
 </div>
 </div>
 </div>
-<div id="outline-container-org14f1475" class="outline-4">
-<h4 id="org14f1475">Exceptions &amp; Paradigm Shifts</h4>
-<div class="outline-text-4" id="text-org14f1475">
+<div id="outline-container-orga6ae5b4" class="outline-4">
+<h4 id="orga6ae5b4">Exceptions &amp; Paradigm Shifts</h4>
+<div class="outline-text-4" id="text-orga6ae5b4">
 <ul class="org-ul">
 <li><p>
 <b>Go's Initializer Statement:</b> This is a massive paradigm shift from Python. Go allows you to declare a variable <i>inside</i> the <code>if</code> statement itself. The variable is only available inside that specific <code>if/else</code> block. This is how Go handles almost all error checking:

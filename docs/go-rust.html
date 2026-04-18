@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-04-18 Sat 13:16 -->
+<!-- 2026-04-18 Sat 13:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>go-rust</title>
@@ -250,25 +250,13 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgcadcb06">Word Frequency Counter</a>
-<ul>
-<li>
-<ul>
-<li>
-<ul>
-<li><a href="#org0386c2c">Why use &amp;str instead of String?</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
+<li><a href="#orga77f0f0">Word Frequency Counter</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgcadcb06" class="outline-2">
-<h2 id="orgcadcb06">Word Frequency Counter</h2>
-<div class="outline-text-2" id="text-orgcadcb06">
+<div id="outline-container-orga77f0f0" class="outline-2">
+<h2 id="orga77f0f0">Word Frequency Counter</h2>
+<div class="outline-text-2" id="text-orga77f0f0">
 <p>
 <b>Go</b>
 </p>
@@ -328,10 +316,13 @@ This would also work, but it could panic if the word doesn’t exist in the map 
 <p>
 <code>to_string()</code> converts the <code>&amp;str</code> (borrowed string slice) into an owned <code>String</code>. This is needed because HashMap in Rust uses <code>String</code> as the key type, and <code>&amp;str</code> is not compatible directly as a key in the map.
 </p>
-</div>
-<div id="outline-container-org0386c2c" class="outline-5">
-<h5 id="org0386c2c">Why use &amp;str instead of String?</h5>
-<div class="outline-text-5" id="text-org0386c2c">
+
+
+<div class="note" id="org1984a4f">
+<p>
+<b>Why use &amp;str instead of String?</b>
+</p>
+
 <p>
 <code>&amp;str</code> is a <i>string slice</i> in Rust. It’s a reference to a string, but it does not own the string data. It’s a borrowed view into the string and <code>s</code> is just the name of the parameter that represents this string slice.
 A <code>String</code> is owned, meaning it has its own memory allocation while a <code>&amp;str</code> is a borrowed reference
@@ -340,11 +331,10 @@ When you use <code>&amp;str</code>, you're passing around references to the data
 </p>
 
 <p>
-#+begin<sub>src</sub> rust
-let s = "hello";   <i>/ This is a &amp;str, borrowed
-let owned<sub>s</sub> = String::from("hello"); /</i> This is an owned String
-#+end<sub>src</sub> rust
+<code>let s = "hello";</code>   This is a &amp;str, borrowed
+<code>let owned_s = String::from("hello");</code>  This is an owned String
 </p>
+
 </div>
 </div>
 </div>
