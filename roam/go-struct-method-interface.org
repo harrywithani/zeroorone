@@ -1,0 +1,196 @@
+:PROPERTIES:
+:ID: cf22aa3f-1566-4b7e-bc14-eabd9179e139
+:CREATED: [2026-04-20 Mon 17:04]
+:END:
+#+title: Go: Struct, Method, Interface
+
+I am used to the mathematical definition of a function, where \(f: X \to Y\) takes an input from domain \(X\) and maps it to \(Y\), so the object-oriented syntax of Go can look confusing. I need to map Go's syntax to mathematical concepts.
+
+
+* Structs = Defining a Mathematical Space
+A =struct= is like defining an element of a specific mathematical space or set. For example, let's define a vector \(\vec{v} \in \mathbb{R}^2\).
+
+In Go, you build this space by defining its components:
+
+#+begin_src go
+type Vector struct {
+    X float64
+    Y float64
+}
+#+end_src
+
+We haven't done any operations yet, just defined the domain.
+
+* Methods = Intrinsic Operations
+
+Normally, if you wanted to find the Euclidean norm (magnitude) of your vector, you would write a standard function like
+\[
+f(\vec{v}) = ||\vec{v}||
+\]
+
+That's pretty trivial in Go
+
+#+begin_src go
+// Function
+func Norm(v Vector) float64 {
+    return math.Sqrt(v.X*v.X + v.Y*v.Y)
+}
+#+end_src
+
+A *method* is the exact same logic, just with a syntax trick. Instead of passing the vector as a standard input parameter, you bind the function /directly to the space itself/.
+
+Like an operator that belongs exclusively to \(\mathbb{R}^2\) (you could say the transformation is limited to 2D, instead of explicitly giving 2D coordinates as inputs)
+
+#+begin_src go
+// Method
+func (v Vector) Norm() float64 {
+    return math.Sqrt(v.X*v.X + v.Y*v.Y)
+}
+#+end_src
+
+#+begin_note
+*Why does the syntax look like that?*
+
+- =func=: We are declaring an operation.
+- =(v Vector)=: This is called the *receiver*. It is literally just the input parameter \(x\) in \(f(x) = y\), but we put it /before/ the function name to explicitly state: "This operation is an intrinsic property of the Vector space."
+- =Norm()=: The name of the operation.
+- =float64=: The output \(y\).
+
+Because it is bound to the object, you call it by writing =v.Norm()= instead of =Norm(v)=.
+#+end_note
+
+* Interfaces = Algebraic Structures (Axioms)
+
+In abstract algebra, you define structures based purely on their axioms. A "Metric Space" doesn't care if you are dealing with real numbers, matrices, or continuous functions; it just says, "If a set has a distance function \(d(x,y)\) that satisfies certain rules, it is a Metric Space."
+
+An *Interface* in Go is exactly that. It is a set of axioms. It defines a category of objects based purely on the operations (methods) they support, without caring about what the objects actually are.
+
+#+begin_src go
+type Normable interface {
+    Norm() float64
+}
+#+end_src
+
+This interface says: /"Let =Normable= be the set of all objects that have a =Norm()= operation that returns a =float64.=" 
+Because our =Vector= struct has a =Norm()= method, it automatically satisfies the axioms of the =Normable= interface. You don't have to explicitly declare =Vector implements Normable=. In Go, if a struct has the required math operations, it automatically belongs to that category.
+
+* Why though? 
+
+Why do we do this instead of just writing \(f(x)\)? Because it allows you to write functions that operate on /abstractions/ rather than specific types.
+
+If you write a function that takes an interface as an input:
+
+#+begin_src go
+func PrintMagnitude(n Normable) {
+    fmt.Println(n.Norm())
+}
+#+end_src
+
+You can pass your 2D =Vector= into it. But if tomorrow you define a complex number \(z = a + bi\) as a struct, and give it its own =Norm()= method, you can pass that complex number into =PrintMagnitude= too. The function only cares that the axioms are met.
+
+
+would it help to write out a quick, compilable Go script together where
+we implement an interface for something concrete, like a basic matrix
+operation?
+
+
+**** Let's code
+
+Let's model a *Linear Transformation*
+\[
+T: \mathbb{R}^2 \to \mathbb{R}^2
+\]
+
+In this script, we will define a Vector space, and then we will define an interface (our axioms) called =Transformer=. Any object that can map a vector to a new vector satisfies this interface. We will then build two very different mathematical objects---a Scalar and a 2x2 Matrix---and prove that Go treats them as the exact same category of object.
+
+#+begin_src go
+package main
+
+import "fmt"
+
+// 1. THE SPACE (Struct)
+// We define our mathematical domain: a 2D Vector space.
+type Vector struct {
+    X float64
+    Y float64
+}
+
+// 2. THE AXIOMS (Interface)
+// This is the abstract category.
+// Rule: To be a "Transformer", you must have an intrinsic operation called Apply()
+// that takes a Vector as input and outputs a new transformed Vector.
+type Transformer interface {
+    Apply(v Vector) Vector
+}
+
+// 3. OBJECT A (Struct + Method)
+// Let's define uniform scaling. A Scaler just needs a single factor.
+type Scaler struct {
+    Factor float64
+}
+
+// Intrinsic Operation for Scaler
+// It implements Apply(), so the Go compiler silently labels Scaler as a "Transformer"
+func (s Scaler) Apply(v Vector) Vector {
+    return Vector{
+        X: v.X * s.Factor,
+        Y: v.Y * s.Factor,
+    }
+}
+
+// 4. OBJECT B (Struct + Method)
+// Let's define a 2x2 Matrix for more complex transformations (like rotation).
+type Matrix struct {
+    A, B float64 // Top row
+    C, D float64 // Bottom row
+}
+
+// Intrinsic Operation for Matrix
+// Standard matrix-vector multiplication.
+// Because it also implements Apply(), Matrix is also labeled a "Transformer".
+func (m Matrix) Apply(v Vector) Vector {
+    return Vector{
+        X: (m.A * v.X) + (m.B * v.Y),
+        Y: (m.C * v.X) + (m.D * v.Y),
+    }
+}
+
+// 5. THE POWER OF ABSTRACTION
+// Notice the input type here is "Transformer".
+// This function does NOT care if you give it a Scaler, a Matrix, or something else entirely.
+// It only cares that the object obeys the axiom: it has an Apply() method.
+func PrintTransformation(name string, t Transformer, v Vector) {
+    // We call the method bound to whatever object 't' happens to be
+    result := t.Apply(v)
+    fmt.Printf("%s applied to (%.1f, %.1f) -> (%.1f, %.1f)\n", name, v.X, v.Y, result.X, result.Y)
+}
+
+func main() {
+    // A starting vector (2, 3)
+    v := Vector{X: 2.0, Y: 3.0}
+
+    // Instantiate a Scaler that scales by 3
+    myScaler := Scaler{Factor: 3.0}
+
+    // Instantiate a Matrix representing a 90-degree counter-clockwise rotation
+    myMatrix := Matrix{
+        A: 0.0, B: -1.0,
+        C: 1.0, D: 0.0,
+    }
+
+    // Even though myScaler and myMatrix are entirely different structs in memory,
+    // we can pass them into the exact same parameter because they both satisfy the interface.
+    PrintTransformation("Scalar x3", myScaler, v)
+    PrintTransformation("90-deg Rotation", myMatrix, v)
+}
+#+end_src
+
+*Output*
+#+begin_src text
+Scalar x3 applied to (2.0, 3.0) -> (6.0, 9.0)
+90-deg Rotation applied to (2.0, 3.0) -> (-3.0, 2.0)
+#+end_src
+
+Look closely at step 5 in the code. If we didn't have interfaces, we would have been forced to write two completely separate functions: =PrintScalerTransformation(name, s Scaler, v Vector)= and =PrintMatrixTransformation(name, m Matrix, v Vector)=.
+
+By defining the =Transformer= interface, we created a single generalized mathematical rule that allows the =PrintTransformation= function to operate purely on the /behavior/ of the objects, ignoring what the objects actually are under the hood.

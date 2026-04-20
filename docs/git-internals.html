@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-04-19 Sun 01:17 -->
+<!-- 2026-04-20 Mon 17:28 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>git-internals</title>
@@ -250,28 +250,28 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org03b1972">What happens inside .git/</a></li>
-<li><a href="#org3b4990d">So what are git objects?</a>
+<li><a href="#orgaa1b1b6">What happens inside .git/</a></li>
+<li><a href="#org825ed0e">So what are git objects?</a>
 <ul>
 <li>
 <ul>
 <li>
 <ul>
-<li><a href="#orgaccaade">Git's Content-Addressed Storage System</a></li>
-<li><a href="#orgfcbec19">How Git Avoids Duplication</a></li>
+<li><a href="#org69adbfc">Git's Content-Addressed Storage System</a></li>
+<li><a href="#orgeb9fcd3">How Git Avoids Duplication</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org6fe49e3">So what is git index?</a></li>
+<li><a href="#org579be12">So what is git index?</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org03b1972" class="outline-2">
-<h2 id="org03b1972">What happens inside .git/</h2>
-<div class="outline-text-2" id="text-org03b1972">
+<div id="outline-container-orgaa1b1b6" class="outline-2">
+<h2 id="orgaa1b1b6">What happens inside .git/</h2>
+<div class="outline-text-2" id="text-orgaa1b1b6">
 <p>
 Let's explore a <code>.git/</code> directory
 </p>
@@ -324,9 +324,9 @@ Let's explore a <code>.git/</code> directory
 </table>
 </div>
 </div>
-<div id="outline-container-org3b4990d" class="outline-2">
-<h2 id="org3b4990d">So what are git objects?</h2>
-<div class="outline-text-2" id="text-org3b4990d">
+<div id="outline-container-org825ed0e" class="outline-2">
+<h2 id="org825ed0e">So what are git objects?</h2>
+<div class="outline-text-2" id="text-org825ed0e">
 <p>
 When you work with Git, every piece of your project's history is stored as something called a "Git object". To understand this better, imagine Git as a smart photo archive for your code. Every time you take a snapshot of your project using git commit, it stores the content of your files as individual photos (called blobs), records how your folders are organized (using trees), and writes a detailed caption describing when the snapshot was taken, who took it, and what changed (stored as commits). Each of these components gets a unique fingerprint so Git can find and reference them later.
 </p>
@@ -339,9 +339,9 @@ Git runs every piece of content through a SHA-1 hash function, which produces a 
 Wait, it doesn't stop there. Git doesn't just hash your raw file content. Before creating the hash, Git adds a small header that describes what type of object it is and how big the content is. For example, if you have a file containing "hello friend", Git first creates a string that looks like <code>blob 12\0hello friend</code> (where <code>blob</code> indicates the type, <code>12</code> is the number of characters, <code>\0</code> is a null separator, and then comes your actual content). Only then does it calculate the SHA-1 hash.
 </p>
 </div>
-<div id="outline-container-orgaccaade" class="outline-5">
-<h5 id="orgaccaade">Git's Content-Addressed Storage System</h5>
-<div class="outline-text-5" id="text-orgaccaade">
+<div id="outline-container-org69adbfc" class="outline-5">
+<h5 id="org69adbfc">Git's Content-Addressed Storage System</h5>
+<div class="outline-text-5" id="text-org69adbfc">
 <p>
 Git operates as a content-addressed storage system. This means that instead of storing files by their names or locations, Git stores everything based on its content. The SHA-1 hash of each object serves as both its unique identifier and its storage address within the <code>.git/objects/</code> directory.
 </p>
@@ -351,9 +351,9 @@ This means identical content is never stored twice. Git can quickly determine wh
 </p>
 </div>
 </div>
-<div id="outline-container-orgfcbec19" class="outline-5">
-<h5 id="orgfcbec19">How Git Avoids Duplication</h5>
-<div class="outline-text-5" id="text-orgfcbec19">
+<div id="outline-container-orgeb9fcd3" class="outline-5">
+<h5 id="orgeb9fcd3">How Git Avoids Duplication</h5>
+<div class="outline-text-5" id="text-orgeb9fcd3">
 <p>
 Let's walk through a practical example to see how Git's deduplication works. Suppose you create a file called greeting.txt with the content "hello friend" and commit it to your repository. Git calculates the hash of this content and stores it as a blob object.
 </p>
@@ -441,9 +441,9 @@ So Git isn’t saving diffs. It saves the full structure of the project at each 
 </div>
 </div>
 </div>
-<div id="outline-container-org6fe49e3" class="outline-2">
-<h2 id="org6fe49e3">So what is git index?</h2>
-<div class="outline-text-2" id="text-org6fe49e3">
+<div id="outline-container-org579be12" class="outline-2">
+<h2 id="org579be12">So what is git index?</h2>
+<div class="outline-text-2" id="text-org579be12">
 <p>
 Git index is like the shopping cart of your changes. 
  You can:

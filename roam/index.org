@@ -1,5 +1,7 @@
 #+TITLE: hello friend.
 
+- [[file:go-struct-method-interface.org][Go: Struct, Method, Interface]]
+- [[file:new.org][Configuration Guide]]
 - [[file:into-git.org][Into-Git]]
 - [[file:git-internals.org][git-internals]]
 - [[file:go-rust.org][go-rust]]
@@ -9,4 +11,3 @@
 - [[file:scripting.org][Scripting]]
 - [[file:test.org][Testing the Compline Book Theme]]
 - [[file:org-agenda.org][Org Agenda]]
-- [[file:new.org][Configuration Guide]]

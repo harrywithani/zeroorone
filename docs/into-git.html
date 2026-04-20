@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-04-19 Sun 01:17 -->
+<!-- 2026-04-20 Mon 17:28 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Into-Git</title>
@@ -250,23 +250,23 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org346a20b">Git</a></li>
-<li><a href="#orgae6b5f1">Status</a></li>
-<li><a href="#org5172b3f">Staging</a></li>
-<li><a href="#org164340d">Commit</a>
+<li><a href="#org809de1a">Git</a></li>
+<li><a href="#org386c777">Status</a></li>
+<li><a href="#orgdafe2d4">Staging</a></li>
+<li><a href="#org772cb76">Commit</a>
 <ul>
-<li><a href="#org881523a">What happens when you commit?</a></li>
+<li><a href="#org06cb5c8">What happens when you commit?</a></li>
 </ul>
 </li>
-<li><a href="#org903b276">Git Log</a></li>
-<li><a href="#orgf756603">Notes</a></li>
-<li><a href="#orgab114b8">Commit Quality</a></li>
+<li><a href="#orgc49c5a8">Git Log</a></li>
+<li><a href="#org383da53">Notes</a></li>
+<li><a href="#org3e420dc">Commit Quality</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org346a20b" class="outline-2">
-<h2 id="org346a20b">Git</h2>
-<div class="outline-text-2" id="text-org346a20b">
+<div id="outline-container-org809de1a" class="outline-2">
+<h2 id="org809de1a">Git</h2>
+<div class="outline-text-2" id="text-org809de1a">
 <p>
 Local Git Directory Layout
 </p>
@@ -282,9 +282,9 @@ If .git/ is deleted, the folder is no longer a Git repo.
 </p>
 </div>
 </div>
-<div id="outline-container-orgae6b5f1" class="outline-2">
-<h2 id="orgae6b5f1">Status</h2>
-<div class="outline-text-2" id="text-orgae6b5f1">
+<div id="outline-container-org386c777" class="outline-2">
+<h2 id="org386c777">Status</h2>
+<div class="outline-text-2" id="text-org386c777">
 <p>
 A file can be in one of several states in a Git repository. Here are a few important ones:
 </p>
@@ -300,9 +300,9 @@ The git status command shows you the current state of your repo. It will tell yo
 </p>
 </div>
 </div>
-<div id="outline-container-org5172b3f" class="outline-2">
-<h2 id="org5172b3f">Staging</h2>
-<div class="outline-text-2" id="text-org5172b3f">
+<div id="outline-container-orgdafe2d4" class="outline-2">
+<h2 id="orgdafe2d4">Staging</h2>
+<div class="outline-text-2" id="text-orgdafe2d4">
 <p>
 The contents.md file has been created, but as we saw, it's untracked. We need to stage it (add it to the "index") with the git add command before committing it later.
 </p>
@@ -320,9 +320,9 @@ Here's the command:
 </p>
 </div>
 </div>
-<div id="outline-container-org164340d" class="outline-2">
-<h2 id="org164340d">Commit</h2>
-<div class="outline-text-2" id="text-org164340d">
+<div id="outline-container-org772cb76" class="outline-2">
+<h2 id="org772cb76">Commit</h2>
+<div class="outline-text-2" id="text-org772cb76">
 <p>
 After staging a file, we can commit it.
 </p>
@@ -339,9 +339,9 @@ Here's how to commit all of your staged files:
 <code>git commit -m "your message here"</code>
 </p>
 </div>
-<div id="outline-container-org881523a" class="outline-3">
-<h3 id="org881523a">What happens when you commit?</h3>
-<div class="outline-text-3" id="text-org881523a">
+<div id="outline-container-org06cb5c8" class="outline-3">
+<h3 id="org06cb5c8">What happens when you commit?</h3>
+<div class="outline-text-3" id="text-org06cb5c8">
 <p>
 Git takes a snapshot of the file,
 Stores it as a blob object,
@@ -351,9 +351,9 @@ Creates a commit object pointing to the tree + metadata (author, timestamp, mess
 </div>
 </div>
 </div>
-<div id="outline-container-org903b276" class="outline-2">
-<h2 id="org903b276">Git Log</h2>
-<div class="outline-text-2" id="text-org903b276">
+<div id="outline-container-orgc49c5a8" class="outline-2">
+<h2 id="orgc49c5a8">Git Log</h2>
+<div class="outline-text-2" id="text-orgc49c5a8">
 <p>
 A Git repo is a (potentially very long) list of commits, where each commit represents the full state of the repository at a given point in time.
 </p>
@@ -415,18 +415,18 @@ Git uses a cryptographic hash function called SHA-1 to generate commit hashes. W
 </p>
 </div>
 </div>
-<div id="outline-container-orgf756603" class="outline-2">
-<h2 id="orgf756603">Notes</h2>
-<div class="outline-text-2" id="text-orgf756603">
+<div id="outline-container-org383da53" class="outline-2">
+<h2 id="org383da53">Notes</h2>
+<div class="outline-text-2" id="text-org383da53">
 <p>
 You cab see Tree as a directory and blob as a file
 git cat-file -p &lt;hash&gt;
 </p>
 </div>
 </div>
-<div id="outline-container-orgab114b8" class="outline-2">
-<h2 id="orgab114b8">Commit Quality</h2>
-<div class="outline-text-2" id="text-orgab114b8">
+<div id="outline-container-org3e420dc" class="outline-2">
+<h2 id="org3e420dc">Commit Quality</h2>
+<div class="outline-text-2" id="text-org3e420dc">
 <p>
 Commits should contain changes related to a <b><b>single topic</b></b> to maintain clarity and ease of understanding for both current and future collaborators.
 </p>

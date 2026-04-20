@@ -4,7 +4,6 @@
 :END:
 
 #+title: Configuration Guide
-#+options: toc:t
 
 * Core Settings
 ** UI
@@ -15,3 +14,5 @@ Configuration details...
 
 * Org Setup
 ** This is a setup
+
+
