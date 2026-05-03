@@ -1,0 +1,80 @@
+:PROPERTIES:
+:ID: 675da0e9-3f48-4a5d-b911-8bfc80dfd844
+:CREATED: [2026-04-20 Mon 18:05]
+:END:
+#+title: Go: Pointers and State Mutation
+
+In math, functions are generally immutable. When you evaluate \(f(x)\), you don't destroy or alter \(x\). You just observe it to produce \(y\). Our Go value receivers =(v Vector)= work exactly like this. When you pass a struct into a standard method, Go quietly creates a completely independent photocopy of it in memory, does the math on the copy, and throws the copy away when it's done.
+
+But imagine you are running gradient descent to update a model's weights. If your network has a million parameters, treating it like a pure mathematical function means your program would have to photocopy the entire million-parameter matrix into RAM, calculate the step \(w_{t+1} = w_t - \alpha \nabla L\), and spit out a brand new matrix every single epoch. You would run out of memory instantly.
+
+You don't want a copy. You want to reach into memory and physically alter the original weights in place.
+
+To do that, you need a *Pointer Receiver*.
+
+* The Syntax of "Where" vs. "What"
+In Go, we have two operators to handle memory addresses:
+
+- =&= (Ampersand): Think of this as asking for the *coordinates*. =&w= means "give me the exact memory address where =w= lives."
+- =*= (Asterisk): Think of this as the *dereferencer*. =*w= means "go to this memory address and operate on the actual object sitting there."
+
+When we attach a method to a struct, we can choose whether the receiver gets a photocopy, or the memory address.
+
+Let's create a =Model= struct with a weight value, and try to apply a learning rate step to it using both methods.
+
+#+begin_src go
+package main
+
+import "fmt"
+
+// 1. THE SPACE
+type Model struct {
+    Weight float64
+}
+
+// 2. THE PHOTOCOPY (Value Receiver)
+// Notice the receiver: (m Model)
+// Go creates a temporary clone of 'm' for this method.
+func (m Model) UpdateFake(gradient float64, learningRate float64) {
+    m.Weight = m.Weight - (learningRate * gradient)
+    fmt.Printf("Inside UpdateFake: Weight is now %.2f\n", m.Weight)
+    // As soon as this function ends, the clone 'm' is destroyed.
+}
+
+// 3. THE SURGERY (Pointer Receiver)
+// Notice the receiver: (m *Model)
+// The asterisk means "I am receiving the memory address of the original Model."
+func (m *Model) UpdateReal(gradient float64, learningRate float64) {
+    m.Weight = m.Weight - (learningRate * gradient)
+    fmt.Printf("Inside UpdateReal: Weight is now %.2f\n", m.Weight)
+    // We just permanently mutated the original object.
+}
+
+func main() {
+    // Initialize our starting state
+    myModel := Model{Weight: 10.0}
+
+    fmt.Printf("STARTING WEIGHT: %.2f\n\n", myModel.Weight)
+
+    // Attempt 1: The Value Receiver
+    // We try to update the weight, but we are only updating a phantom copy.
+    fmt.Println("--- Running UpdateFake ---")
+    myModel.UpdateFake(2.0, 0.1) 
+    fmt.Printf("Back in main: Weight is still %.2f! It didn't stick.\n\n", myModel.Weight)
+
+    // Attempt 2: The Pointer Receiver
+    // Because UpdateReal demands a pointer (*Model), Go automatically passes 
+    // the memory address (&myModel) under the hood.
+    fmt.Println("--- Running UpdateReal ---")
+    myModel.UpdateReal(2.0, 0.1)
+    fmt.Printf("Back in main: Weight is permanently %.2f!\n", myModel.Weight)
+}
+#+end_src
+
+#+begin_note
+*The Rule of Thumb*
+When writing Go, you decide between =(m Model)= and =(m *Model)= by asking one simple question:
+
+1. *Am I just observing the data to calculate a result?* (Like finding a norm, calculating a loss, or formatting a string). Use a *Value Receiver*. It's safer because the original data cannot be accidentally altered.
+2. *Am I modifying the state, or is the struct massively huge?* (Like updating weights, appending data to a buffer, or interacting with a live database connection). Use a *Pointer Receiver*.
+#+end_note

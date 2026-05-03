@@ -1,0 +1,198 @@
+:PROPERTIES:
+:ID: ca3e4347-82cf-4afc-87b7-3a1309760005
+:CREATED: [2026-05-02 Sat 19:42]
+:END:
+#+title: into-sql
+
+* Database file
+
+A database file (like an =.mdf= file in SQL Server) is just a massive continuous file on your hard drive. To manage memory efficiently, the database chops this file into *8 Kilobyte (8192 bytes)* blocks. This is the smallest unit of disk I/O. Every time the database reads or writes, it moves an entire 8KB Page into RAM.
+
+Pages are blocks (8Kb) inside larger database files, not individual files.
+
+When querying the database does not load the whole file into RAM unless needed, instead it reads only the required Pages from disk and loads them into RAM while also caching frequently used Pages. 
+
+This is the general layout of a database files (conceptual) 
+
+#+begin_src text
+  Database System
+│
+├── Logical Layer
+│   ├── Tables
+│   ├── Views
+│   ├── Indexes
+│   └── Schemas
+│
+└── Physical Layer
+    ├── Data Files
+    │    └── Contain many 8KB pages
+    │
+    ├── Index Files
+    │    └── Contain many index pages
+    │
+    ├── Transaction Logs (WAL / Redo)
+    │
+    ├── Metadata/System Catalog
+    │
+    └── Buffer Pool (RAM cache)
+#+end_src
+
+
+Where one large file contains many pages:
+
+#+begin_src text
+  employees_table.dat
+│
+├── Page 0 (8KB)
+├── Page 1 (8KB)
+├── Page 2 (8KB)
+├── Page 3 (8KB)
+└── ...
+#+end_src
+
+This is just one file internally divided into Pages.
+
+#+begin_note
+*Logical vs Physical Layer*
+Logical Layer stores the metadata and schema definition. When you =CREATE= a table all the information about the table like the table name, columns, data types, constraints, keys, index type, and permissions are stored in the logical layer
+
+The Physical Layer hold the actual data. So all the values you =INSERT= goes into the table Pages.
+
+Conceptually, a table is not stored as Pages but it's rows are stored in Pages.
+#+end_note
+
+
+
+#+begin_note
+*Data Modification*
+
+If a row is updated
+
+The Page containing that row data is loaded into RAM, updated and the change is written to WAL. It is later flushed back to disk
+#+end_note
+
+There are two main types of pages:
+
+- *Data Page:* Stores your actual table rows.  
+- *Index Page:* Stores traffic signs (Keys and memory pointers) telling the database where to find the Data Pages.
+    
+
+* Data Page
+
+When you insert a row, the database writes it into a Data Page. The page fills up from the top down, while an "Offset Array" (a map of where each row starts) fills up from the bottom up.
+
+
+
+#+begin_src text
++----------------------------------------------------+
+|                   PAGE HEADER                      |
+| (96 Bytes) Page ID, Object ID, Free Space count    |
++----------------------------------------------------+
+| Row 1: [ID: 1, Name: "Alice", Role: "Engineer"]    |
+|----------------------------------------------------|
+| Row 2: [ID: 2, Name: "Bob", Role: "Sales"]         |
+|----------------------------------------------------|
+| Row 3: [ID: 3, Name: "Charlie", Role: "Admin"]     |
+|----------------------------------------------------|
+|                                                    |
+|                   FREE SPACE                       |
+|          (Rows grow down, offsets grow up)         |
+|                                                    |
+|----------------------------------------------------|
+| Offset 3 (Points to Row 3 byte address)            |
+|----------------------------------------------------|
+| Offset 2 (Points to Row 2 byte address)            |
+|----------------------------------------------------|
+| Offset 1 (Points to Row 1 byte address)            |
++----------------------------------------------------+
+#+end_src
+
+Note: If you try to insert a massive string that exceeds 8KB, the database has to split it across multiple pages, which kills performance. This is why strict schema design matters.
+
+
+* Heap Data Structure
+
+If you create a table without a Primary Key or a Clustered Index, you create a *Heap*.
+
+A Heap is literally just an unordered pile of Data Pages.
+
+- *Write Performance (Fast):* When you =INSERT=, the database just finds the last page and blindly appends the data. It doesn't waste CPU sorting anything.
+    
+- *Read Performance (Terrible):* If you search for =ID = 50=, the database has no idea where it is. It must perform a Table Scan, reading every single 8KB Data Page from the disk into RAM until it finds the row.
+    
+
+* The Clustered Index (B-Tree)
+
+A Clustered Index fundamentally physically rearranges how your Data Pages sit on the hard drive. **The table data itself becomes the leaf nodes of a B-Tree.** You can only have one Clustered Index per table because the data can only be sorted physically in one way (usually by the Primary Key).
+
+- **Read Performance (Fast):** It traverses the tree logarithmically.
+    
+- **Write Performance (Slower):** If you insert `ID = 25` between `24` and `26`, and that Data Page is full, the database has to perform a "Page Split"—creating a new page, moving half the rows over, and rewriting the Index Pages. This is expensive.
+    
+
+**Visualizing the Clustered Index (B-Tree)**
+
+Imagine searching for `ID = 55`. The database reads the Root Node, follows the pointer to the correct Intermediate Node, and lands directly on the Data Page.
+
+
+                          [ ROOT INDEX PAGE   ]
+                          | ID Range: 1 - 100 |
+                          +---------+---------+
+                                    |
+                  +-----------------+-----------------+
+                  |                                   |
+                  V                                   V
+        [ INTERMEDIATE PAGE ]               [ INTERMEDIATE PAGE ]
+        | ID Range: 1 - 50  |               | ID Range: 51 - 100|
+        +----+---------+----+               +----+---------+----+
+             |         |                         |         |
+      +------+         +------+           +------+         +------+
+      |                       |           |                       |
+      V                       V           V                       V
+[ DATA PAGE 1 ]         [ DATA PAGE 2]  [ DATA PAGE 3 ]         [ DATA PAGE 4 ]
+| ROW: ID 1   |         | ROW: ID 26 |  | ROW: ID 51  |         | ROW: ID 76  |
+| ROW: ID 2   |         | ROW: ID 27 |  | ROW: ID 52  |         | ROW: ID 77  |
+| ...         |         | ...        |  | ...         |         | ...         |
+| ROW: ID 25  |         | ROW: ID 50 |  | ROW: ID 75  |         | ROW: ID 100 |
++-------------+         +------------+  +-------------+         +-------------+
+                 ^^ THESE ARE YOUR ACTUAL TABLE ROWS ^^
+
+
+* The Non-Clustered Index (Lookup Table)
+
+What if your data is physically clustered by `ID`, but you frequently search by `Email`? You create a **Non-Clustered Index**.
+
+A Non-Clustered Index is a _completely separate B-Tree_. The key difference: **The leaf nodes are NOT Data Pages. The leaf nodes are Index Pages that just hold memory pointers back to the Clustered Index.**
+
+- **Read Performance (Fast for lookups, slow for full rows):** It finds the pointer instantly, but to get the rest of the row data, it has to do a "Key Lookup" back to the Clustered Index.
+    
+- **Write Performance (Faster than Clustered, but adds overhead):** It doesn't physically move your massive table data, but every time you `INSERT` a row, the database must update the main table _and_ update this secondary tree.
+    
+
+**Visualizing the Non-Clustered Index (on "Name")**
+
+If you run `SELECT * FROM table WHERE Name = 'Bob';`
+
+
+                          [ ROOT INDEX PAGE ]
+                          | Names: A - Z    |
+                          +---------+---------+
+                                    |
+                  +-----------------+-----------------+
+                  |                                   |
+                  V                                   V
+        [ INTERMEDIATE PAGE ]               [ INTERMEDIATE PAGE ]
+        | Names: A - M      |               | Names: N - Z      |
+        +----+---------+----+               +----+---------+----+
+             |                                   |
+             V                                   V
+     [ LEAF INDEX PAGE ]                 [ LEAF INDEX PAGE ]
+     | "Alice" -> Point to ID 1 |        | "Nancy" -> Point to ID 8 |
+     | "Bob"   -> Point to ID 2 |        | "Zack"  -> Point to ID 9 |
+     +--------------------------+        +--------------------------+
+                  |
+                  | (Database follows pointer to ID 2)
+                  V
+     [ ACTUAL CLUSTERED DATA PAGE ]
+     | ROW: ID 2, "Bob", "Sales"  |
+     +----------------------------+

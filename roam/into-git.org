@@ -63,9 +63,11 @@ The git log command shows a history of the commits in a repository. This is what
 
 ~git --no-pager log -n 10~
 or
-~git --no-pager log -n 10 --online --parents --graph~ 
+~git --no-pager log -n 10 --oneline --parents --graph~ 
+=git --no-pager log --oneline --graph --decorate --all=
 
-Inode busting???
+
+* Inode busting???
 
 A Commit Hash
 

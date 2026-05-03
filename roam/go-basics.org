@@ -2,69 +2,848 @@
 :ID: f8bdd294-b1ec-48c6-b997-39246c63d481
 :CREATED: [2026-04-17 Fri 23:30]
 :END:
-#+title: go-basics
+#+title: GO Basics
 
-What is this?
-os.Args is a []string (slice of strings)
-It contains everything typed in the command
+* Core Basics
 
-Index	Value
-os.Args[0]	program name
-os.Args[1]	first argument
-os.Args[2]	second argument
+** Variables
 
-*** Slice ([]string)
-A []string (slice of strings) is:
+#+begin_src go
+package main
 
-an ordered list of values
+import "fmt"
 
-Indexes are automatic positions, not keys you define
-You don’t choose the index, Go assigns it (0, 1, 2...)
-args := []string{"a", "b", "c"}
-args[0] // "a"
+func main() {
+    // Explicit type
+    var name string = "Alice"
+    var age int = 25
+    var balance float64 = 100.50
+    var active bool = true
+    
+    // Type inference (Go figures it out)
+    var city = "New York"  // string
+    var count = 42         // int
+    
+    // Short declaration (inside functions only)
+    message := "Hello"
+    x := 10
+    
+    // Short declaration NOT allowed at package level
+    // name := "Bob"  // ERROR outside function
+    
+    fmt.Println(name, age, city, message)
+}
+#+end_src
 
 
-*** Map (actual dictionary)
+- Go is *strongly typed*: once a variable is declared, its type is fixed
+- Zero values: strings =""=, ints =0=, bools =false=, pointers =nil=, slice =nil=
 
-m := map[string]string{
-	"name": "john",
+  
+** Constants
+
+Constants must be known at compile time. You cannot assign values returned from functions or computed at runtime.
+
+#+begin_src go
+// Constants (values known at compile time)
+const Pi = 3.14159
+const MaxConnections int = 100
+
+// Group constants
+const (
+    Red    = "red"
+    Green  = "green"
+    Blue   = "blue"
+)
+
+// Iota (auto-incrementing)
+const (
+    Small  = iota  // 0
+    Medium         // 1
+    Large          // 2
+)
+
+// Constants can't be reassigned
+// Pi = 3.15  // ERROR
+
+#+end_src
+
+** Primitive Types
+
+#+begin_src go
+  var a int = 42           // signed, platform-dependent size
+  var g float64 = 3.14159  // Preferred for precision
+  var s string = "hello"
+  var active bool = true
+
+  // Printing types
+  fmt.Printf("%T\n", 42)        // int
+  fmt.Printf("%T\n", 3.14)      // float64
+  fmt.Printf("%T\n", "hello")   // string
+
+#+end_src
+
+** Type Conversion (Explicit)
+
+
+Go requires Explicit type conversion (no automatic)
+
+
+#+begin_src go
+  var x int = 42
+  var y float64 = float64(x)      // Must convert explicitly
+  var z int = int(y)
+
+  var s string = "42"
+  //  var num int = int(s)            //  Does not compile
+num, err := strconv.Atoi(s)
+if err != nil {
+    fmt.Println("Conversion failed:", err)
 }
 
-m["name"] // "john"
+  var f float64 = 3.14
+  var si string = strconv.FormatFloat(f, 'f', 2, 64)  // Convert to string
+#+end_src
+
+Strings cannot be converted to numbers using casting; use strconv.
+
+** Pointers
+
+Pointers hold memory addresses. Needed for efficiency (large structs) and modification.
+
+#+begin_src go
+x := 10
+ptr := &x      // Pointer to x (address)
+*ptr = 20      // Dereference: change value at pointer
+fmt.Println(x) // 20
+
+// Why: Pass large structs by pointer, modify in functions
+type Server struct {
+    Host string
+    Port int
+}
+
+func updatePort(s *Server, port int) {
+    s.Port = port  // Auto-dereferenced
+}
+
+server := Server{Host: "localhost", Port: 8080}
+updatePort(&server, 9000)
+fmt.Println(server.Port) // 9000
+#+end_src
 
 
-*** Flag
+* Control Flow
 
+** If/Else
+You must put the opening braces on the same line as the condition and not on a new line. And =else= and =else if= must start on the same line as the closing braces of =if= statement. 
+
+#+begin_src go
+if x > 10 {
+    fmt.Println("big")
+} else if x > 5 {
+    fmt.Println("medium")
+} else {
+    fmt.Println("small")
+}
+
+// If with initialization
+if err := doSomething(); err != nil {
+    return err
+}
+// err not accessible here
+#+end_src
+
+** For Loops
+
+Go only has =for=, no =while=
+
+#+begin_src go
+// Traditional
+for i := 0; i < 10; i++ {
+    fmt.Println(i)
+}
+
+// While-style
+for condition {
+    // loop
+}
+
+// Infinite loop
+for {
+    // loop forever
+    break  // exit
+}
+
+// Continue
+for i := 0; i < 10; i++ {
+    if i%2 == 0 {
+        continue  // Skip even numbers
+    }
+    fmt.Println(i)
+}
+#+end_src
+
+** Range Loop
+
+Iterate over slices, arrays, maps, strings.
+
+#+begin_src go
+// Slice: index and value
+nums := []int{10, 20, 30}
+for i, val := range nums {
+    fmt.Println(i, val)
+}
+
+// Ignore index
+for _, val := range nums {
+    fmt.Println(val)
+}
+
+// Ignore value (just indices)
+for i := range nums {
+    fmt.Println(i)
+}
+
+// Map: key and value
+env := map[string]string{"PATH": "/usr/bin", "HOME": "/root"}
+for key, val := range env {
+    fmt.Println(key, "=", val)
+}
+
+// String: index and rune (Unicode code point)
+for i, char := range "hello" {
+    fmt.Printf("%d: %c\n", i, char)
+}
+#+end_src
+
+** Switch
+
+#+begin_src go
+switch day {
+case "Monday":
+    fmt.Println("Start of week")
+case "Friday":
+    fmt.Println("TGIF")
+default:
+    fmt.Println("Midweek")
+}
+
+// No condition (like if-else chain)
+switch {
+case score >= 90:
+    grade = "A"
+case score >= 80:
+    grade = "B"
+default:
+    grade = "C"
+}
+
+// Switch with initialization
+switch err := doSomething(); err {
+case nil:
+    fmt.Println("Success")
+default:
+    fmt.Println("Error:", err)
+}
+#+end_src
+
+
+
+* Functions
+
+#+begin_src go
+// Basic function
+func add(a, b int) int {
+    return a + b
+}
+
+// Multiple returns (idiomatic Go for error handling)
+func divide(a, b int) (int, error) {
+    if b == 0 {
+        return 0, fmt.Errorf("divide by zero")
+    }
+    return a / b, nil
+}
+
+result, err := divide(10, 2)
+if err != nil {
+    fmt.Println("Error:", err)
+    return
+}
+
+// Named return values
+func split(sum int) (x, y int) {
+    x = sum * 4 / 9
+    y = sum - x
+    return  // Returns x and y
+}
+
+// Variadic functions (variable arguments)
+func sum(nums ...int) int {
+    total := 0
+    for _, n := range nums {
+        total += n
+    }
+    return total
+}
+
+sum(1, 2, 3, 4, 5)  // 15
+#+end_src
+
+* Error Handling
+
+Standard Go pattern: functions return =(value, error)=
+
+#+begin_src go
+// Standard pattern
+file, err := os.Open("data.txt")
+if err != nil {
+    return fmt.Errorf("failed to open: %w", err)  // %w wraps error
+}
+defer file.Close()
+
+// Quick scripts: log.Fatal prints error and exits
+data, err := os.ReadFile("config.json")
+if err != nil {
+    log.Fatal(err)
+}
+
+// Creating errors
+err := fmt.Errorf("invalid port: %d", port)
+err := errors.New("connection failed")
+#+end_src
+
+=log.Fatal= prints the error and exits the program immediately (no defer runs)
+
+** Defer
+
+Defer schedules a function call to run when the surrounding function exits. Used for cleanup.
+
+#+begin_src go
+func main() {
+    file, _ := os.Open("data.txt")
+    defer file.Close()  // Runs when main() exits
+    
+    // Do stuff with file...
+}
+
+// Multiple defers execute in LIFO order (stack)
+defer fmt.Println("3")
+defer fmt.Println("2")
+defer fmt.Println("1")  // Prints: 1, 2, 3
+#+end_src
+
+Common uses: closing files, unlocking mutexes, closing connections.
+
+* Data Structures
+
+** Arrays & Slices
+
+#+begin_src go
+// Array (fixed size, rarely used)
+var arr [3]int = [3]int{1, 2, 3}
+
+// Slice (dynamic, what you'll actually use)
+nums := []int{1, 2, 3}
+nums = append(nums, 4, 5)
+
+fmt.Println(len(nums))  // 5 (length)
+fmt.Println(cap(nums))  // capacity (underlying array size)
+
+// Make slice with capacity
+s := make([]int, 0, 10)  // length 0, capacity 10
+
+// Slicing operations
+slice := []int{0, 1, 2, 3, 4, 5}
+slice[1:4]     // [1 2 3] (index 1 to 3)
+slice[:3]      // [0 1 2] (first 3)
+slice[3:]      // [3 4 5] (from index 3)
+
+// Copy slice
+src := []int{1, 2, 3}
+dst := make([]int, len(src))
+copy(dst, src)
+#+end_src
+
+** Maps
+
+Key-value pairs. Essential for configs, caching, lookups.
+
+#+begin_src go
+// Create
+env := make(map[string]string)
+env := map[string]string{
+    "PATH": "/usr/bin",
+    "HOME": "/root",
+}
+
+// Add/Update
+env["USER"] = "admin"
+
+// Check existence
+val, ok := env["USER"]
+if ok {
+    fmt.Println("Found:", val)
+}
+
+// Delete
+delete(env, "USER")
+
+// Loop over map
+for key, val := range env {
+    fmt.Println(key, "=", val)
+}
+
+// Map of structs
+users := make(map[string]User)
+users["alice"] = User{Name: "Alice", Age: 30}
+#+end_src
+
+
+
+
+* Formatting and Output
+
+** String Manipulation
+
+#+begin_src go
+import "strings"
+
+// Split and join
+parts := strings.Split("a,b,c", ",")           // []string{"a", "b", "c"}
+joined := strings.Join([]string{"a", "b"}, "-") // "a-b"
+
+// Check and search
+strings.Contains("hello", "ell")      // true
+strings.HasPrefix("hello", "he")     // true
+strings.HasSuffix("hello", "lo")     // true
+strings.Index("hello", "ll")         // 2
+
+// Modify
+strings.ToLower("HELLO")             // "hello"
+strings.ToUpper("hello")             // "HELLO"
+strings.TrimSpace("  hi  ")          // "hi"
+strings.Trim("!!hello!!", "!")       // "hello"
+strings.Replace("foo foo", "foo", "bar", 1)  // "bar foo" (replace 1)
+strings.ReplaceAll("foo foo", "foo", "bar")  // "bar bar"
+
+// Repeat and count
+strings.Repeat("ha", 3)              // "hahaha"
+strings.Count("cheese", "e")         // 3
+#+end_src
+
+** Printing
+=fmt.Print= just print, =Println= new line, =Printf= formatted  
+
+=fmt.Printf= prints a formatted string to stdout
+=fmt.Sprintf= returns the formatted string
+
+** Formatting Strings
+This is like f string in python
+
+#+begin_src go
+  s := fmt.Sprintf("I am %v years old", 10) // %v is used for the default formats
+
+  fmt.Sprintf("%[3]*.[2]*[1]f", 12.0, 2, 6) //equivalent to ("%6.2f", 12.0)
+#+end_src
+
+You can use other formats to be more specfic. =%s= for string, =%d= integer, =%.2f= float (2 decimal places), =%t= boolean, =%q= double quoted string, =%T= type of value, =%p= for pointers and slices, =%+v= struct with field names. 
+
+Note: Use =%%= for percentage sign.
+
+**** Printing Structs
+#+begin_src go
+  fmt.Printf("%v\n", u)   // {ekko 22}
+  fmt.Printf("%+v\n", u)  // {Name:ekko Age:22}
+  fmt.Printf("%#v\n", u)  // Go syntax
+#+end_src
+
+* Input and CLI
+
+** Using fmt 
+
+=fmt.Scan= takes input separted by spaces, =Scanln= by line, =Scanf= formatted scanning
+
+#+begin_src go
+var name string
+var age int
+
+fmt.Scanf("%s %d", &name, &age)
+#+end_src
+
+** Quick stdin read
+
+#+begin_src go
+import (
+    "bufio"
+    "os"
+)
+
+scanner := bufio.NewScanner(os.Stdin)
+
+// scanner.Split(bufio.ScanWords) to split by words
+
+for scanner.Scan() {
+    line := scanner.Text()
+    // process line
+}
+
+if err := scanner.Err(); err != nil {
+    log.Fatal(err)
+}
+#+end_src
+
+** String to Int
+#+begin_src go
+import "strconv"
+
+numStr := scanner.Text()
+num, err := strconv.Atoi(numStr)
+if err != nil {
+    log.Fatal("Invalid number:", err)
+}
+#+end_src
+
+** Command-line Arguments
+
+Good for cli tools.
+
+#+begin_src go
+import "os"
+
+// os.Args is []string containing command-line arguments
+if len(os.Args) < 2 {
+    fmt.Println("Usage: program <arg>")
+    return
+}
+
+// os.Args[0] is program name
+// os.Args[1:] are actual arguments
+for i, arg := range os.Args[1:] {
+    fmt.Printf("Arg %d: %s\n", i, arg)
+}
+#+end_src
+
+=go run main.go hello world=
+
+| Index      | Value           |
+|------------+-----------------|
+| os.Args[0] | program name    |
+| os.Args[1] | first argument  |
+| os.Args[2] | second argument |
+
+
+For real CLI tools, use the =flag= package:
+#+begin_src go
+import "flag"
+
+var port = flag.Int("port", 8080, "server port")
+var host = flag.String("host", "localhost", "server host")
+flag.Parse()
+
+fmt.Printf("Starting server on %s:%d\n", *host, *port)
+// Run: go run main.go -port 3000 -host 0.0.0.0
+#+end_src
+
+
+
+* File I/O
+
+** Reading from file
+A file is just a stream of bytes you can read from or write to.
+
+
+#+begin_src go
 package main
 
 import (
-	"flag"
 	"fmt"
+	"os"
 )
 
 func main() {
-	file := flag.String("file", "", "file to read")
-	flag.Parse()
+	file, err := os.Open("data.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
 
-	fmt.Println(*file)
+	fmt.Println("File opened:", file.Name())
+}
+#+end_src
+
+** Read entire file at once
+
+#+begin_src go
+data, err := os.ReadFile("data.txt")  // Returns []byte
+if err != nil {
+    log.Fatal(err)
+}
+fmt.Println(string(data))
+#+end_src
+
+** Read line by line from a file
+
+#+begin_src go
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"os"
+)
+
+func main() {
+	file, err := os.Open("data.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+
+	for scanner.Scan() {
+		line := scanner.Text()
+		fmt.Println(line)
+	}
+
+	if err := scanner.Err(); err != nil {
+		log.Fatal(err)
+	}
+}
+#+end_src
+
+** Writing to file
+
+#+begin_src go
+package main
+
+import (
+	"os"
+)
+
+func main() {
+	data := []byte("hello world\n")
+
+	err := os.WriteFile("data.txt", data, 0644)  //creates file if not exists, overwrites if exists
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+#+end_src
+
+Permissions 0644:
+- owner: read/write
+- others: read
+
+** Append to file
+
+#+begin_src go
+file, err := os.OpenFile("data.txt",
+	os.O_APPEND|os.O_CREATE|os.O_WRONLY,
+	0644,
+)
+if err != nil {
+	log.Fatal(err)
+}
+defer file.Close()
+
+file.WriteString("new line\n")
+#+end_src
+
+Flags
+- =O_APPEND=:  add to end
+- =O_CREATE=:  create if missing
+- =O_WRONLY=:  write only
+
+** Buffered Write
+
+#+begin_src go
+package main
+
+import (
+	"bufio"
+	"os"
+)
+
+func main() {
+	file, _ := os.Create("data.txt")
+	defer file.Close()
+
+	writer := bufio.NewWriter(file)
+
+	writer.WriteString("hello\n")
+	writer.WriteString("world\n")
+
+	writer.Flush()  // Important: flush buffer to disk
+}
+#+end_src
+
+Without buffer every write will call disk (slow), with buffer, it collects data and writes in chunks (fast)
+
+
+* JSON
+
+Essential for config files, APIs, data exchange.
+
+#+begin_src go
+import "encoding/json"
+
+type Config struct {
+    Host    string `json:"host"`
+    Port    int    `json:"port"`
+    Debug   bool   `json:"debug,omitempty"`  // Omit if false
+    Timeout int    `json:"-"`                // Never serialize
 }
 
-Part	Meaning
-"file"	flag name → -file
-""	default value
-"file to read"	help description
+// Parse JSON (Unmarshal)
+data := []byte(`{"host":"localhost","port":8080,"debug":true}`)
+var cfg Config
+err := json.Unmarshal(data, &cfg)
+if err != nil {
+    log.Fatal(err)
+}
+fmt.Println(cfg.Host, cfg.Port)
 
-go run main.go -file=abc.txt
+// Create JSON (Marshal)
+cfg := Config{Host: "0.0.0.0", Port: 3000, Debug: true}
+
+// Compact
+bytes, _ := json.Marshal(cfg)
+fmt.Println(string(bytes))
+
+// Pretty print
+bytes, _ = json.MarshalIndent(cfg, "", "  ")
+fmt.Println(string(bytes))
+
+// Working with files
+data, _ := os.ReadFile("config.json")
+json.Unmarshal(data, &cfg)
+
+bytes, _ := json.MarshalIndent(cfg, "", "  ")
+os.WriteFile("config.json", bytes, 0644)
+
+// Dynamic JSON (map)
+var result map[string]interface{}
+json.Unmarshal(data, &result)
+fmt.Println(result["host"])
+#+end_src
 
 
-#+begin_note
-This is a note
-#+end_note
 
-#+begin_warning
-Be careful here
-#+end_warning
+* Running external commands
 
-#+begin_tip
-This is a tip
-#+end_tip
+Running shell commands and external programs.
+
+#+begin_src go
+import "os/exec"
+
+// Simple command
+cmd := exec.Command("ls", "-la")
+output, err := cmd.Output()
+if err != nil {
+    log.Fatal(err)
+}
+fmt.Println(string(output))
+
+// Command with combined stdout/stderr
+cmd := exec.Command("git", "status")
+output, err := cmd.CombinedOutput()
+
+// Pipe stdin to command
+cmd := exec.Command("grep", "error")
+cmd.Stdin = strings.NewReader("info\nerror\nwarning\nerror\n")
+output, _ := cmd.Output()
+fmt.Println(string(output))  // error\nerror\n
+
+// Set working directory and environment
+cmd := exec.Command("ls")
+cmd.Dir = "/tmp"
+cmd.Env = append(os.Environ(), "DEBUG=1")
+cmd.Run()
+
+// Stream output in real-time
+cmd := exec.Command("ping", "google.com")
+cmd.Stdout = os.Stdout
+cmd.Stderr = os.Stderr
+cmd.Run()
+#+end_src
+
+* Some Standard Library Packages  
+
+** time
+
+#+begin_src go
+import "time"
+
+// Current time
+now := time.Now()
+fmt.Println(now)
+
+// Format time (specific layout)
+fmt.Println(now.Format("2006-01-02 15:04:05"))  // YYYY-MM-DD HH:MM:SS
+fmt.Println(now.Format(time.RFC3339))           // 2024-01-15T14:30:00Z
+
+// Parse time
+t, _ := time.Parse("2006-01-02", "2024-01-15")
+
+// Duration
+time.Sleep(2 * time.Second)
+duration := 5 * time.Minute
+
+// Add/Sub time
+tomorrow := now.Add(24 * time.Hour)
+yesterday := now.Add(-24 * time.Hour)
+
+// Compare
+if now.After(t) { }
+if now.Before(t) { }
+#+end_src
+
+** filepath
+
+#+begin_src go
+import "path/filepath"
+
+// Join paths (OS-specific separator)
+path := filepath.Join("dir", "subdir", "file.txt")
+
+// Get directory and filename
+dir := filepath.Dir("/home/user/file.txt")   // /home/user
+file := filepath.Base("/home/user/file.txt") // file.txt
+
+// Extension
+ext := filepath.Ext("file.txt")  // .txt
+
+// Absolute path
+abs, _ := filepath.Abs("../file.txt")
+
+// Walk directory tree
+filepath.Walk(".", func(path string, info os.FileInfo, err error) error {
+    if !info.IsDir() {
+        fmt.Println(path)
+    }
+    return nil
+})
+#+end_src
+
+** net/http (Quick HTTP server)
+
+#+begin_src go
+import "net/http"
+
+// Simple server
+http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+    fmt.Fprintf(w, "Hello, World!")
+})
+log.Fatal(http.ListenAndServe(":8080", nil))
+
+// HTTP request
+resp, err := http.Get("https://api.github.com")
+if err != nil {
+    log.Fatal(err)
+}
+defer resp.Body.Close()
+body, _ := io.ReadAll(resp.Body)
+#+end_src

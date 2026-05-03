@@ -1,0 +1,150 @@
+:PROPERTIES:
+:ID: 3d5dfc3b-3a8a-4646-844a-8aca994a7f64
+:CREATED: [2026-04-23 Thu 13:37]
+:END:
+#+title: git-basics
+
+* Git Config
+
+Git stores author information so that when you're making a commit it can track who made the change. 
+
+Let's take the command apart:
+
+git config: The command to interact with your Git configuration.
+set: The subcommand to set a value – i.e., to add it if it doesn't already exist, or update it if it does.
+--global: Flag stating you want this configuration to be stored globally in your ~/.gitconfig. The opposite is --local, which stores the configuration in the current repository only.
+user: The section.
+name: The key within the section.
+"ThePrimeagen": The value you want to set for the key.
+    
+Git has a command to view the contents of your config:
+
+git config list --local
+
+You can also just view the contents of your local config file directly:
+
+cat .git/config
+
+** System, Global, local, worktree
+There are several locations where Git can be configured. From more general to more specific, they are:
+
+    system: /etc/gitconfig, a file that configures Git for all users on the system
+    global: ~/.gitconfig, a file that configures Git for all projects of a user
+    local: .git/config, a file that configures Git for a specific project
+    worktree: .git/config.worktree, a file that configures Git for part of a project
+
+In my experience, 90% of the time you will be using --global to set things like your username and email. The other 9% of the time you will be using --local to set project-specific configurations. The last 1% of the time you might need to futz with system and worktree configurations, but it's extremely rare.
+
+
+** Get
+
+We've used list to see all the configuration values, but the get subcommand is useful for getting a single value.
+
+git config get <key>
+
+Keys are in the format <section>.<keyname>.
+
+** Unset
+Unset
+
+The unset subcommand is used to remove a configuration value. For example:
+
+git config unset <key>
+
+
+Only works with section and a key =<section>.<keyname>=
+
+**  remove-section
+
+=git config --remove-section <section>=
+
+
+** Unset-all
+
+=git config --unset-all webflyx.ceo=
+
+Removes all
+
+
+* Git branching
+
+A Git branch allows you to keep track of different changes separately.
+
+For example, let's say you have a big web project and you want to experiment with changing the color scheme. Instead of changing the entire project directly (as of right now, our master branch), you can create a new branch called color_scheme and work on that branch. When you're done, if you like the changes, you can merge the color_scheme branch back into the master branch to keep the changes. If you don't like the changes, you can simply delete the color_scheme branch and go back to the master branch.
+Under the Hood
+
+A branch is just a named pointer to a specific commit. When you create a branch, you are creating a new pointer to a specific commit. The commit that the branch points to is called the tip of the branch.
+Because a branch is just a pointer to a commit, they're lightweight and "cheap" resource-wise to create. When you create 10 branches, you're not creating 10 copies of your project on your hard drive.
+
+Check which branch you're currently on by running:
+
+=git branch=
+
+Rename a branch
+=git branch -m oldname newname=
+
+** New Branch
+
+You should already be on the main branch: your "default" branch. You can always check with git branch.
+Two Ways to Create a Branch
+
+=git branch my_new_branch=
+
+This creates a new branch called =my_new_branch=. The thing is, I rarely use this command because usually I want to create a branch and switch to it immediately. So I use this command instead:
+
+=git switch -c my_new_branch=
+
+=-c= is for create. Use without c to just switch.
+
+The switch command allows you to switch branches. Including the -c flag tells Git to create a new branch and switch to it.
+
+When you create a new branch, it uses the current commit you are on as the branch base. For example, if you're on your main branch with 3 commits, A, B, and C, and then you run =git switch -c my_new_branch=, your new branch will look like this:
+
+Another way to switch
+
+=git checkout prime=
+
+** Merge
+
+=git merge branch_to_merge=
+
+View the commits and merges
+ =git log --oneline --decorate --graph --parents=
+
+*** Fastforwarsd merge
+The branch you are merging onto if the tip of that branch is the merge base - fast forward branch
+Basically there is no branch.
+
+** Delete a branch
+
+=git branch -d branch_name=
+
+
+
+I need some notes of these
+--oneline
+--graph
+--parents
+--all
+and other stuff that's very commonly used and would be useful
+
+** Rebase
+Moves the branch to the tip of the base of the main branch that the feature branch is based on 
+
+Visualizing Rebase
+
+Say we have this commit history:
+
+#+begin_src bash
+A - B - C    main
+   \
+    D - E    feature_branch
+#+end_src
+
+We're working on =feature_branch=, and want to bring in the changes our team added to main so we're not working with a stale branch. We could merge main into =feature_branch=, but that would create an additional merge commit. Rebase avoids a merge commit by replaying the commits from =feature_branch= on top of main. After a rebase, the history will look like this:
+
+#+begin_src bash
+A - B - C         main
+         \
+          D - E   feature_branch
+#+end_src
