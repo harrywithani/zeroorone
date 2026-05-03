@@ -1,0 +1,797 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2026-05-03 Sun 19:36 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>into-sql</title>
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="stylesheet" href="/zeroorone/style.css" type="text/css"/>
+<script src="/zeroorone/theme.js"></script>
+</head>
+<body>
+<div id="preamble" class="status">
+<meta name='theme-color' id='theme-color-meta' content='#f5f5f5'>
+   <header>
+    <nav class='breadcrumb'>
+      <a href='/zeroorone/index.html'>Home</a>
+      <span class='breadcrumb-sep'>/</span>
+      <span class='breadcrumb-current'>into-sql</span>
+    </nav>
+    <div class='controls'>
+      <button class='sidebar-toggle' title='Search'>
+        <svg width='20' height='20' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+          <path fill-rule='evenodd' clip-rule='evenodd' d='M18.319 14.4326C20.7628 11.2941 20.542 6.75347 17.6569 3.86829C14.5327 0.744098 9.46734 0.744098 6.34315 3.86829C3.21895 6.99249 3.21895 12.0578 6.34315 15.182C9.22833 18.0672 13.769 18.2879 16.9075 15.8442C16.921 15.8595 16.9351 15.8745 16.9497 15.8891L21.1924 20.1317C21.5829 20.5223 22.2161 20.5223 22.6066 20.1317C22.9971 19.7412 22.9971 19.1081 22.6066 18.7175L18.364 14.4749C18.3493 14.4603 18.3343 14.4462 18.319 14.4326ZM16.2426 5.28251C18.5858 7.62565 18.5858 11.4246 16.2426 13.7678C13.8995 16.1109 10.1005 16.1109 7.75736 13.7678C5.41421 11.4246 5.41421 7.62565 7.75736 5.28251C10.1005 2.93936 13.8995 2.93936 16.2426 5.28251Z' fill='currentColor'/>
+        </svg>
+      </button>
+
+      <button class='theme-toggle' title='Toggle Theme'>
+        <svg width='20' height='20' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+          <path d='M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8V16Z' fill='currentColor'/>
+          <path fill-rule='evenodd' clip-rule='evenodd' d='M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM12 4V8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16V20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4Z' fill='currentColor'/>
+        </svg>
+      </button>
+
+      <button class='toc-toggle' title='Table of Contents'>
+        <svg width='20' height='20' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+          <path d='M2 6C2 5.44772 2.44772 5 3 5H21C21.5523 5 22 5.44772 22 6C22 6.55228 21.5523 7 21 7H3C2.44772 7 2 6.55228 2 6Z' fill='currentColor'/>
+          <path d='M2 12.0322C2 11.4799 2.44772 11.0322 3 11.0322H21C21.5523 11.0322 22 11.4799 22 12.0322C22 12.5845 21.5523 13.0322 21 13.0322H3C2.44772 13.0322 2 12.5845 2 12.0322Z' fill='currentColor'/>
+          <path d='M3 17.0645C2.44772 17.0645 2 17.5122 2 18.0645C2 18.6167 2.44772 19.0645 3 19.0645H21C21.5523 19.0645 22 18.6167 22 18.0645C22 17.5122 21.5523 17.0645 21 17.0645H3Z' fill='currentColor'/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <aside id='left-sidebar'>
+    <div class='sidebar-header'>
+      <h3>Search & Tags</h3>
+      <button class='sidebar-close' title='Close'>
+        <svg width='20' height='20' viewBox='0 0 15 15' fill='none' xmlns='http://www.w3.org/2000/svg'>
+          <path fill-rule='evenodd' clip-rule='evenodd' d='M11.7816 4.03157C12.0062 3.80702 12.0062 3.44295 11.7816 3.2184C11.5571 2.99385 11.193 2.99385 10.9685 3.2184L7.50005 6.68682L4.03164 3.2184C3.80708 2.99385 3.44301 2.99385 3.21846 3.2184C2.99391 3.44295 2.99391 3.80702 3.21846 4.03157L6.68688 7.49999L3.21846 10.9684C2.99391 11.193 2.99391 11.557 3.21846 11.7816C3.44301 12.0061 3.80708 12.0061 4.03164 11.7816L7.50005 8.31316L10.9685 11.7816C11.193 12.0061 11.5571 12.0061 11.7816 11.7816C12.0062 11.557 12.0062 11.193 11.7816 10.9684L8.31322 7.49999L11.7816 4.03157Z' fill='currentColor'/>
+        </svg>
+      </button>
+    </div>
+    <div class='search-container'>
+      <input type='text' id='sidebar-search' placeholder='Search full content or #tags...' autocomplete='off'>
+    </div>
+    <div id='sidebar-tags' class='tag-cloud'></div>
+    <ul id='sidebar-results'></ul>
+  </aside>
+</div>
+<div id="content" class="content">
+<h1 class="title">into-sql</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org6037b54">Database file</a></li>
+<li><a href="#org878964e">Data Page</a></li>
+<li><a href="#org5e708ec">Heap Data Structure</a></li>
+<li><a href="#org013c568">The Clustered Index (B-Tree)</a></li>
+<li><a href="#org9d973e3">The Non-Clustered Index (Lookup Table)</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org6037b54" class="outline-2">
+<h2 id="org6037b54">Database file</h2>
+<div class="outline-text-2" id="text-org6037b54">
+<p>
+A database file (like an <code>.mdf</code> file in SQL Server) is just a massive continuous file on your hard drive. To manage memory efficiently, the database chops this file into <b>8 Kilobyte (8192 bytes)</b> blocks. This is the smallest unit of disk I/O. Every time the database reads or writes, it moves an entire 8KB Page into RAM.
+</p>
+
+<p>
+Pages are blocks (8Kb) inside larger database files, not individual files.
+</p>
+
+<p>
+When querying the database does not load the whole file into RAM unless needed, instead it reads only the required Pages from disk and loads them into RAM while also caching frequently used Pages. 
+</p>
+
+<p>
+This is the general layout of a database files (conceptual) 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-text">  Database System
+&#9474;
+&#9500;&#9472;&#9472; Logical Layer
+&#9474;   &#9500;&#9472;&#9472; Tables
+&#9474;   &#9500;&#9472;&#9472; Views
+&#9474;   &#9500;&#9472;&#9472; Indexes
+&#9474;   &#9492;&#9472;&#9472; Schemas
+&#9474;
+&#9492;&#9472;&#9472; Physical Layer
+    &#9500;&#9472;&#9472; Data Files
+    &#9474;    &#9492;&#9472;&#9472; Contain many 8KB pages
+    &#9474;
+    &#9500;&#9472;&#9472; Index Files
+    &#9474;    &#9492;&#9472;&#9472; Contain many index pages
+    &#9474;
+    &#9500;&#9472;&#9472; Transaction Logs (WAL / Redo)
+    &#9474;
+    &#9500;&#9472;&#9472; Metadata/System Catalog
+    &#9474;
+    &#9492;&#9472;&#9472; Buffer Pool (RAM cache)
+</pre>
+</div>
+
+
+<p>
+Where one large file contains many pages:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-text">  employees_table.dat
+&#9474;
+&#9500;&#9472;&#9472; Page 0 (8KB)
+&#9500;&#9472;&#9472; Page 1 (8KB)
+&#9500;&#9472;&#9472; Page 2 (8KB)
+&#9500;&#9472;&#9472; Page 3 (8KB)
+&#9492;&#9472;&#9472; ...
+</pre>
+</div>
+
+<p>
+This is just one file internally divided into Pages.
+</p>
+
+<div class="note" id="org788d802">
+<p>
+<b>Logical vs Physical Layer</b>
+Logical Layer stores the metadata and schema definition. When you <code>CREATE</code> a table all the information about the table like the table name, columns, data types, constraints, keys, index type, and permissions are stored in the logical layer
+</p>
+
+<p>
+The Physical Layer hold the actual data. So all the values you <code>INSERT</code> goes into the table Pages.
+</p>
+
+<p>
+Conceptually, a table is not stored as Pages but it's rows are stored in Pages.
+</p>
+
+</div>
+
+
+
+<div class="note" id="org7c9a2a0">
+<p>
+<b>Data Modification</b>
+</p>
+
+<p>
+If a row is updated
+</p>
+
+<p>
+The Page containing that row data is loaded into RAM, updated and the change is written to WAL. It is later flushed back to disk
+</p>
+
+</div>
+
+<p>
+There are two main types of pages:
+</p>
+
+<ul class="org-ul">
+<li><b>Data Page:</b> Stores your actual table rows.</li>
+<li><b>Index Page:</b> Stores traffic signs (Keys and memory pointers) telling the database where to find the Data Pages.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org878964e" class="outline-2">
+<h2 id="org878964e">Data Page</h2>
+<div class="outline-text-2" id="text-org878964e">
+<p>
+When you insert a row, the database writes it into a Data Page. The page fills up from the top down, while an "Offset Array" (a map of where each row starts) fills up from the bottom up.
+</p>
+
+
+
+<div class="org-src-container">
+<pre class="src src-text">+----------------------------------------------------+
+|                   PAGE HEADER                      |
+| (96 Bytes) Page ID, Object ID, Free Space count    |
++----------------------------------------------------+
+| Row 1: [ID: 1, Name: "Alice", Role: "Engineer"]    |
+|----------------------------------------------------|
+| Row 2: [ID: 2, Name: "Bob", Role: "Sales"]         |
+|----------------------------------------------------|
+| Row 3: [ID: 3, Name: "Charlie", Role: "Admin"]     |
+|----------------------------------------------------|
+|                                                    |
+|                   FREE SPACE                       |
+|          (Rows grow down, offsets grow up)         |
+|                                                    |
+|----------------------------------------------------|
+| Offset 3 (Points to Row 3 byte address)            |
+|----------------------------------------------------|
+| Offset 2 (Points to Row 2 byte address)            |
+|----------------------------------------------------|
+| Offset 1 (Points to Row 1 byte address)            |
++----------------------------------------------------+
+</pre>
+</div>
+
+<p>
+Note: If you try to insert a massive string that exceeds 8KB, the database has to split it across multiple pages, which kills performance. This is why strict schema design matters.
+</p>
+</div>
+</div>
+<div id="outline-container-org5e708ec" class="outline-2">
+<h2 id="org5e708ec">Heap Data Structure</h2>
+<div class="outline-text-2" id="text-org5e708ec">
+<p>
+If you create a table without a Primary Key or a Clustered Index, you create a <b>Heap</b>.
+</p>
+
+<p>
+A Heap is literally just an unordered pile of Data Pages.
+</p>
+
+<ul class="org-ul">
+<li><b>Write Performance (Fast):</b> When you <code>INSERT</code>, the database just finds the last page and blindly appends the data. It doesn't waste CPU sorting anything.</li>
+
+<li><b>Read Performance (Terrible):</b> If you search for <code>ID = 50</code>, the database has no idea where it is. It must perform a Table Scan, reading every single 8KB Data Page from the disk into RAM until it finds the row.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org013c568" class="outline-2">
+<h2 id="org013c568">The Clustered Index (B-Tree)</h2>
+<div class="outline-text-2" id="text-org013c568">
+<p>
+A Clustered Index fundamentally physically rearranges how your Data Pages sit on the hard drive. <b><b>The table data itself becomes the leaf nodes of a B-Tree.</b></b> You can only have one Clustered Index per table because the data can only be sorted physically in one way (usually by the Primary Key).
+</p>
+
+<ul class="org-ul">
+<li><b><b>Read Performance (Fast):</b></b> It traverses the tree logarithmically.</li>
+
+<li><b><b>Write Performance (Slower):</b></b> If you insert `ID = 25` between `24` and `26`, and that Data Page is full, the database has to perform a "Page Split"—creating a new page, moving half the rows over, and rewriting the Index Pages. This is expensive.</li>
+</ul>
+
+
+<p>
+<b><b>Visualizing the Clustered Index (B-Tree)</b></b>
+</p>
+
+<p>
+Imagine searching for `ID = 55`. The database reads the Root Node, follows the pointer to the correct Intermediate Node, and lands directly on the Data Page.
+</p>
+
+
+<p>
+[ ROOT INDEX PAGE   ]
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">ID Range: 1 - 100</td>
+</tr>
+</tbody>
+</table>
+<p>
+<del>---------</del>----&#x2013;&#x2014;+
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+<p>
+<del>-----------------</del>------------&#x2013;&#x2014;+
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+<p>
+	  V                                   V
+[ INTERMEDIATE PAGE ]               [ INTERMEDIATE PAGE ]
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">ID Range: 1 - 50</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">ID Range: 51 - 100</td>
+</tr>
+</tbody>
+</table>
+<p>
+<del>----</del>---------<del>----</del>               <del>----</del>---------<del>----</del>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+<p>
+<del>------</del>         <del>------</del>           <del>------</del>         <del>------</del>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+<p>
+      V                       V           V                       V
+[ DATA PAGE 1 ]         [ DATA PAGE 2]  [ DATA PAGE 3 ]         [ DATA PAGE 4 ]
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">ROW: ID 1</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">ROW: ID 26</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">ROW: ID 51</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">ROW: ID 76</td>
+</tr>
+
+<tr>
+<td class="org-left">ROW: ID 2</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">ROW: ID 27</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">ROW: ID 52</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">ROW: ID 77</td>
+</tr>
+
+<tr>
+<td class="org-left">&#x2026;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#x2026;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#x2026;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#x2026;</td>
+</tr>
+
+<tr>
+<td class="org-left">ROW: ID 25</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">ROW: ID 50</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">ROW: ID 75</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">ROW: ID 100</td>
+</tr>
+</tbody>
+</table>
+<p>
+<del>-------------</del>         <del>------------</del>  <del>-------------</del>         <del>-------------</del>
+                 ^^ THESE ARE YOUR ACTUAL TABLE ROWS ^^
+</p>
+</div>
+</div>
+<div id="outline-container-org9d973e3" class="outline-2">
+<h2 id="org9d973e3">The Non-Clustered Index (Lookup Table)</h2>
+<div class="outline-text-2" id="text-org9d973e3">
+<p>
+What if your data is physically clustered by `ID`, but you frequently search by `Email`? You create a <b><b>Non-Clustered Index</b></b>.
+</p>
+
+<p>
+A Non-Clustered Index is a <span class="underline">completely separate B-Tree</span>. The key difference: <b><b>The leaf nodes are NOT Data Pages. The leaf nodes are Index Pages that just hold memory pointers back to the Clustered Index.</b></b>
+</p>
+
+<ul class="org-ul">
+<li><b><b>Read Performance (Fast for lookups, slow for full rows):</b></b> It finds the pointer instantly, but to get the rest of the row data, it has to do a "Key Lookup" back to the Clustered Index.</li>
+
+<li><b><b>Write Performance (Faster than Clustered, but adds overhead):</b></b> It doesn't physically move your massive table data, but every time you `INSERT` a row, the database must update the main table <span class="underline">and</span> update this secondary tree.</li>
+</ul>
+
+
+<p>
+<b><b>Visualizing the Non-Clustered Index (on "Name")</b></b>
+</p>
+
+<p>
+If you run `SELECT * FROM table WHERE Name = 'Bob';`
+</p>
+
+
+<p>
+[ ROOT INDEX PAGE ]
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Names: A - Z</td>
+</tr>
+</tbody>
+</table>
+<p>
+<del>---------</del>----&#x2013;&#x2014;+
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+<p>
+<del>-----------------</del>------------&#x2013;&#x2014;+
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+<p>
+	  V                                   V
+[ INTERMEDIATE PAGE ]               [ INTERMEDIATE PAGE ]
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Names: A - M</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Names: N - Z</td>
+</tr>
+</tbody>
+</table>
+<p>
+<del>----</del>---------<del>----</del>               <del>----</del>---------<del>----</del>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+<p>
+	V                                   V
+[ LEAF INDEX PAGE ]                 [ LEAF INDEX PAGE ]
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">"Alice" -&gt; Point to ID 1</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">"Nancy" -&gt; Point to ID 8</td>
+</tr>
+
+<tr>
+<td class="org-left">"Bob"   -&gt; Point to ID 2</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">"Zack"  -&gt; Point to ID 9</td>
+</tr>
+</tbody>
+</table>
+<p>
+<del>--------------------------</del>        <del>--------------------------</del>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+
+<tr>
+<td class="org-left">(Database follows pointer to ID 2)</td>
+</tr>
+</tbody>
+</table>
+<p>
+	     V
+[ ACTUAL CLUSTERED DATA PAGE ]
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">ROW: ID 2, "Bob", "Sales"</td>
+</tr>
+</tbody>
+</table>
+<p>
+<del>----------------------------</del>
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="footer">Built with Emacs</p>
+</div>
+</body>
+</html>

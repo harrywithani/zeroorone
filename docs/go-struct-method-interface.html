@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-04-20 Mon 17:28 -->
+<!-- 2026-05-03 Sun 19:36 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Go: Struct, Method, Interface</title>
@@ -282,16 +282,16 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org8219015">Structs = Defining a Mathematical Space</a></li>
-<li><a href="#org55fe80c">Methods = Intrinsic Operations</a></li>
-<li><a href="#org3de2fb7">Interfaces = Algebraic Structures (Axioms)</a></li>
-<li><a href="#org6a63dc5">Why though?</a>
+<li><a href="#org1a8fc6e">Structs = Defining a Mathematical Space</a></li>
+<li><a href="#org805fd23">Methods = Intrinsic Operations</a></li>
+<li><a href="#org5b766f7">Interfaces = Algebraic Structures (Axioms)</a></li>
+<li><a href="#org702a1f5">Why though?</a>
 <ul>
 <li>
 <ul>
 <li>
 <ul>
-<li><a href="#orgc3a098d">Let's code</a></li>
+<li><a href="#org2ba55fd">Let's code</a></li>
 </ul>
 </li>
 </ul>
@@ -304,9 +304,9 @@
 <p>
 I am used to the mathematical definition of a function, where \(f: X \to Y\) takes an input from domain \(X\) and maps it to \(Y\), so the object-oriented syntax of Go can look confusing. I need to map Go's syntax to mathematical concepts.
 </p>
-<div id="outline-container-org8219015" class="outline-2">
-<h2 id="org8219015">Structs = Defining a Mathematical Space</h2>
-<div class="outline-text-2" id="text-org8219015">
+<div id="outline-container-org1a8fc6e" class="outline-2">
+<h2 id="org1a8fc6e">Structs = Defining a Mathematical Space</h2>
+<div class="outline-text-2" id="text-org1a8fc6e">
 <p>
 A <code>struct</code> is like defining an element of a specific mathematical space or set. For example, let's define a vector \(\vec{v} \in \mathbb{R}^2\).
 </p>
@@ -328,9 +328,9 @@ We haven't done any operations yet, just defined the domain.
 </p>
 </div>
 </div>
-<div id="outline-container-org55fe80c" class="outline-2">
-<h2 id="org55fe80c">Methods = Intrinsic Operations</h2>
-<div class="outline-text-2" id="text-org55fe80c">
+<div id="outline-container-org805fd23" class="outline-2">
+<h2 id="org805fd23">Methods = Intrinsic Operations</h2>
+<div class="outline-text-2" id="text-org805fd23">
 <p>
 Normally, if you wanted to find the Euclidean norm (magnitude) of your vector, you would write a standard function like
 \[
@@ -366,7 +366,7 @@ Like an operator that belongs exclusively to \(\mathbb{R}^2\) (you could say the
 </pre>
 </div>
 
-<div class="note" id="org7db5533">
+<div class="note" id="org112ef61">
 <p>
 <b>Why does the syntax look like that?</b>
 </p>
@@ -385,9 +385,9 @@ Because it is bound to the object, you call it by writing <code>v.Norm()</code> 
 </div>
 </div>
 </div>
-<div id="outline-container-org3de2fb7" class="outline-2">
-<h2 id="org3de2fb7">Interfaces = Algebraic Structures (Axioms)</h2>
-<div class="outline-text-2" id="text-org3de2fb7">
+<div id="outline-container-org5b766f7" class="outline-2">
+<h2 id="org5b766f7">Interfaces = Algebraic Structures (Axioms)</h2>
+<div class="outline-text-2" id="text-org5b766f7">
 <p>
 In abstract algebra, you define structures based purely on their axioms. A "Metric Space" doesn't care if you are dealing with real numbers, matrices, or continuous functions; it just says, "If a set has a distance function \(d(x,y)\) that satisfies certain rules, it is a Metric Space."
 </p>
@@ -409,9 +409,9 @@ Because our <code>Vector</code> struct has a <code>Norm()</code> method, it auto
 </p>
 </div>
 </div>
-<div id="outline-container-org6a63dc5" class="outline-2">
-<h2 id="org6a63dc5">Why though?</h2>
-<div class="outline-text-2" id="text-org6a63dc5">
+<div id="outline-container-org702a1f5" class="outline-2">
+<h2 id="org702a1f5">Why though?</h2>
+<div class="outline-text-2" id="text-org702a1f5">
 <p>
 Why do we do this instead of just writing \(f(x)\)? Because it allows you to write functions that operate on <i>abstractions</i> rather than specific types.
 </p>
@@ -438,9 +438,9 @@ we implement an interface for something concrete, like a basic matrix
 operation?
 </p>
 </div>
-<div id="outline-container-orgc3a098d" class="outline-5">
-<h5 id="orgc3a098d">Let's code</h5>
-<div class="outline-text-5" id="text-orgc3a098d">
+<div id="outline-container-org2ba55fd" class="outline-5">
+<h5 id="org2ba55fd">Let's code</h5>
+<div class="outline-text-5" id="text-org2ba55fd">
 <p>
 Let's model a <b>Linear Transformation</b>
 \[

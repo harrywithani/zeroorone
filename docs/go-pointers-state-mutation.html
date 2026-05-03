@@ -6,7 +6,7 @@
 <!-- 2026-05-03 Sun 19:36 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>go-rust</title>
+<title>Go: Pointers and State Mutation</title>
 <meta name="generator" content="Org Mode" />
 <style type="text/css">
   #content { max-width: 60em; margin: auto; }
@@ -194,6 +194,38 @@
 </style>
 <link rel="stylesheet" href="/zeroorone/style.css" type="text/css"/>
 <script src="/zeroorone/theme.js"></script>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -202,7 +234,7 @@
     <nav class='breadcrumb'>
       <a href='/zeroorone/index.html'>Home</a>
       <span class='breadcrumb-sep'>/</span>
-      <span class='breadcrumb-current'>go-rust</span>
+      <span class='breadcrumb-current'>Go: Pointers and State Mutation</span>
     </nav>
     <div class='controls'>
       <button class='sidebar-toggle' title='Search'>
@@ -245,95 +277,110 @@
   </aside>
 </div>
 <div id="content" class="content">
-<h1 class="title">go-rust</h1>
+<h1 class="title">Go: Pointers and State Mutation</h1>
 <div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org548b4ce">Word Frequency Counter</a></li>
+<li><a href="#orgb9c970d">The Syntax of "Where" vs. "What"</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org548b4ce" class="outline-2">
-<h2 id="org548b4ce">Word Frequency Counter</h2>
-<div class="outline-text-2" id="text-org548b4ce">
 <p>
-<b>Go</b>
+In math, functions are generally immutable. When you evaluate \(f(x)\), you don't destroy or alter \(x\). You just observe it to produce \(y\). Our Go value receivers <code>(v Vector)</code> work exactly like this. When you pass a struct into a standard method, Go quietly creates a completely independent photocopy of it in memory, does the math on the copy, and throws the copy away when it's done.
 </p>
-<div class="org-src-container">
-<pre class="src src-go"><span class="org-keyword">func</span> <span class="org-function-name">wordFreq</span>(<span class="org-variable-name">s</span> <span class="org-type">string</span>) <span class="org-keyword">map</span>[<span class="org-type">string</span>]<span class="org-type">int</span> {
-        <span class="org-variable-name">freq</span> := <span class="org-builtin">make</span>(<span class="org-keyword">map</span>[<span class="org-type">string</span>]<span class="org-type">int</span>)
-        <span class="org-variable-name">words</span> := strings.<span class="org-function-name">Split</span>(s, <span class="org-string">" "</span>)
 
-        <span class="org-keyword">for</span> <span class="org-variable-name">_</span>, <span class="org-variable-name">word</span> := <span class="org-keyword">range</span> words {
-                freq[word]++
-        }
-        <span class="org-keyword">return</span> freq
+<p>
+But imagine you are running gradient descent to update a model's weights. If your network has a million parameters, treating it like a pure mathematical function means your program would have to photocopy the entire million-parameter matrix into RAM, calculate the step \(w_{t+1} = w_t - \alpha \nabla L\), and spit out a brand new matrix every single epoch. You would run out of memory instantly.
+</p>
+
+<p>
+You don't want a copy. You want to reach into memory and physically alter the original weights in place.
+</p>
+
+<p>
+To do that, you need a <b>Pointer Receiver</b>.
+</p>
+<div id="outline-container-orgb9c970d" class="outline-2">
+<h2 id="orgb9c970d">The Syntax of "Where" vs. "What"</h2>
+<div class="outline-text-2" id="text-orgb9c970d">
+<p>
+In Go, we have two operators to handle memory addresses:
+</p>
+
+<ul class="org-ul">
+<li><code>&amp;</code> (Ampersand): Think of this as asking for the <b>coordinates</b>. <code>&amp;w</code> means "give me the exact memory address where <code>w</code> lives."</li>
+<li><code>*</code> (Asterisk): Think of this as the <b>dereferencer</b>. <code>*w</code> means "go to this memory address and operate on the actual object sitting there."</li>
+</ul>
+
+<p>
+When we attach a method to a struct, we can choose whether the receiver gets a photocopy, or the memory address.
+</p>
+
+<p>
+Let's create a <code>Model</code> struct with a weight value, and try to apply a learning rate step to it using both methods.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">package</span> main
+
+<span class="org-keyword">import</span> <span class="org-string">"fmt"</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">1. THE SPACE
+</span><span class="org-keyword">type</span> <span class="org-type">Model</span> <span class="org-keyword">struct</span> {
+    Weight <span class="org-type">float64</span>
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">2. THE PHOTOCOPY (Value Receiver)
+</span><span class="org-comment-delimiter">// </span><span class="org-comment">Notice the receiver: (m Model)
+</span><span class="org-comment-delimiter">// </span><span class="org-comment">Go creates a temporary clone of 'm' for this method.
+</span><span class="org-keyword">func</span> (<span class="org-variable-name">m</span> <span class="org-type">Model</span>) <span class="org-function-name">UpdateFake</span>(<span class="org-variable-name">gradient</span> <span class="org-type">float64</span>, <span class="org-variable-name">learningRate</span> <span class="org-type">float64</span>) {
+    m.Weight = m.Weight - (learningRate * gradient)
+    fmt.<span class="org-function-name">Printf</span>(<span class="org-string">"Inside UpdateFake: Weight is now %.2f\n"</span>, m.Weight)
+    <span class="org-comment-delimiter">// </span><span class="org-comment">As soon as this function ends, the clone 'm' is destroyed.
+</span>}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">3. THE SURGERY (Pointer Receiver)
+</span><span class="org-comment-delimiter">// </span><span class="org-comment">Notice the receiver: (m *Model)
+</span><span class="org-comment-delimiter">// </span><span class="org-comment">The asterisk means "I am receiving the memory address of the original Model."
+</span><span class="org-keyword">func</span> (<span class="org-variable-name">m</span> *<span class="org-type">Model</span>) <span class="org-function-name">UpdateReal</span>(<span class="org-variable-name">gradient</span> <span class="org-type">float64</span>, <span class="org-variable-name">learningRate</span> <span class="org-type">float64</span>) {
+    m.Weight = m.Weight - (learningRate * gradient)
+    fmt.<span class="org-function-name">Printf</span>(<span class="org-string">"Inside UpdateReal: Weight is now %.2f\n"</span>, m.Weight)
+    <span class="org-comment-delimiter">// </span><span class="org-comment">We just permanently mutated the original object.
+</span>}
+
+<span class="org-keyword">func</span> <span class="org-function-name">main</span>() {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Initialize our starting state
+</span>    <span class="org-variable-name">myModel</span> := <span class="org-type">Model</span>{<span class="org-constant">Weight</span>: 10.0}
+
+    fmt.<span class="org-function-name">Printf</span>(<span class="org-string">"STARTING WEIGHT: %.2f\n\n"</span>, myModel.Weight)
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Attempt 1: The Value Receiver
+</span>    <span class="org-comment-delimiter">// </span><span class="org-comment">We try to update the weight, but we are only updating a phantom copy.
+</span>    fmt.<span class="org-function-name">Println</span>(<span class="org-string">"--- Running UpdateFake ---"</span>)
+    myModel.<span class="org-function-name">UpdateFake</span>(2.0, 0.1) 
+    fmt.<span class="org-function-name">Printf</span>(<span class="org-string">"Back in main: Weight is still %.2f! It didn't stick.\n\n"</span>, myModel.Weight)
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Attempt 2: The Pointer Receiver
+</span>    <span class="org-comment-delimiter">// </span><span class="org-comment">Because UpdateReal demands a pointer (*Model), Go automatically passes 
+</span>    <span class="org-comment-delimiter">// </span><span class="org-comment">the memory address (&amp;myModel) under the hood.
+</span>    fmt.<span class="org-function-name">Println</span>(<span class="org-string">"--- Running UpdateReal ---"</span>)
+    myModel.<span class="org-function-name">UpdateReal</span>(2.0, 0.1)
+    fmt.<span class="org-function-name">Printf</span>(<span class="org-string">"Back in main: Weight is permanently %.2f!\n"</span>, myModel.Weight)
 }
 </pre>
 </div>
 
+<div class="note" id="org9a6c76f">
 <p>
-<b>Rust</b>
-</p>
-<div class="org-src-container">
-<pre class="src src-rust"><span class="org-keyword">fn</span> <span class="org-function-name">word_freq</span>(<span class="org-variable-name">s</span>: <span class="org-rust-ampersand">&amp;</span><span class="org-type">str</span>) -&gt; <span class="org-type">HashMap</span>&lt;<span class="org-type">String</span>, <span class="org-type">i32</span>&gt; {
-    <span class="org-keyword">let</span> <span class="org-keyword">mut</span> <span class="org-variable-name">freq</span> = <span class="org-type">HashMap</span>::new();
-
-    <span class="org-keyword">for</span> <span class="org-variable-name">word</span> <span class="org-keyword">in</span> s.split_whitespace() {
-        <span class="org-keyword">let</span> <span class="org-variable-name">count</span> = freq.entry(word.to_string()).or_insert(0);
-        *count += 1;
-    }
-    freq
-}
-</pre>
-</div>
-
-<p>
-A string <code>s</code> is defined as the input for the function. Go uses a map <code>map[string]int</code> for paired values, like dictionary in python. Rust uses HashMap that takes a <code>String</code> and a 32-bit integer. Go and Rust requires that you define the output type in the function. 
-This is how it's defined in python but it's not necessary (dynamic typing).
+<b>The Rule of Thumb</b>
+When writing Go, you decide between <code>(m Model)</code> and <code>(m *Model)</code> by asking one simple question:
 </p>
 
-<div class="org-src-container">
-<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">wordFreq</span>(s: <span class="org-builtin">str</span>) <span class="org-operator">-&gt;</span> <span class="org-builtin">dict</span>[<span class="org-builtin">str</span>, <span class="org-builtin">int</span>]:
-</pre>
-</div>
-
-
-<p>
-<code>entry(word.to_string())</code>: checks if the word exists in the HashMap and, if it does, returns a mutable reference to the value. If it doesn’t exist, it inserts the default value (0 in this case). The <code>or_insert</code> method is used to either get the current value or insert the default one.
-</p>
-
-<p>
-The <code>entry()</code> API is not strictly necessary in Rust for simple cases. You could also do:
-<code>freq[word.to_string()] += 1;</code>
-</p>
-
-<p>
-This would also work, but it could panic if the word doesn’t exist in the map yet, whereas the <code>entry()</code> approach prevents that and gives more control (especially when inserting default values).
-</p>
-
-<p>
-<code>to_string()</code> converts the <code>&amp;str</code> (borrowed string slice) into an owned <code>String</code>. This is needed because HashMap in Rust uses <code>String</code> as the key type, and <code>&amp;str</code> is not compatible directly as a key in the map.
-</p>
-
-
-<div class="note" id="org099d5f8">
-<p>
-<b>Why use &amp;str instead of String?</b>
-</p>
-
-<p>
-<code>&amp;str</code> is a <i>string slice</i> in Rust. It’s a reference to a string, but it does not own the string data. It’s a borrowed view into the string and <code>s</code> is just the name of the parameter that represents this string slice.
-A <code>String</code> is owned, meaning it has its own memory allocation while a <code>&amp;str</code> is a borrowed reference
-When you use <code>&amp;str</code>, you're passing around references to the data, not owning it. This can lead to better performance and memory management, as Rust doesn't need to copy or allocate extra memory.
-<code>String</code> is for when you need to own the string data, especially if you're going to mutate or store it elsewhere.
-</p>
-
-<p>
-<code>let s = "hello";</code>   This is a &amp;str, borrowed
-<code>let owned_s = String::from("hello");</code>  This is an owned String
-</p>
+<ol class="org-ol">
+<li><b>Am I just observing the data to calculate a result?</b> (Like finding a norm, calculating a loss, or formatting a string). Use a <b>Value Receiver</b>. It's safer because the original data cannot be accidentally altered.</li>
+<li><b>Am I modifying the state, or is the struct massively huge?</b> (Like updating weights, appending data to a buffer, or interacting with a live database connection). Use a <b>Pointer Receiver</b>.</li>
+</ol>
 
 </div>
 </div>

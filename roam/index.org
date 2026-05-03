@@ -1,11 +1,14 @@
 #+TITLE: hello friend.
 
+- [[file:go-basics.org][GO Basics]]
+- [[file:into-sql.org][into-sql]]
+- [[file:git-basics.org][git-basics]]
+- [[file:into-git.org][Into-Git]]
+- [[file:go-pointers-state-mutation.org][Go: Pointers and State Mutation]]
 - [[file:go-struct-method-interface.org][Go: Struct, Method, Interface]]
 - [[file:new.org][Configuration Guide]]
-- [[file:into-git.org][Into-Git]]
 - [[file:git-internals.org][git-internals]]
 - [[file:go-rust.org][go-rust]]
-- [[file:go-basics.org][go-basics]]
 - [[file:rosetta-stone.org][rosetta-stone]]
 - [[file:http-intro.org][http-intro]]
 - [[file:scripting.org][Scripting]]

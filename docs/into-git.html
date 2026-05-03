@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-04-20 Mon 17:28 -->
+<!-- 2026-05-03 Sun 19:36 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Into-Git</title>
@@ -250,23 +250,27 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org809de1a">Git</a></li>
-<li><a href="#org386c777">Status</a></li>
-<li><a href="#orgdafe2d4">Staging</a></li>
-<li><a href="#org772cb76">Commit</a>
+<li><a href="#org4f5bcd4">Git</a></li>
+<li><a href="#org7c8e5a3">Status</a></li>
+<li><a href="#org1f51a4c">Staging</a></li>
+<li><a href="#org2e4fce7">Commit</a>
 <ul>
-<li><a href="#org06cb5c8">What happens when you commit?</a></li>
+<li><a href="#orgfa12d25">What happens when you commit?</a></li>
 </ul>
 </li>
-<li><a href="#orgc49c5a8">Git Log</a></li>
-<li><a href="#org383da53">Notes</a></li>
-<li><a href="#org3e420dc">Commit Quality</a></li>
+<li><a href="#org8ee7bab">Git Log</a></li>
+</ul>
+</li>
+<li><a href="#orge942e92">Inode busting???</a>
+<ul>
+<li><a href="#org51e8e4b">Notes</a></li>
+<li><a href="#orgcf545f1">Commit Quality</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org809de1a" class="outline-2">
-<h2 id="org809de1a">Git</h2>
-<div class="outline-text-2" id="text-org809de1a">
+<div id="outline-container-org4f5bcd4" class="outline-3">
+<h3 id="org4f5bcd4">Git</h3>
+<div class="outline-text-3" id="text-org4f5bcd4">
 <p>
 Local Git Directory Layout
 </p>
@@ -282,9 +286,9 @@ If .git/ is deleted, the folder is no longer a Git repo.
 </p>
 </div>
 </div>
-<div id="outline-container-org386c777" class="outline-2">
-<h2 id="org386c777">Status</h2>
-<div class="outline-text-2" id="text-org386c777">
+<div id="outline-container-org7c8e5a3" class="outline-3">
+<h3 id="org7c8e5a3">Status</h3>
+<div class="outline-text-3" id="text-org7c8e5a3">
 <p>
 A file can be in one of several states in a Git repository. Here are a few important ones:
 </p>
@@ -300,9 +304,9 @@ The git status command shows you the current state of your repo. It will tell yo
 </p>
 </div>
 </div>
-<div id="outline-container-orgdafe2d4" class="outline-2">
-<h2 id="orgdafe2d4">Staging</h2>
-<div class="outline-text-2" id="text-orgdafe2d4">
+<div id="outline-container-org1f51a4c" class="outline-3">
+<h3 id="org1f51a4c">Staging</h3>
+<div class="outline-text-3" id="text-org1f51a4c">
 <p>
 The contents.md file has been created, but as we saw, it's untracked. We need to stage it (add it to the "index") with the git add command before committing it later.
 </p>
@@ -320,9 +324,9 @@ Here's the command:
 </p>
 </div>
 </div>
-<div id="outline-container-org772cb76" class="outline-2">
-<h2 id="org772cb76">Commit</h2>
-<div class="outline-text-2" id="text-org772cb76">
+<div id="outline-container-org2e4fce7" class="outline-3">
+<h3 id="org2e4fce7">Commit</h3>
+<div class="outline-text-3" id="text-org2e4fce7">
 <p>
 After staging a file, we can commit it.
 </p>
@@ -339,9 +343,9 @@ Here's how to commit all of your staged files:
 <code>git commit -m "your message here"</code>
 </p>
 </div>
-<div id="outline-container-org06cb5c8" class="outline-3">
-<h3 id="org06cb5c8">What happens when you commit?</h3>
-<div class="outline-text-3" id="text-org06cb5c8">
+<div id="outline-container-orgfa12d25" class="outline-4">
+<h4 id="orgfa12d25">What happens when you commit?</h4>
+<div class="outline-text-4" id="text-orgfa12d25">
 <p>
 Git takes a snapshot of the file,
 Stores it as a blob object,
@@ -351,9 +355,9 @@ Creates a commit object pointing to the tree + metadata (author, timestamp, mess
 </div>
 </div>
 </div>
-<div id="outline-container-orgc49c5a8" class="outline-2">
-<h2 id="orgc49c5a8">Git Log</h2>
-<div class="outline-text-2" id="text-orgc49c5a8">
+<div id="outline-container-org8ee7bab" class="outline-3">
+<h3 id="org8ee7bab">Git Log</h3>
+<div class="outline-text-3" id="text-org8ee7bab">
 <p>
 A Git repo is a (potentially very long) list of commits, where each commit represents the full state of the repository at a given point in time.
 </p>
@@ -371,13 +375,14 @@ What was changed
 <p>
 <code>git --no-pager log -n 10</code>
 or
-<code>git --no-pager log -n 10 --online --parents --graph</code> 
+<code>git --no-pager log -n 10 --oneline --parents --graph</code> 
+<code>git --no-pager log --oneline --graph --decorate --all</code>
 </p>
-
-<p>
-Inode busting???
-</p>
-
+</div>
+</div>
+<div id="outline-container-orge942e92" class="outline-2">
+<h2 id="orge942e92">Inode busting???</h2>
+<div class="outline-text-2" id="text-orge942e92">
 <p>
 A Commit Hash
 </p>
@@ -414,19 +419,18 @@ Note: Hash = SHA
 Git uses a cryptographic hash function called SHA-1 to generate commit hashes. We won't go into the details of how SHA-1 works in this course, but it's important to know because you might also hear commit hashes referred to as "SHAs".
 </p>
 </div>
-</div>
-<div id="outline-container-org383da53" class="outline-2">
-<h2 id="org383da53">Notes</h2>
-<div class="outline-text-2" id="text-org383da53">
+<div id="outline-container-org51e8e4b" class="outline-3">
+<h3 id="org51e8e4b">Notes</h3>
+<div class="outline-text-3" id="text-org51e8e4b">
 <p>
 You cab see Tree as a directory and blob as a file
 git cat-file -p &lt;hash&gt;
 </p>
 </div>
 </div>
-<div id="outline-container-org3e420dc" class="outline-2">
-<h2 id="org3e420dc">Commit Quality</h2>
-<div class="outline-text-2" id="text-org3e420dc">
+<div id="outline-container-orgcf545f1" class="outline-3">
+<h3 id="orgcf545f1">Commit Quality</h3>
+<div class="outline-text-3" id="text-orgcf545f1">
 <p>
 Commits should contain changes related to a <b><b>single topic</b></b> to maintain clarity and ease of understanding for both current and future collaborators.
 </p>
@@ -680,6 +684,7 @@ Commits should contain changes related to a <b><b>single topic</b></b> to mainta
 <li><b><b>Merge commit:</b></b> A commit automatically created by Git to join two divergent branches.</li>
 <li><b><b>Rebase:</b></b> Reapplies commits on top of another branch to create a linear history, rewriting commit hashes.</li>
 </ul>
+</div>
 </div>
 </div>
 </div>

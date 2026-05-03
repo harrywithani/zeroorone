@@ -6,7 +6,7 @@
 <!-- 2026-05-03 Sun 19:36 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>go-rust</title>
+<title>git-basics</title>
 <meta name="generator" content="Org Mode" />
 <style type="text/css">
   #content { max-width: 60em; margin: auto; }
@@ -202,7 +202,7 @@
     <nav class='breadcrumb'>
       <a href='/zeroorone/index.html'>Home</a>
       <span class='breadcrumb-sep'>/</span>
-      <span class='breadcrumb-current'>go-rust</span>
+      <span class='breadcrumb-current'>git-basics</span>
     </nav>
     <div class='controls'>
       <button class='sidebar-toggle' title='Search'>
@@ -245,96 +245,292 @@
   </aside>
 </div>
 <div id="content" class="content">
-<h1 class="title">go-rust</h1>
+<h1 class="title">git-basics</h1>
 <div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org548b4ce">Word Frequency Counter</a></li>
+<li><a href="#orgb1ab9b5">Git Config</a>
+<ul>
+<li><a href="#orgbc78ac6">System, Global, local, worktree</a></li>
+<li><a href="#org3007291">Get</a></li>
+<li><a href="#orgcac7dd5">Unset</a></li>
+<li><a href="#orgf8917b2">remove-section</a></li>
+<li><a href="#org500291f">Unset-all</a></li>
+</ul>
+</li>
+<li><a href="#org7f82f99">Git branching</a>
+<ul>
+<li><a href="#org53a2f96">New Branch</a></li>
+<li><a href="#orga2fc5b5">Merge</a>
+<ul>
+<li><a href="#orga9f3a6d">Fastforwarsd merge</a></li>
+</ul>
+</li>
+<li><a href="#org5991129">Delete a branch</a></li>
+<li><a href="#org2256668">Rebase</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org548b4ce" class="outline-2">
-<h2 id="org548b4ce">Word Frequency Counter</h2>
-<div class="outline-text-2" id="text-org548b4ce">
+<div id="outline-container-orgb1ab9b5" class="outline-2">
+<h2 id="orgb1ab9b5">Git Config</h2>
+<div class="outline-text-2" id="text-orgb1ab9b5">
 <p>
-<b>Go</b>
+Git stores author information so that when you're making a commit it can track who made the change. 
 </p>
-<div class="org-src-container">
-<pre class="src src-go"><span class="org-keyword">func</span> <span class="org-function-name">wordFreq</span>(<span class="org-variable-name">s</span> <span class="org-type">string</span>) <span class="org-keyword">map</span>[<span class="org-type">string</span>]<span class="org-type">int</span> {
-        <span class="org-variable-name">freq</span> := <span class="org-builtin">make</span>(<span class="org-keyword">map</span>[<span class="org-type">string</span>]<span class="org-type">int</span>)
-        <span class="org-variable-name">words</span> := strings.<span class="org-function-name">Split</span>(s, <span class="org-string">" "</span>)
 
-        <span class="org-keyword">for</span> <span class="org-variable-name">_</span>, <span class="org-variable-name">word</span> := <span class="org-keyword">range</span> words {
-                freq[word]++
-        }
-        <span class="org-keyword">return</span> freq
-}
+<p>
+Let's take the command apart:
+</p>
+
+<p>
+git config: The command to interact with your Git configuration.
+set: The subcommand to set a value – i.e., to add it if it doesn't already exist, or update it if it does.
+&#x2013;global: Flag stating you want this configuration to be stored globally in your ~/.gitconfig. The opposite is &#x2013;local, which stores the configuration in the current repository only.
+user: The section.
+name: The key within the section.
+"ThePrimeagen": The value you want to set for the key.
+</p>
+
+<p>
+Git has a command to view the contents of your config:
+</p>
+
+<p>
+git config list &#x2013;local
+</p>
+
+<p>
+You can also just view the contents of your local config file directly:
+</p>
+
+<p>
+cat .git/config
+</p>
+</div>
+<div id="outline-container-orgbc78ac6" class="outline-3">
+<h3 id="orgbc78ac6">System, Global, local, worktree</h3>
+<div class="outline-text-3" id="text-orgbc78ac6">
+<p>
+There are several locations where Git can be configured. From more general to more specific, they are:
+</p>
+
+<p>
+system: <i>etc/gitconfig, a file that configures Git for all users on the system
+global: ~</i>.gitconfig, a file that configures Git for all projects of a user
+local: .git/config, a file that configures Git for a specific project
+worktree: .git/config.worktree, a file that configures Git for part of a project
+</p>
+
+<p>
+In my experience, 90% of the time you will be using &#x2013;global to set things like your username and email. The other 9% of the time you will be using &#x2013;local to set project-specific configurations. The last 1% of the time you might need to futz with system and worktree configurations, but it's extremely rare.
+</p>
+</div>
+</div>
+<div id="outline-container-org3007291" class="outline-3">
+<h3 id="org3007291">Get</h3>
+<div class="outline-text-3" id="text-org3007291">
+<p>
+We've used list to see all the configuration values, but the get subcommand is useful for getting a single value.
+</p>
+
+<p>
+git config get &lt;key&gt;
+</p>
+
+<p>
+Keys are in the format &lt;section&gt;.&lt;keyname&gt;.
+</p>
+</div>
+</div>
+<div id="outline-container-orgcac7dd5" class="outline-3">
+<h3 id="orgcac7dd5">Unset</h3>
+<div class="outline-text-3" id="text-orgcac7dd5">
+<p>
+Unset
+</p>
+
+<p>
+The unset subcommand is used to remove a configuration value. For example:
+</p>
+
+<p>
+git config unset &lt;key&gt;
+</p>
+
+
+<p>
+Only works with section and a key <code>&lt;section&gt;.&lt;keyname&gt;</code>
+</p>
+</div>
+</div>
+<div id="outline-container-orgf8917b2" class="outline-3">
+<h3 id="orgf8917b2">remove-section</h3>
+<div class="outline-text-3" id="text-orgf8917b2">
+<p>
+<code>git config --remove-section &lt;section&gt;</code>
+</p>
+</div>
+</div>
+<div id="outline-container-org500291f" class="outline-3">
+<h3 id="org500291f">Unset-all</h3>
+<div class="outline-text-3" id="text-org500291f">
+<p>
+<code>git config --unset-all webflyx.ceo</code>
+</p>
+
+<p>
+Removes all
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org7f82f99" class="outline-2">
+<h2 id="org7f82f99">Git branching</h2>
+<div class="outline-text-2" id="text-org7f82f99">
+<p>
+A Git branch allows you to keep track of different changes separately.
+</p>
+
+<p>
+For example, let's say you have a big web project and you want to experiment with changing the color scheme. Instead of changing the entire project directly (as of right now, our master branch), you can create a new branch called color<sub>scheme</sub> and work on that branch. When you're done, if you like the changes, you can merge the color<sub>scheme</sub> branch back into the master branch to keep the changes. If you don't like the changes, you can simply delete the color<sub>scheme</sub> branch and go back to the master branch.
+Under the Hood
+</p>
+
+<p>
+A branch is just a named pointer to a specific commit. When you create a branch, you are creating a new pointer to a specific commit. The commit that the branch points to is called the tip of the branch.
+Because a branch is just a pointer to a commit, they're lightweight and "cheap" resource-wise to create. When you create 10 branches, you're not creating 10 copies of your project on your hard drive.
+</p>
+
+<p>
+Check which branch you're currently on by running:
+</p>
+
+<p>
+<code>git branch</code>
+</p>
+
+<p>
+Rename a branch
+<code>git branch -m oldname newname</code>
+</p>
+</div>
+<div id="outline-container-org53a2f96" class="outline-3">
+<h3 id="org53a2f96">New Branch</h3>
+<div class="outline-text-3" id="text-org53a2f96">
+<p>
+You should already be on the main branch: your "default" branch. You can always check with git branch.
+Two Ways to Create a Branch
+</p>
+
+<p>
+<code>git branch my_new_branch</code>
+</p>
+
+<p>
+This creates a new branch called <code>my_new_branch</code>. The thing is, I rarely use this command because usually I want to create a branch and switch to it immediately. So I use this command instead:
+</p>
+
+<p>
+<code>git switch -c my_new_branch</code>
+</p>
+
+<p>
+<code>-c</code> is for create. Use without c to just switch.
+</p>
+
+<p>
+The switch command allows you to switch branches. Including the -c flag tells Git to create a new branch and switch to it.
+</p>
+
+<p>
+When you create a new branch, it uses the current commit you are on as the branch base. For example, if you're on your main branch with 3 commits, A, B, and C, and then you run <code>git switch -c my_new_branch</code>, your new branch will look like this:
+</p>
+
+<p>
+Another way to switch
+</p>
+
+<p>
+<code>git checkout prime</code>
+</p>
+</div>
+</div>
+<div id="outline-container-orga2fc5b5" class="outline-3">
+<h3 id="orga2fc5b5">Merge</h3>
+<div class="outline-text-3" id="text-orga2fc5b5">
+<p>
+<code>git merge branch_to_merge</code>
+</p>
+
+<p>
+View the commits and merges
+ <code>git log --oneline --decorate --graph --parents</code>
+</p>
+</div>
+<div id="outline-container-orga9f3a6d" class="outline-4">
+<h4 id="orga9f3a6d">Fastforwarsd merge</h4>
+<div class="outline-text-4" id="text-orga9f3a6d">
+<p>
+The branch you are merging onto if the tip of that branch is the merge base - fast forward branch
+Basically there is no branch.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org5991129" class="outline-3">
+<h3 id="org5991129">Delete a branch</h3>
+<div class="outline-text-3" id="text-org5991129">
+<p>
+<code>git branch -d branch_name</code>
+</p>
+
+
+
+<p>
+I need some notes of these
+&#x2013;oneline
+&#x2013;graph
+&#x2013;parents
+&#x2013;all
+and other stuff that's very commonly used and would be useful
+</p>
+</div>
+</div>
+<div id="outline-container-org2256668" class="outline-3">
+<h3 id="org2256668">Rebase</h3>
+<div class="outline-text-3" id="text-org2256668">
+<p>
+Moves the branch to the tip of the base of the main branch that the feature branch is based on 
+</p>
+
+<p>
+Visualizing Rebase
+</p>
+
+<p>
+Say we have this commit history:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">A - B - C    main
+   <span class="org-sh-escaped-newline">\</span>
+    D - E    feature_branch
 </pre>
 </div>
 
 <p>
-<b>Rust</b>
-</p>
-<div class="org-src-container">
-<pre class="src src-rust"><span class="org-keyword">fn</span> <span class="org-function-name">word_freq</span>(<span class="org-variable-name">s</span>: <span class="org-rust-ampersand">&amp;</span><span class="org-type">str</span>) -&gt; <span class="org-type">HashMap</span>&lt;<span class="org-type">String</span>, <span class="org-type">i32</span>&gt; {
-    <span class="org-keyword">let</span> <span class="org-keyword">mut</span> <span class="org-variable-name">freq</span> = <span class="org-type">HashMap</span>::new();
-
-    <span class="org-keyword">for</span> <span class="org-variable-name">word</span> <span class="org-keyword">in</span> s.split_whitespace() {
-        <span class="org-keyword">let</span> <span class="org-variable-name">count</span> = freq.entry(word.to_string()).or_insert(0);
-        *count += 1;
-    }
-    freq
-}
-</pre>
-</div>
-
-<p>
-A string <code>s</code> is defined as the input for the function. Go uses a map <code>map[string]int</code> for paired values, like dictionary in python. Rust uses HashMap that takes a <code>String</code> and a 32-bit integer. Go and Rust requires that you define the output type in the function. 
-This is how it's defined in python but it's not necessary (dynamic typing).
+We're working on <code>feature_branch</code>, and want to bring in the changes our team added to main so we're not working with a stale branch. We could merge main into <code>feature_branch</code>, but that would create an additional merge commit. Rebase avoids a merge commit by replaying the commits from <code>feature_branch</code> on top of main. After a rebase, the history will look like this:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">wordFreq</span>(s: <span class="org-builtin">str</span>) <span class="org-operator">-&gt;</span> <span class="org-builtin">dict</span>[<span class="org-builtin">str</span>, <span class="org-builtin">int</span>]:
+<pre class="src src-bash">A - B - C         main
+         <span class="org-sh-escaped-newline">\</span>
+          D - E   feature_branch
 </pre>
 </div>
-
-
-<p>
-<code>entry(word.to_string())</code>: checks if the word exists in the HashMap and, if it does, returns a mutable reference to the value. If it doesn’t exist, it inserts the default value (0 in this case). The <code>or_insert</code> method is used to either get the current value or insert the default one.
-</p>
-
-<p>
-The <code>entry()</code> API is not strictly necessary in Rust for simple cases. You could also do:
-<code>freq[word.to_string()] += 1;</code>
-</p>
-
-<p>
-This would also work, but it could panic if the word doesn’t exist in the map yet, whereas the <code>entry()</code> approach prevents that and gives more control (especially when inserting default values).
-</p>
-
-<p>
-<code>to_string()</code> converts the <code>&amp;str</code> (borrowed string slice) into an owned <code>String</code>. This is needed because HashMap in Rust uses <code>String</code> as the key type, and <code>&amp;str</code> is not compatible directly as a key in the map.
-</p>
-
-
-<div class="note" id="org099d5f8">
-<p>
-<b>Why use &amp;str instead of String?</b>
-</p>
-
-<p>
-<code>&amp;str</code> is a <i>string slice</i> in Rust. It’s a reference to a string, but it does not own the string data. It’s a borrowed view into the string and <code>s</code> is just the name of the parameter that represents this string slice.
-A <code>String</code> is owned, meaning it has its own memory allocation while a <code>&amp;str</code> is a borrowed reference
-When you use <code>&amp;str</code>, you're passing around references to the data, not owning it. This can lead to better performance and memory management, as Rust doesn't need to copy or allocate extra memory.
-<code>String</code> is for when you need to own the string data, especially if you're going to mutate or store it elsewhere.
-</p>
-
-<p>
-<code>let s = "hello";</code>   This is a &amp;str, borrowed
-<code>let owned_s = String::from("hello");</code>  This is an owned String
-</p>
-
 </div>
 </div>
 </div>

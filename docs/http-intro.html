@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-04-20 Mon 17:28 -->
+<!-- 2026-05-03 Sun 19:36 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>http-intro</title>
@@ -250,32 +250,32 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgef9ab57">What is HTTP?</a></li>
-<li><a href="#org9d74a73">Anatomy of an HTTP Request</a></li>
-<li><a href="#orge9efb54">HTTPS?</a></li>
-<li><a href="#orgaa6e1c4">HTTP Methods</a>
+<li><a href="#org4130b77">What is HTTP?</a></li>
+<li><a href="#org4eaf671">Anatomy of an HTTP Request</a></li>
+<li><a href="#org2002063">HTTPS?</a></li>
+<li><a href="#org68ad2b8">HTTP Methods</a>
 <ul>
-<li><a href="#org773093e">GET</a></li>
-<li><a href="#org77800b3">POST</a></li>
-<li><a href="#orgc4ea515">PUT</a></li>
-<li><a href="#org048ed96">DELETE</a></li>
+<li><a href="#orgc7779cd">GET</a></li>
+<li><a href="#org4717110">POST</a></li>
+<li><a href="#org969a7d3">PUT</a></li>
+<li><a href="#orge7befa4">DELETE</a></li>
 </ul>
 </li>
-<li><a href="#orgae748eb">HTTP Header Fields</a></li>
+<li><a href="#org04e0504">HTTP Header Fields</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgef9ab57" class="outline-2">
-<h2 id="orgef9ab57">What is HTTP?</h2>
-<div class="outline-text-2" id="text-orgef9ab57">
+<div id="outline-container-org4130b77" class="outline-2">
+<h2 id="org4130b77">What is HTTP?</h2>
+<div class="outline-text-2" id="text-org4130b77">
 <p>
 Hyper Text Transfer Protocol (HTTP) is like a conversation between a client and a server, where every interaction is a request and a respone. HTTP is stateless that means it doesn't remember anything about previous transactions (a request and a response). When a client sends a request <code>GET /profile</code>  the server responds with the header and if the client requests <code>GET /order</code> the server doesn't know they are the same clients. So how does a server know it's the same person who islogged in? This is usually handled through tokens and cookies. 
 </p>
 </div>
 </div>
-<div id="outline-container-org9d74a73" class="outline-2">
-<h2 id="org9d74a73">Anatomy of an HTTP Request</h2>
-<div class="outline-text-2" id="text-org9d74a73">
+<div id="outline-container-org4eaf671" class="outline-2">
+<h2 id="org4eaf671">Anatomy of an HTTP Request</h2>
+<div class="outline-text-2" id="text-org4eaf671">
 <div class="org-src-container">
 <pre class="src src-text">GET /users/123 HTTP/1.1
 Host: example.com
@@ -285,9 +285,9 @@ Authorization: Bearer abc123
 </div>
 </div>
 </div>
-<div id="outline-container-orge9efb54" class="outline-2">
-<h2 id="orge9efb54">HTTPS?</h2>
-<div class="outline-text-2" id="text-orge9efb54">
+<div id="outline-container-org2002063" class="outline-2">
+<h2 id="org2002063">HTTPS?</h2>
+<div class="outline-text-2" id="text-org2002063">
 <p>
 Hyper Text Transfer Protocol Secure
 Data is encrypted by SSL/TLS
@@ -296,26 +296,26 @@ Transport Security Layer
 </p>
 </div>
 </div>
-<div id="outline-container-orgaa6e1c4" class="outline-2">
-<h2 id="orgaa6e1c4">HTTP Methods</h2>
-<div class="outline-text-2" id="text-orgaa6e1c4">
+<div id="outline-container-org68ad2b8" class="outline-2">
+<h2 id="org68ad2b8">HTTP Methods</h2>
+<div class="outline-text-2" id="text-org68ad2b8">
 </div>
-<div id="outline-container-org773093e" class="outline-3">
-<h3 id="org773093e">GET</h3>
+<div id="outline-container-orgc7779cd" class="outline-3">
+<h3 id="orgc7779cd">GET</h3>
 </div>
-<div id="outline-container-org77800b3" class="outline-3">
-<h3 id="org77800b3">POST</h3>
+<div id="outline-container-org4717110" class="outline-3">
+<h3 id="org4717110">POST</h3>
 </div>
-<div id="outline-container-orgc4ea515" class="outline-3">
-<h3 id="orgc4ea515">PUT</h3>
+<div id="outline-container-org969a7d3" class="outline-3">
+<h3 id="org969a7d3">PUT</h3>
 </div>
-<div id="outline-container-org048ed96" class="outline-3">
-<h3 id="org048ed96">DELETE</h3>
+<div id="outline-container-orge7befa4" class="outline-3">
+<h3 id="orge7befa4">DELETE</h3>
 </div>
 </div>
-<div id="outline-container-orgae748eb" class="outline-2">
-<h2 id="orgae748eb">HTTP Header Fields</h2>
-<div class="outline-text-2" id="text-orgae748eb">
+<div id="outline-container-org04e0504" class="outline-2">
+<h2 id="org04e0504">HTTP Header Fields</h2>
+<div class="outline-text-2" id="text-org04e0504">
 <ul class="org-ul">
 <li>method</li>
 <li>path</li>

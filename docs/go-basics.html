@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-04-20 Mon 17:28 -->
+<!-- 2026-05-03 Sun 19:36 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>go-basics</title>
+<title>GO Basics</title>
 <meta name="generator" content="Org Mode" />
 <style type="text/css">
   #content { max-width: 60em; margin: auto; }
@@ -202,7 +202,7 @@
     <nav class='breadcrumb'>
       <a href='/zeroorone/index.html'>Home</a>
       <span class='breadcrumb-sep'>/</span>
-      <span class='breadcrumb-current'>go-basics</span>
+      <span class='breadcrumb-current'>GO Basics</span>
     </nav>
     <div class='controls'>
       <button class='sidebar-toggle' title='Search'>
@@ -245,118 +245,1125 @@
   </aside>
 </div>
 <div id="content" class="content">
-<h1 class="title">go-basics</h1>
+<h1 class="title">GO Basics</h1>
 <div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org97dc45f">Slice ([]string)</a></li>
-<li><a href="#org069a641">Map (actual dictionary)</a></li>
-<li><a href="#org77ab2b7">Flag</a></li>
+<li><a href="#orgb49aea8">Core Basics</a>
+<ul>
+<li><a href="#orgbd1d2a1">Variables</a></li>
+<li><a href="#orgb59c9b3">Constants</a></li>
+<li><a href="#org33895de">Primitive Types</a></li>
+<li><a href="#org4076bb5">Type Conversion (Explicit)</a></li>
+<li><a href="#org9774085">Pointers</a></li>
+</ul>
+</li>
+<li><a href="#orgb758209">Control Flow</a>
+<ul>
+<li><a href="#org3bd0ce9">If/Else</a></li>
+<li><a href="#orgb1ea90e">For Loops</a></li>
+<li><a href="#org02f1109">Range Loop</a></li>
+<li><a href="#org0e5f322">Switch</a></li>
+</ul>
+</li>
+<li><a href="#orgd1b3b41">Functions</a></li>
+<li><a href="#org4a0eead">Error Handling</a>
+<ul>
+<li><a href="#org061cc0f">Defer</a></li>
+</ul>
+</li>
+<li><a href="#org6107ab8">Data Structures</a>
+<ul>
+<li><a href="#org0f81b46">Arrays &amp; Slices</a></li>
+<li><a href="#orgf539c23">Maps</a></li>
+</ul>
+</li>
+<li><a href="#org327b49c">Formatting and Output</a>
+<ul>
+<li><a href="#org0677587">String Manipulation</a></li>
+<li><a href="#orgd1196ac">Printing</a></li>
+<li><a href="#org3c88c97">Formatting Strings</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org5e00aa0">Printing Structs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgc324cc5">Input and CLI</a>
+<ul>
+<li><a href="#org44f863f">Using fmt</a></li>
+<li><a href="#orgf10e220">Quick stdin read</a></li>
+<li><a href="#org0777aac">String to Int</a></li>
+<li><a href="#org78813eb">Command-line Arguments</a></li>
+</ul>
+</li>
+<li><a href="#orgee39bdc">File I/O</a>
+<ul>
+<li><a href="#orgdb7a18d">Reading from file</a></li>
+<li><a href="#org03e05f0">Read entire file at once</a></li>
+<li><a href="#orgda57442">Read line by line from a file</a></li>
+<li><a href="#org11f357d">Writing to file</a></li>
+<li><a href="#org8122976">Append to file</a></li>
+<li><a href="#org36e6be3">Buffered Write</a></li>
+</ul>
+</li>
+<li><a href="#org8d2a0c6">JSON</a></li>
+<li><a href="#org917b881">Running external commands</a></li>
+<li><a href="#org682abc8">Some Standard Library Packages</a>
+<ul>
+<li><a href="#org16f915f">time</a></li>
+<li><a href="#org3e0f95a">filepath</a></li>
+<li><a href="#orga4fbecf">net/http (Quick HTTP server)</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
-<p>
-What is this?
-os.Args is a []string (slice of strings)
-It contains everything typed in the command
-</p>
-
-<p>
-Index	Value
-os.Args[0]	program name
-os.Args[1]	first argument
-os.Args[2]	second argument
-</p>
-<div id="outline-container-org97dc45f" class="outline-2">
-<h2 id="org97dc45f">Slice ([]string)</h2>
-<div class="outline-text-2" id="text-org97dc45f">
-<p>
-A []string (slice of strings) is:
-</p>
-
-<p>
-an ordered list of values
-</p>
-
-<p>
-Indexes are automatic positions, not keys you define
-You don’t choose the index, Go assigns it (0, 1, 2&#x2026;)
-args := []string{"a", "b", "c"}
-args[0] // "a"
-</p>
+<div id="outline-container-orgb49aea8" class="outline-2">
+<h2 id="orgb49aea8">Core Basics</h2>
+<div class="outline-text-2" id="text-orgb49aea8">
 </div>
-</div>
-<div id="outline-container-org069a641" class="outline-2">
-<h2 id="org069a641">Map (actual dictionary)</h2>
-<div class="outline-text-2" id="text-org069a641">
-<p>
-m := map[string]string{
-	"name": "john",
+<div id="outline-container-orgbd1d2a1" class="outline-3">
+<h3 id="orgbd1d2a1">Variables</h3>
+<div class="outline-text-3" id="text-orgbd1d2a1">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">package</span> main
+
+<span class="org-keyword">import</span> <span class="org-string">"fmt"</span>
+
+<span class="org-keyword">func</span> <span class="org-function-name">main</span>() {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Explicit type
+</span>    <span class="org-keyword">var</span> <span class="org-variable-name">name</span> <span class="org-type">string</span> = <span class="org-string">"Alice"</span>
+    <span class="org-keyword">var</span> <span class="org-variable-name">age</span> <span class="org-type">int</span> = 25
+    <span class="org-keyword">var</span> <span class="org-variable-name">balance</span> <span class="org-type">float64</span> = 100.50
+    <span class="org-keyword">var</span> <span class="org-variable-name">active</span> <span class="org-type">bool</span> = <span class="org-constant">true</span>
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Type inference (Go figures it out)
+</span>    <span class="org-keyword">var</span> <span class="org-variable-name">city</span> = <span class="org-string">"New York"</span>  <span class="org-comment-delimiter">// </span><span class="org-comment">string
+</span>    <span class="org-keyword">var</span> <span class="org-variable-name">count</span> = 42         <span class="org-comment-delimiter">// </span><span class="org-comment">int
+</span>
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Short declaration (inside functions only)
+</span>    <span class="org-variable-name">message</span> := <span class="org-string">"Hello"</span>
+    <span class="org-variable-name">x</span> := 10
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Short declaration NOT allowed at package level
+</span>    <span class="org-comment-delimiter">// </span><span class="org-comment">name := "Bob"  // ERROR outside function
+</span>
+    fmt.<span class="org-function-name">Println</span>(name, age, city, message)
 }
-</p>
+</pre>
+</div>
 
-<p>
-m["name"] // "john"
-</p>
+
+<ul class="org-ul">
+<li>Go is <b>strongly typed</b>: once a variable is declared, its type is fixed</li>
+<li>Zero values: strings <code>""</code>, ints <code>0</code>, bools <code>false</code>, pointers <code>nil</code>, slice <code>nil</code></li>
+</ul>
 </div>
 </div>
-<div id="outline-container-org77ab2b7" class="outline-2">
-<h2 id="org77ab2b7">Flag</h2>
-<div class="outline-text-2" id="text-org77ab2b7">
+<div id="outline-container-orgb59c9b3" class="outline-3">
+<h3 id="orgb59c9b3">Constants</h3>
+<div class="outline-text-3" id="text-orgb59c9b3">
 <p>
-package main
+Constants must be known at compile time. You cannot assign values returned from functions or computed at runtime.
 </p>
 
-<p>
-import (
-	"flag"
-	"fmt"
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-comment-delimiter">// </span><span class="org-comment">Constants (values known at compile time)
+</span><span class="org-keyword">const</span> <span class="org-constant">Pi</span> = 3.14159
+<span class="org-keyword">const</span> <span class="org-constant">MaxConnections</span> <span class="org-type">int</span> = 100
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Group constants
+</span><span class="org-keyword">const</span> (
+    <span class="org-constant">Red</span>    = <span class="org-string">"red"</span>
+    <span class="org-constant">Green</span>  = <span class="org-string">"green"</span>
+    <span class="org-constant">Blue</span>   = <span class="org-string">"blue"</span>
 )
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Iota (auto-incrementing)
+</span><span class="org-keyword">const</span> (
+    <span class="org-constant">Small</span>  = <span class="org-constant">iota</span>  <span class="org-comment-delimiter">// </span><span class="org-comment">0
+</span>    <span class="org-constant">Medium</span>         <span class="org-comment-delimiter">// </span><span class="org-comment">1
+</span>    <span class="org-constant">Large</span>          <span class="org-comment-delimiter">// </span><span class="org-comment">2
+</span>)
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Constants can't be reassigned
+</span><span class="org-comment-delimiter">// </span><span class="org-comment">Pi = 3.15  // ERROR
+</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org33895de" class="outline-3">
+<h3 id="org33895de">Primitive Types</h3>
+<div class="outline-text-3" id="text-org33895de">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">var</span> <span class="org-variable-name">a</span> <span class="org-type">int</span> = 42           <span class="org-comment-delimiter">// </span><span class="org-comment">signed, platform-dependent size
+</span><span class="org-keyword">var</span> <span class="org-variable-name">g</span> <span class="org-type">float64</span> = 3.14159  <span class="org-comment-delimiter">// </span><span class="org-comment">Preferred for precision
+</span><span class="org-keyword">var</span> <span class="org-variable-name">s</span> <span class="org-type">string</span> = <span class="org-string">"hello"</span>
+<span class="org-keyword">var</span> <span class="org-variable-name">active</span> <span class="org-type">bool</span> = <span class="org-constant">true</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Printing types
+</span>fmt.<span class="org-function-name">Printf</span>(<span class="org-string">"%T\n"</span>, 42)        <span class="org-comment-delimiter">// </span><span class="org-comment">int
+</span>fmt.<span class="org-function-name">Printf</span>(<span class="org-string">"%T\n"</span>, 3.14)      <span class="org-comment-delimiter">// </span><span class="org-comment">float64
+</span>fmt.<span class="org-function-name">Printf</span>(<span class="org-string">"%T\n"</span>, <span class="org-string">"hello"</span>)   <span class="org-comment-delimiter">// </span><span class="org-comment">string
+</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org4076bb5" class="outline-3">
+<h3 id="org4076bb5">Type Conversion (Explicit)</h3>
+<div class="outline-text-3" id="text-org4076bb5">
+<p>
+Go requires Explicit type conversion (no automatic)
 </p>
 
-<p>
-func main() {
-	file := flag.String("file", "", "file to read")
-	flag.Parse()
-</p>
 
-<p>
-	fmt.Println(*file)
+<div class="org-src-container">
+<pre class="src src-go">  <span class="org-keyword">var</span> <span class="org-variable-name">x</span> <span class="org-type">int</span> = 42
+  <span class="org-keyword">var</span> <span class="org-variable-name">y</span> <span class="org-type">float64</span> = <span class="org-function-name">float64</span>(x)      <span class="org-comment-delimiter">// </span><span class="org-comment">Must convert explicitly
+</span>  <span class="org-keyword">var</span> <span class="org-variable-name">z</span> <span class="org-type">int</span> = <span class="org-function-name">int</span>(y)
+
+  <span class="org-keyword">var</span> <span class="org-variable-name">s</span> <span class="org-type">string</span> = <span class="org-string">"42"</span>
+  <span class="org-comment-delimiter">//  </span><span class="org-comment">var num int = int(s)            //  Does not compile
+</span><span class="org-variable-name">num</span>, <span class="org-variable-name">err</span> := strconv.<span class="org-function-name">Atoi</span>(s)
+<span class="org-keyword">if</span> err != <span class="org-constant">nil</span> {
+    fmt.<span class="org-function-name">Println</span>(<span class="org-string">"Conversion failed:"</span>, err)
 }
-</p>
 
-<p>
-Part	Meaning
-"file"	flag name → -file
-""	default value
-"file to read"	help description
-</p>
-
-<p>
-go run main.go -file=abc.txt
-</p>
-
-
-<div class="note" id="org253eb35">
-<p>
-This is a note
-</p>
-
+  <span class="org-keyword">var</span> <span class="org-variable-name">f</span> <span class="org-type">float64</span> = 3.14
+  <span class="org-keyword">var</span> <span class="org-variable-name">si</span> <span class="org-type">string</span> = strconv.<span class="org-function-name">FormatFloat</span>(f, <span class="org-string">'f'</span>, 2, 64)  <span class="org-comment-delimiter">// </span><span class="org-comment">Convert to string</span>
+</pre>
 </div>
 
-<div class="warning" id="orgc4c5948">
 <p>
-Be careful here
+Strings cannot be converted to numbers using casting; use strconv.
+</p>
+</div>
+</div>
+<div id="outline-container-org9774085" class="outline-3">
+<h3 id="org9774085">Pointers</h3>
+<div class="outline-text-3" id="text-org9774085">
+<p>
+Pointers hold memory addresses. Needed for efficiency (large structs) and modification.
 </p>
 
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-variable-name">x</span> := 10
+<span class="org-variable-name">ptr</span> := &amp;x      <span class="org-comment-delimiter">// </span><span class="org-comment">Pointer to x (address)
+</span>*ptr = 20      <span class="org-comment-delimiter">// </span><span class="org-comment">Dereference: change value at pointer
+</span>fmt.<span class="org-function-name">Println</span>(x) <span class="org-comment-delimiter">// </span><span class="org-comment">20
+</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">Why: Pass large structs by pointer, modify in functions
+</span><span class="org-keyword">type</span> <span class="org-type">Server</span> <span class="org-keyword">struct</span> {
+    Host <span class="org-type">string</span>
+    Port <span class="org-type">int</span>
+}
+
+<span class="org-keyword">func</span> <span class="org-function-name">updatePort</span>(<span class="org-variable-name">s</span> *<span class="org-type">Server</span>, <span class="org-variable-name">port</span> <span class="org-type">int</span>) {
+    s.Port = port  <span class="org-comment-delimiter">// </span><span class="org-comment">Auto-dereferenced
+</span>}
+
+<span class="org-variable-name">server</span> := <span class="org-type">Server</span>{<span class="org-constant">Host</span>: <span class="org-string">"localhost"</span>, <span class="org-constant">Port</span>: 8080}
+<span class="org-function-name">updatePort</span>(&amp;server, 9000)
+fmt.<span class="org-function-name">Println</span>(server.Port) <span class="org-comment-delimiter">// </span><span class="org-comment">9000</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb758209" class="outline-2">
+<h2 id="orgb758209">Control Flow</h2>
+<div class="outline-text-2" id="text-orgb758209">
+</div>
+<div id="outline-container-org3bd0ce9" class="outline-3">
+<h3 id="org3bd0ce9">If/Else</h3>
+<div class="outline-text-3" id="text-org3bd0ce9">
+<p>
+You must put the opening braces on the same line as the condition and not on a new line. And <code>else</code> and <code>else if</code> must start on the same line as the closing braces of <code>if</code> statement. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">if</span> x &gt; 10 {
+    fmt.<span class="org-function-name">Println</span>(<span class="org-string">"big"</span>)
+} <span class="org-keyword">else</span> <span class="org-keyword">if</span> x &gt; 5 {
+    fmt.<span class="org-function-name">Println</span>(<span class="org-string">"medium"</span>)
+} <span class="org-keyword">else</span> {
+    fmt.<span class="org-function-name">Println</span>(<span class="org-string">"small"</span>)
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">If with initialization
+</span><span class="org-keyword">if</span> <span class="org-variable-name">err</span> := <span class="org-function-name">doSomething</span>(); err != <span class="org-constant">nil</span> {
+    <span class="org-keyword">return</span> err
+}
+<span class="org-comment-delimiter">// </span><span class="org-comment">err not accessible here</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb1ea90e" class="outline-3">
+<h3 id="orgb1ea90e">For Loops</h3>
+<div class="outline-text-3" id="text-orgb1ea90e">
+<p>
+Go only has <code>for</code>, no <code>while</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-comment-delimiter">// </span><span class="org-comment">Traditional
+</span><span class="org-keyword">for</span> <span class="org-variable-name">i</span> := 0; i &lt; 10; i++ {
+    fmt.<span class="org-function-name">Println</span>(i)
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">While-style
+</span><span class="org-keyword">for</span> condition {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">loop
+</span>}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Infinite loop
+</span><span class="org-keyword">for</span> {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">loop forever
+</span>    <span class="org-keyword">break</span>  <span class="org-comment-delimiter">// </span><span class="org-comment">exit
+</span>}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Continue
+</span><span class="org-keyword">for</span> <span class="org-variable-name">i</span> := 0; i &lt; 10; i++ {
+    <span class="org-keyword">if</span> i%2 == 0 {
+        <span class="org-keyword">continue</span>  <span class="org-comment-delimiter">// </span><span class="org-comment">Skip even numbers
+</span>    }
+    fmt.<span class="org-function-name">Println</span>(i)
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org02f1109" class="outline-3">
+<h3 id="org02f1109">Range Loop</h3>
+<div class="outline-text-3" id="text-org02f1109">
+<p>
+Iterate over slices, arrays, maps, strings.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-comment-delimiter">// </span><span class="org-comment">Slice: index and value
+</span><span class="org-variable-name">nums</span> := []<span class="org-type">int</span>{10, 20, 30}
+<span class="org-keyword">for</span> <span class="org-variable-name">i</span>, <span class="org-variable-name">val</span> := <span class="org-keyword">range</span> nums {
+    fmt.<span class="org-function-name">Println</span>(i, val)
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Ignore index
+</span><span class="org-keyword">for</span> <span class="org-variable-name">_</span>, <span class="org-variable-name">val</span> := <span class="org-keyword">range</span> nums {
+    fmt.<span class="org-function-name">Println</span>(val)
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Ignore value (just indices)
+</span><span class="org-keyword">for</span> <span class="org-variable-name">i</span> := <span class="org-keyword">range</span> nums {
+    fmt.<span class="org-function-name">Println</span>(i)
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Map: key and value
+</span><span class="org-variable-name">env</span> := <span class="org-keyword">map</span>[<span class="org-type">string</span>]<span class="org-type">string</span>{<span class="org-string">"PATH"</span>: <span class="org-string">"/usr/bin"</span>, <span class="org-string">"HOME"</span>: <span class="org-string">"/root"</span>}
+<span class="org-keyword">for</span> <span class="org-variable-name">key</span>, <span class="org-variable-name">val</span> := <span class="org-keyword">range</span> env {
+    fmt.<span class="org-function-name">Println</span>(key, <span class="org-string">"="</span>, val)
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">String: index and rune (Unicode code point)
+</span><span class="org-keyword">for</span> <span class="org-variable-name">i</span>, <span class="org-variable-name">char</span> := <span class="org-keyword">range</span> <span class="org-string">"hello"</span> {
+    fmt.<span class="org-function-name">Printf</span>(<span class="org-string">"%d: %c\n"</span>, i, char)
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org0e5f322" class="outline-3">
+<h3 id="org0e5f322">Switch</h3>
+<div class="outline-text-3" id="text-org0e5f322">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">switch</span> day {
+<span class="org-keyword">case</span> <span class="org-string">"Monday"</span>:
+    fmt.<span class="org-function-name">Println</span>(<span class="org-string">"Start of week"</span>)
+<span class="org-keyword">case</span> <span class="org-string">"Friday"</span>:
+    fmt.<span class="org-function-name">Println</span>(<span class="org-string">"TGIF"</span>)
+<span class="org-keyword">default</span>:
+    fmt.<span class="org-function-name">Println</span>(<span class="org-string">"Midweek"</span>)
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">No condition (like if-else chain)
+</span><span class="org-keyword">switch</span> {
+<span class="org-keyword">case</span> score &gt;= 90:
+    grade = <span class="org-string">"A"</span>
+<span class="org-keyword">case</span> score &gt;= 80:
+    grade = <span class="org-string">"B"</span>
+<span class="org-keyword">default</span>:
+    grade = <span class="org-string">"C"</span>
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Switch with initialization
+</span><span class="org-keyword">switch</span> <span class="org-variable-name">err</span> := <span class="org-function-name">doSomething</span>(); err {
+<span class="org-keyword">case</span> <span class="org-constant">nil</span>:
+    fmt.<span class="org-function-name">Println</span>(<span class="org-string">"Success"</span>)
+<span class="org-keyword">default</span>:
+    fmt.<span class="org-function-name">Println</span>(<span class="org-string">"Error:"</span>, err)
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd1b3b41" class="outline-2">
+<h2 id="orgd1b3b41">Functions</h2>
+<div class="outline-text-2" id="text-orgd1b3b41">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-comment-delimiter">// </span><span class="org-comment">Basic function
+</span><span class="org-keyword">func</span> <span class="org-function-name">add</span>(<span class="org-variable-name">a</span>, <span class="org-variable-name">b</span> <span class="org-type">int</span>) <span class="org-type">int</span> {
+    <span class="org-keyword">return</span> a + b
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Multiple returns (idiomatic Go for error handling)
+</span><span class="org-keyword">func</span> <span class="org-function-name">divide</span>(<span class="org-variable-name">a</span>, <span class="org-variable-name">b</span> <span class="org-type">int</span>) (<span class="org-type">int</span>, <span class="org-type">error</span>) {
+    <span class="org-keyword">if</span> b == 0 {
+        <span class="org-keyword">return</span> 0, fmt.<span class="org-function-name">Errorf</span>(<span class="org-string">"divide by zero"</span>)
+    }
+    <span class="org-keyword">return</span> a / b, <span class="org-constant">nil</span>
+}
+
+<span class="org-variable-name">result</span>, <span class="org-variable-name">err</span> := <span class="org-function-name">divide</span>(10, 2)
+<span class="org-keyword">if</span> err != <span class="org-constant">nil</span> {
+    fmt.<span class="org-function-name">Println</span>(<span class="org-string">"Error:"</span>, err)
+    <span class="org-keyword">return</span>
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Named return values
+</span><span class="org-keyword">func</span> <span class="org-function-name">split</span>(<span class="org-variable-name">sum</span> <span class="org-type">int</span>) (<span class="org-variable-name">x</span>, <span class="org-variable-name">y</span> <span class="org-type">int</span>) {
+    x = sum * 4 / 9
+    y = sum - x
+    <span class="org-keyword">return</span>  <span class="org-comment-delimiter">// </span><span class="org-comment">Returns x and y
+</span>}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Variadic functions (variable arguments)
+</span><span class="org-keyword">func</span> <span class="org-function-name">sum</span>(<span class="org-variable-name">nums</span> ...<span class="org-type">int</span>) <span class="org-type">int</span> {
+    <span class="org-variable-name">total</span> := 0
+    <span class="org-keyword">for</span> <span class="org-variable-name">_</span>, <span class="org-variable-name">n</span> := <span class="org-keyword">range</span> nums {
+        total += n
+    }
+    <span class="org-keyword">return</span> total
+}
+
+<span class="org-function-name">sum</span>(1, 2, 3, 4, 5)  <span class="org-comment-delimiter">// </span><span class="org-comment">15</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org4a0eead" class="outline-2">
+<h2 id="org4a0eead">Error Handling</h2>
+<div class="outline-text-2" id="text-org4a0eead">
+<p>
+Standard Go pattern: functions return <code>(value, error)</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-comment-delimiter">// </span><span class="org-comment">Standard pattern
+</span><span class="org-variable-name">file</span>, <span class="org-variable-name">err</span> := os.<span class="org-function-name">Open</span>(<span class="org-string">"data.txt"</span>)
+<span class="org-keyword">if</span> err != <span class="org-constant">nil</span> {
+    <span class="org-keyword">return</span> fmt.<span class="org-function-name">Errorf</span>(<span class="org-string">"failed to open: %w"</span>, err)  <span class="org-comment-delimiter">// </span><span class="org-comment">%w wraps error
+</span>}
+<span class="org-keyword">defer</span> file.<span class="org-function-name">Close</span>()
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Quick scripts: log.Fatal prints error and exits
+</span><span class="org-variable-name">data</span>, <span class="org-variable-name">err</span> := os.<span class="org-function-name">ReadFile</span>(<span class="org-string">"config.json"</span>)
+<span class="org-keyword">if</span> err != <span class="org-constant">nil</span> {
+    log.<span class="org-function-name">Fatal</span>(err)
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Creating errors
+</span><span class="org-variable-name">err</span> := fmt.<span class="org-function-name">Errorf</span>(<span class="org-string">"invalid port: %d"</span>, port)
+<span class="org-variable-name">err</span> := errors.<span class="org-function-name">New</span>(<span class="org-string">"connection failed"</span>)
+</pre>
 </div>
 
-<div class="tip" id="org221b0f2">
 <p>
-This is a tip
+<code>log.Fatal</code> prints the error and exits the program immediately (no defer runs)
+</p>
+</div>
+<div id="outline-container-org061cc0f" class="outline-3">
+<h3 id="org061cc0f">Defer</h3>
+<div class="outline-text-3" id="text-org061cc0f">
+<p>
+Defer schedules a function call to run when the surrounding function exits. Used for cleanup.
 </p>
 
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">func</span> <span class="org-function-name">main</span>() {
+    <span class="org-variable-name">file</span>, <span class="org-variable-name">_</span> := os.<span class="org-function-name">Open</span>(<span class="org-string">"data.txt"</span>)
+    <span class="org-keyword">defer</span> file.<span class="org-function-name">Close</span>()  <span class="org-comment-delimiter">// </span><span class="org-comment">Runs when main() exits
+</span>
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Do stuff with file...
+</span>}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Multiple defers execute in LIFO order (stack)
+</span><span class="org-keyword">defer</span> fmt.<span class="org-function-name">Println</span>(<span class="org-string">"3"</span>)
+<span class="org-keyword">defer</span> fmt.<span class="org-function-name">Println</span>(<span class="org-string">"2"</span>)
+<span class="org-keyword">defer</span> fmt.<span class="org-function-name">Println</span>(<span class="org-string">"1"</span>)  <span class="org-comment-delimiter">// </span><span class="org-comment">Prints: 1, 2, 3</span>
+</pre>
+</div>
+
+<p>
+Common uses: closing files, unlocking mutexes, closing connections.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org6107ab8" class="outline-2">
+<h2 id="org6107ab8">Data Structures</h2>
+<div class="outline-text-2" id="text-org6107ab8">
+</div>
+<div id="outline-container-org0f81b46" class="outline-3">
+<h3 id="org0f81b46">Arrays &amp; Slices</h3>
+<div class="outline-text-3" id="text-org0f81b46">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-comment-delimiter">// </span><span class="org-comment">Array (fixed size, rarely used)
+</span><span class="org-keyword">var</span> <span class="org-variable-name">arr</span> [3]<span class="org-type">int</span> = [3]<span class="org-type">int</span>{1, 2, 3}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Slice (dynamic, what you'll actually use)
+</span><span class="org-variable-name">nums</span> := []<span class="org-type">int</span>{1, 2, 3}
+nums = <span class="org-builtin">append</span>(nums, 4, 5)
+
+fmt.<span class="org-function-name">Println</span>(<span class="org-builtin">len</span>(nums))  <span class="org-comment-delimiter">// </span><span class="org-comment">5 (length)
+</span>fmt.<span class="org-function-name">Println</span>(<span class="org-builtin">cap</span>(nums))  <span class="org-comment-delimiter">// </span><span class="org-comment">capacity (underlying array size)
+</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">Make slice with capacity
+</span><span class="org-variable-name">s</span> := <span class="org-builtin">make</span>([]<span class="org-type">int</span>, 0, 10)  <span class="org-comment-delimiter">// </span><span class="org-comment">length 0, capacity 10
+</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">Slicing operations
+</span><span class="org-variable-name">slice</span> := []<span class="org-type">int</span>{0, 1, 2, 3, 4, 5}
+slice[1:4]     <span class="org-comment-delimiter">// </span><span class="org-comment">[1 2 3] (index 1 to 3)
+</span>slice[:3]      <span class="org-comment-delimiter">// </span><span class="org-comment">[0 1 2] (first 3)
+</span>slice[3:]      <span class="org-comment-delimiter">// </span><span class="org-comment">[3 4 5] (from index 3)
+</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">Copy slice
+</span><span class="org-variable-name">src</span> := []<span class="org-type">int</span>{1, 2, 3}
+<span class="org-variable-name">dst</span> := <span class="org-builtin">make</span>([]<span class="org-type">int</span>, <span class="org-builtin">len</span>(src))
+<span class="org-builtin">copy</span>(dst, src)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf539c23" class="outline-3">
+<h3 id="orgf539c23">Maps</h3>
+<div class="outline-text-3" id="text-orgf539c23">
+<p>
+Key-value pairs. Essential for configs, caching, lookups.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-comment-delimiter">// </span><span class="org-comment">Create
+</span><span class="org-variable-name">env</span> := <span class="org-builtin">make</span>(<span class="org-keyword">map</span>[<span class="org-type">string</span>]<span class="org-type">string</span>)
+<span class="org-variable-name">env</span> := <span class="org-keyword">map</span>[<span class="org-type">string</span>]<span class="org-type">string</span>{
+    <span class="org-string">"PATH"</span>: <span class="org-string">"/usr/bin"</span>,
+    <span class="org-string">"HOME"</span>: <span class="org-string">"/root"</span>,
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Add/Update
+</span>env[<span class="org-string">"USER"</span>] = <span class="org-string">"admin"</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Check existence
+</span><span class="org-variable-name">val</span>, <span class="org-variable-name">ok</span> := env[<span class="org-string">"USER"</span>]
+<span class="org-keyword">if</span> ok {
+    fmt.<span class="org-function-name">Println</span>(<span class="org-string">"Found:"</span>, val)
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Delete
+</span><span class="org-builtin">delete</span>(env, <span class="org-string">"USER"</span>)
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Loop over map
+</span><span class="org-keyword">for</span> <span class="org-variable-name">key</span>, <span class="org-variable-name">val</span> := <span class="org-keyword">range</span> env {
+    fmt.<span class="org-function-name">Println</span>(key, <span class="org-string">"="</span>, val)
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Map of structs
+</span><span class="org-variable-name">users</span> := <span class="org-builtin">make</span>(<span class="org-keyword">map</span>[<span class="org-type">string</span>]<span class="org-type">User</span>)
+users[<span class="org-string">"alice"</span>] = <span class="org-type">User</span>{<span class="org-constant">Name</span>: <span class="org-string">"Alice"</span>, <span class="org-constant">Age</span>: 30}
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org327b49c" class="outline-2">
+<h2 id="org327b49c">Formatting and Output</h2>
+<div class="outline-text-2" id="text-org327b49c">
+</div>
+<div id="outline-container-org0677587" class="outline-3">
+<h3 id="org0677587">String Manipulation</h3>
+<div class="outline-text-3" id="text-org0677587">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">import</span> <span class="org-string">"strings"</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Split and join
+</span><span class="org-variable-name">parts</span> := strings.<span class="org-function-name">Split</span>(<span class="org-string">"a,b,c"</span>, <span class="org-string">","</span>)           <span class="org-comment-delimiter">// </span><span class="org-comment">[]string{"a", "b", "c"}
+</span><span class="org-variable-name">joined</span> := strings.<span class="org-function-name">Join</span>([]<span class="org-type">string</span>{<span class="org-string">"a"</span>, <span class="org-string">"b"</span>}, <span class="org-string">"-"</span>) <span class="org-comment-delimiter">// </span><span class="org-comment">"a-b"
+</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">Check and search
+</span>strings.<span class="org-function-name">Contains</span>(<span class="org-string">"hello"</span>, <span class="org-string">"ell"</span>)      <span class="org-comment-delimiter">// </span><span class="org-comment">true
+</span>strings.<span class="org-function-name">HasPrefix</span>(<span class="org-string">"hello"</span>, <span class="org-string">"he"</span>)     <span class="org-comment-delimiter">// </span><span class="org-comment">true
+</span>strings.<span class="org-function-name">HasSuffix</span>(<span class="org-string">"hello"</span>, <span class="org-string">"lo"</span>)     <span class="org-comment-delimiter">// </span><span class="org-comment">true
+</span>strings.<span class="org-function-name">Index</span>(<span class="org-string">"hello"</span>, <span class="org-string">"ll"</span>)         <span class="org-comment-delimiter">// </span><span class="org-comment">2
+</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">Modify
+</span>strings.<span class="org-function-name">ToLower</span>(<span class="org-string">"HELLO"</span>)             <span class="org-comment-delimiter">// </span><span class="org-comment">"hello"
+</span>strings.<span class="org-function-name">ToUpper</span>(<span class="org-string">"hello"</span>)             <span class="org-comment-delimiter">// </span><span class="org-comment">"HELLO"
+</span>strings.<span class="org-function-name">TrimSpace</span>(<span class="org-string">"  hi  "</span>)          <span class="org-comment-delimiter">// </span><span class="org-comment">"hi"
+</span>strings.<span class="org-function-name">Trim</span>(<span class="org-string">"!!hello!!"</span>, <span class="org-string">"!"</span>)       <span class="org-comment-delimiter">// </span><span class="org-comment">"hello"
+</span>strings.<span class="org-function-name">Replace</span>(<span class="org-string">"foo foo"</span>, <span class="org-string">"foo"</span>, <span class="org-string">"bar"</span>, 1)  <span class="org-comment-delimiter">// </span><span class="org-comment">"bar foo" (replace 1)
+</span>strings.<span class="org-function-name">ReplaceAll</span>(<span class="org-string">"foo foo"</span>, <span class="org-string">"foo"</span>, <span class="org-string">"bar"</span>)  <span class="org-comment-delimiter">// </span><span class="org-comment">"bar bar"
+</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">Repeat and count
+</span>strings.<span class="org-function-name">Repeat</span>(<span class="org-string">"ha"</span>, 3)              <span class="org-comment-delimiter">// </span><span class="org-comment">"hahaha"
+</span>strings.<span class="org-function-name">Count</span>(<span class="org-string">"cheese"</span>, <span class="org-string">"e"</span>)         <span class="org-comment-delimiter">// </span><span class="org-comment">3</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd1196ac" class="outline-3">
+<h3 id="orgd1196ac">Printing</h3>
+<div class="outline-text-3" id="text-orgd1196ac">
+<p>
+<code>fmt.Print</code> just print, <code>Println</code> new line, <code>Printf</code> formatted  
+</p>
+
+<p>
+<code>fmt.Printf</code> prints a formatted string to stdout
+<code>fmt.Sprintf</code> returns the formatted string
+</p>
+</div>
+</div>
+<div id="outline-container-org3c88c97" class="outline-3">
+<h3 id="org3c88c97">Formatting Strings</h3>
+<div class="outline-text-3" id="text-org3c88c97">
+<p>
+This is like f string in python
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-variable-name">s</span> := fmt.<span class="org-function-name">Sprintf</span>(<span class="org-string">"I am %v years old"</span>, 10) <span class="org-comment-delimiter">// </span><span class="org-comment">%v is used for the default formats
+</span>
+fmt.<span class="org-function-name">Sprintf</span>(<span class="org-string">"%[3]*.[2]*[1]f"</span>, 12.0, 2, 6) <span class="org-comment-delimiter">//</span><span class="org-comment">equivalent to ("%6.2f", 12.0)</span>
+</pre>
+</div>
+
+<p>
+You can use other formats to be more specfic. <code>%s</code> for string, <code>%d</code> integer, <code>%.2f</code> float (2 decimal places), <code>%t</code> boolean, <code>%q</code> double quoted string, <code>%T</code> type of value, <code>%p</code> for pointers and slices, <code>%+v</code> struct with field names. 
+</p>
+
+<p>
+Note: Use <code>%%</code> for percentage sign.
+</p>
+</div>
+<div id="outline-container-org5e00aa0" class="outline-5">
+<h5 id="org5e00aa0">Printing Structs</h5>
+<div class="outline-text-5" id="text-org5e00aa0">
+<div class="org-src-container">
+<pre class="src src-go">fmt.<span class="org-function-name">Printf</span>(<span class="org-string">"%v\n"</span>, u)   <span class="org-comment-delimiter">// </span><span class="org-comment">{ekko 22}
+</span>fmt.<span class="org-function-name">Printf</span>(<span class="org-string">"%+v\n"</span>, u)  <span class="org-comment-delimiter">// </span><span class="org-comment">{Name:ekko Age:22}
+</span>fmt.<span class="org-function-name">Printf</span>(<span class="org-string">"%#v\n"</span>, u)  <span class="org-comment-delimiter">// </span><span class="org-comment">Go syntax</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc324cc5" class="outline-2">
+<h2 id="orgc324cc5">Input and CLI</h2>
+<div class="outline-text-2" id="text-orgc324cc5">
+</div>
+<div id="outline-container-org44f863f" class="outline-3">
+<h3 id="org44f863f">Using fmt</h3>
+<div class="outline-text-3" id="text-org44f863f">
+<p>
+<code>fmt.Scan</code> takes input separted by spaces, <code>Scanln</code> by line, <code>Scanf</code> formatted scanning
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">var</span> <span class="org-variable-name">name</span> <span class="org-type">string</span>
+<span class="org-keyword">var</span> <span class="org-variable-name">age</span> <span class="org-type">int</span>
+
+fmt.<span class="org-function-name">Scanf</span>(<span class="org-string">"%s %d"</span>, &amp;name, &amp;age)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf10e220" class="outline-3">
+<h3 id="orgf10e220">Quick stdin read</h3>
+<div class="outline-text-3" id="text-orgf10e220">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">import</span> (
+    <span class="org-string">"bufio"</span>
+    <span class="org-string">"os"</span>
+)
+
+<span class="org-variable-name">scanner</span> := bufio.<span class="org-function-name">NewScanner</span>(os.Stdin)
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">scanner.Split(bufio.ScanWords) to split by words
+</span>
+<span class="org-keyword">for</span> scanner.<span class="org-function-name">Scan</span>() {
+    <span class="org-variable-name">line</span> := scanner.<span class="org-function-name">Text</span>()
+    <span class="org-comment-delimiter">// </span><span class="org-comment">process line
+</span>}
+
+<span class="org-keyword">if</span> <span class="org-variable-name">err</span> := scanner.<span class="org-function-name">Err</span>(); err != <span class="org-constant">nil</span> {
+    log.<span class="org-function-name">Fatal</span>(err)
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org0777aac" class="outline-3">
+<h3 id="org0777aac">String to Int</h3>
+<div class="outline-text-3" id="text-org0777aac">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">import</span> <span class="org-string">"strconv"</span>
+
+<span class="org-variable-name">numStr</span> := scanner.<span class="org-function-name">Text</span>()
+<span class="org-variable-name">num</span>, <span class="org-variable-name">err</span> := strconv.<span class="org-function-name">Atoi</span>(numStr)
+<span class="org-keyword">if</span> err != <span class="org-constant">nil</span> {
+    log.<span class="org-function-name">Fatal</span>(<span class="org-string">"Invalid number:"</span>, err)
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org78813eb" class="outline-3">
+<h3 id="org78813eb">Command-line Arguments</h3>
+<div class="outline-text-3" id="text-org78813eb">
+<p>
+Good for cli tools.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">import</span> <span class="org-string">"os"</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">os.Args is []string containing command-line arguments
+</span><span class="org-keyword">if</span> <span class="org-builtin">len</span>(os.Args) &lt; 2 {
+    fmt.<span class="org-function-name">Println</span>(<span class="org-string">"Usage: program &lt;arg&gt;"</span>)
+    <span class="org-keyword">return</span>
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">os.Args[0] is program name
+</span><span class="org-comment-delimiter">// </span><span class="org-comment">os.Args[1:] are actual arguments
+</span><span class="org-keyword">for</span> <span class="org-variable-name">i</span>, <span class="org-variable-name">arg</span> := <span class="org-keyword">range</span> os.Args[1:] {
+    fmt.<span class="org-function-name">Printf</span>(<span class="org-string">"Arg %d: %s\n"</span>, i, arg)
+}
+</pre>
+</div>
+
+<p>
+<code>go run main.go hello world</code>
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Index</th>
+<th scope="col" class="org-left">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">os.Args[0]</td>
+<td class="org-left">program name</td>
+</tr>
+
+<tr>
+<td class="org-left">os.Args[1]</td>
+<td class="org-left">first argument</td>
+</tr>
+
+<tr>
+<td class="org-left">os.Args[2]</td>
+<td class="org-left">second argument</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>
+For real CLI tools, use the <code>flag</code> package:
+</p>
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">import</span> <span class="org-string">"flag"</span>
+
+<span class="org-keyword">var</span> <span class="org-variable-name">port</span> = flag.<span class="org-function-name">Int</span>(<span class="org-string">"port"</span>, 8080, <span class="org-string">"server port"</span>)
+<span class="org-keyword">var</span> <span class="org-variable-name">host</span> = flag.<span class="org-function-name">String</span>(<span class="org-string">"host"</span>, <span class="org-string">"localhost"</span>, <span class="org-string">"server host"</span>)
+flag.<span class="org-function-name">Parse</span>()
+
+fmt.<span class="org-function-name">Printf</span>(<span class="org-string">"Starting server on %s:%d\n"</span>, *host, *port)
+<span class="org-comment-delimiter">// </span><span class="org-comment">Run: go run main.go -port 3000 -host 0.0.0.0</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgee39bdc" class="outline-2">
+<h2 id="orgee39bdc">File I/O</h2>
+<div class="outline-text-2" id="text-orgee39bdc">
+</div>
+<div id="outline-container-orgdb7a18d" class="outline-3">
+<h3 id="orgdb7a18d">Reading from file</h3>
+<div class="outline-text-3" id="text-orgdb7a18d">
+<p>
+A file is just a stream of bytes you can read from or write to.
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">package</span> main
+
+<span class="org-keyword">import</span> (
+        <span class="org-string">"fmt"</span>
+        <span class="org-string">"os"</span>
+)
+
+<span class="org-keyword">func</span> <span class="org-function-name">main</span>() {
+        <span class="org-variable-name">file</span>, <span class="org-variable-name">err</span> := os.<span class="org-function-name">Open</span>(<span class="org-string">"data.txt"</span>)
+        <span class="org-keyword">if</span> err != <span class="org-constant">nil</span> {
+                log.<span class="org-function-name">Fatal</span>(err)
+        }
+        <span class="org-keyword">defer</span> file.<span class="org-function-name">Close</span>()
+
+        fmt.<span class="org-function-name">Println</span>(<span class="org-string">"File opened:"</span>, file.<span class="org-function-name">Name</span>())
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org03e05f0" class="outline-3">
+<h3 id="org03e05f0">Read entire file at once</h3>
+<div class="outline-text-3" id="text-org03e05f0">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-variable-name">data</span>, <span class="org-variable-name">err</span> := os.<span class="org-function-name">ReadFile</span>(<span class="org-string">"data.txt"</span>)  <span class="org-comment-delimiter">// </span><span class="org-comment">Returns []byte
+</span><span class="org-keyword">if</span> err != <span class="org-constant">nil</span> {
+    log.<span class="org-function-name">Fatal</span>(err)
+}
+fmt.<span class="org-function-name">Println</span>(<span class="org-function-name">string</span>(data))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgda57442" class="outline-3">
+<h3 id="orgda57442">Read line by line from a file</h3>
+<div class="outline-text-3" id="text-orgda57442">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">package</span> main
+
+<span class="org-keyword">import</span> (
+        <span class="org-string">"bufio"</span>
+        <span class="org-string">"fmt"</span>
+        <span class="org-string">"os"</span>
+)
+
+<span class="org-keyword">func</span> <span class="org-function-name">main</span>() {
+        <span class="org-variable-name">file</span>, <span class="org-variable-name">err</span> := os.<span class="org-function-name">Open</span>(<span class="org-string">"data.txt"</span>)
+        <span class="org-keyword">if</span> err != <span class="org-constant">nil</span> {
+                log.<span class="org-function-name">Fatal</span>(err)
+        }
+        <span class="org-keyword">defer</span> file.<span class="org-function-name">Close</span>()
+
+        <span class="org-variable-name">scanner</span> := bufio.<span class="org-function-name">NewScanner</span>(file)
+
+        <span class="org-keyword">for</span> scanner.<span class="org-function-name">Scan</span>() {
+                <span class="org-variable-name">line</span> := scanner.<span class="org-function-name">Text</span>()
+                fmt.<span class="org-function-name">Println</span>(line)
+        }
+
+        <span class="org-keyword">if</span> <span class="org-variable-name">err</span> := scanner.<span class="org-function-name">Err</span>(); err != <span class="org-constant">nil</span> {
+                log.<span class="org-function-name">Fatal</span>(err)
+        }
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org11f357d" class="outline-3">
+<h3 id="org11f357d">Writing to file</h3>
+<div class="outline-text-3" id="text-org11f357d">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">package</span> main
+
+<span class="org-keyword">import</span> (
+        <span class="org-string">"os"</span>
+)
+
+<span class="org-keyword">func</span> <span class="org-function-name">main</span>() {
+        <span class="org-variable-name">data</span> := []<span class="org-function-name">byte</span>(<span class="org-string">"hello world\n"</span>)
+
+        <span class="org-variable-name">err</span> := os.<span class="org-function-name">WriteFile</span>(<span class="org-string">"data.txt"</span>, data, 0644)  <span class="org-comment-delimiter">//</span><span class="org-comment">creates file if not exists, overwrites if exists
+</span>        <span class="org-keyword">if</span> err != <span class="org-constant">nil</span> {
+                log.<span class="org-function-name">Fatal</span>(err)
+        }
+}
+</pre>
+</div>
+
+<p>
+Permissions 0644:
+</p>
+<ul class="org-ul">
+<li>owner: read/write</li>
+<li>others: read</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org8122976" class="outline-3">
+<h3 id="org8122976">Append to file</h3>
+<div class="outline-text-3" id="text-org8122976">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-variable-name">file</span>, <span class="org-variable-name">err</span> := os.<span class="org-function-name">OpenFile</span>(<span class="org-string">"data.txt"</span>,
+        os.O_APPEND|os.O_CREATE|os.O_WRONLY,
+        0644,
+)
+<span class="org-keyword">if</span> err != <span class="org-constant">nil</span> {
+        log.<span class="org-function-name">Fatal</span>(err)
+}
+<span class="org-keyword">defer</span> file.<span class="org-function-name">Close</span>()
+
+file.<span class="org-function-name">WriteString</span>(<span class="org-string">"new line\n"</span>)
+</pre>
+</div>
+
+<p>
+Flags
+</p>
+<ul class="org-ul">
+<li><code>O_APPEND</code>:  add to end</li>
+<li><code>O_CREATE</code>:  create if missing</li>
+<li><code>O_WRONLY</code>:  write only</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org36e6be3" class="outline-3">
+<h3 id="org36e6be3">Buffered Write</h3>
+<div class="outline-text-3" id="text-org36e6be3">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">package</span> main
+
+<span class="org-keyword">import</span> (
+        <span class="org-string">"bufio"</span>
+        <span class="org-string">"os"</span>
+)
+
+<span class="org-keyword">func</span> <span class="org-function-name">main</span>() {
+        <span class="org-variable-name">file</span>, <span class="org-variable-name">_</span> := os.<span class="org-function-name">Create</span>(<span class="org-string">"data.txt"</span>)
+        <span class="org-keyword">defer</span> file.<span class="org-function-name">Close</span>()
+
+        <span class="org-variable-name">writer</span> := bufio.<span class="org-function-name">NewWriter</span>(file)
+
+        writer.<span class="org-function-name">WriteString</span>(<span class="org-string">"hello\n"</span>)
+        writer.<span class="org-function-name">WriteString</span>(<span class="org-string">"world\n"</span>)
+
+        writer.<span class="org-function-name">Flush</span>()  <span class="org-comment-delimiter">// </span><span class="org-comment">Important: flush buffer to disk
+</span>}
+</pre>
+</div>
+
+<p>
+Without buffer every write will call disk (slow), with buffer, it collects data and writes in chunks (fast)
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org8d2a0c6" class="outline-2">
+<h2 id="org8d2a0c6">JSON</h2>
+<div class="outline-text-2" id="text-org8d2a0c6">
+<p>
+Essential for config files, APIs, data exchange.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">import</span> <span class="org-string">"encoding/json"</span>
+
+<span class="org-keyword">type</span> <span class="org-type">Config</span> <span class="org-keyword">struct</span> {
+    Host    <span class="org-type">string</span> <span class="org-string">`json:"host"`</span>
+    Port    <span class="org-type">int</span>    <span class="org-string">`json:"port"`</span>
+    Debug   <span class="org-type">bool</span>   <span class="org-string">`json:"debug,omitempty"`</span>  <span class="org-comment-delimiter">// </span><span class="org-comment">Omit if false
+</span>    Timeout <span class="org-type">int</span>    <span class="org-string">`json:"-"`</span>                <span class="org-comment-delimiter">// </span><span class="org-comment">Never serialize
+</span>}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Parse JSON (Unmarshal)
+</span><span class="org-variable-name">data</span> := []<span class="org-function-name">byte</span>(<span class="org-string">`{"host":"localhost","port":8080,"debug":true}`</span>)
+<span class="org-keyword">var</span> <span class="org-variable-name">cfg</span> <span class="org-type">Config</span>
+<span class="org-variable-name">err</span> := json.<span class="org-function-name">Unmarshal</span>(data, &amp;cfg)
+<span class="org-keyword">if</span> err != <span class="org-constant">nil</span> {
+    log.<span class="org-function-name">Fatal</span>(err)
+}
+fmt.<span class="org-function-name">Println</span>(cfg.Host, cfg.Port)
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Create JSON (Marshal)
+</span><span class="org-variable-name">cfg</span> := <span class="org-type">Config</span>{<span class="org-constant">Host</span>: <span class="org-string">"0.0.0.0"</span>, <span class="org-constant">Port</span>: 3000, <span class="org-constant">Debug</span>: <span class="org-constant">true</span>}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Compact
+</span><span class="org-variable-name">bytes</span>, <span class="org-variable-name">_</span> := json.<span class="org-function-name">Marshal</span>(cfg)
+fmt.<span class="org-function-name">Println</span>(<span class="org-function-name">string</span>(bytes))
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Pretty print
+</span>bytes, _ = json.<span class="org-function-name">MarshalIndent</span>(cfg, <span class="org-string">""</span>, <span class="org-string">"  "</span>)
+fmt.<span class="org-function-name">Println</span>(<span class="org-function-name">string</span>(bytes))
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Working with files
+</span><span class="org-variable-name">data</span>, <span class="org-variable-name">_</span> := os.<span class="org-function-name">ReadFile</span>(<span class="org-string">"config.json"</span>)
+json.<span class="org-function-name">Unmarshal</span>(data, &amp;cfg)
+
+<span class="org-variable-name">bytes</span>, <span class="org-variable-name">_</span> := json.<span class="org-function-name">MarshalIndent</span>(cfg, <span class="org-string">""</span>, <span class="org-string">"  "</span>)
+os.<span class="org-function-name">WriteFile</span>(<span class="org-string">"config.json"</span>, bytes, 0644)
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Dynamic JSON (map)
+</span><span class="org-keyword">var</span> <span class="org-variable-name">result</span> <span class="org-keyword">map</span>[<span class="org-type">string</span>]<span class="org-keyword">interface</span>{}
+json.<span class="org-function-name">Unmarshal</span>(data, &amp;result)
+fmt.<span class="org-function-name">Println</span>(result[<span class="org-string">"host"</span>])
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org917b881" class="outline-2">
+<h2 id="org917b881">Running external commands</h2>
+<div class="outline-text-2" id="text-org917b881">
+<p>
+Running shell commands and external programs.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">import</span> <span class="org-string">"os/exec"</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Simple command
+</span><span class="org-variable-name">cmd</span> := exec.<span class="org-function-name">Command</span>(<span class="org-string">"ls"</span>, <span class="org-string">"-la"</span>)
+<span class="org-variable-name">output</span>, <span class="org-variable-name">err</span> := cmd.<span class="org-function-name">Output</span>()
+<span class="org-keyword">if</span> err != <span class="org-constant">nil</span> {
+    log.<span class="org-function-name">Fatal</span>(err)
+}
+fmt.<span class="org-function-name">Println</span>(<span class="org-function-name">string</span>(output))
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Command with combined stdout/stderr
+</span><span class="org-variable-name">cmd</span> := exec.<span class="org-function-name">Command</span>(<span class="org-string">"git"</span>, <span class="org-string">"status"</span>)
+<span class="org-variable-name">output</span>, <span class="org-variable-name">err</span> := cmd.<span class="org-function-name">CombinedOutput</span>()
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Pipe stdin to command
+</span><span class="org-variable-name">cmd</span> := exec.<span class="org-function-name">Command</span>(<span class="org-string">"grep"</span>, <span class="org-string">"error"</span>)
+cmd.Stdin = strings.<span class="org-function-name">NewReader</span>(<span class="org-string">"info\nerror\nwarning\nerror\n"</span>)
+<span class="org-variable-name">output</span>, <span class="org-variable-name">_</span> := cmd.<span class="org-function-name">Output</span>()
+fmt.<span class="org-function-name">Println</span>(<span class="org-function-name">string</span>(output))  <span class="org-comment-delimiter">// </span><span class="org-comment">error\nerror\n
+</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">Set working directory and environment
+</span><span class="org-variable-name">cmd</span> := exec.<span class="org-function-name">Command</span>(<span class="org-string">"ls"</span>)
+cmd.Dir = <span class="org-string">"/tmp"</span>
+cmd.Env = <span class="org-builtin">append</span>(os.<span class="org-function-name">Environ</span>(), <span class="org-string">"DEBUG=1"</span>)
+cmd.<span class="org-function-name">Run</span>()
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Stream output in real-time
+</span><span class="org-variable-name">cmd</span> := exec.<span class="org-function-name">Command</span>(<span class="org-string">"ping"</span>, <span class="org-string">"google.com"</span>)
+cmd.Stdout = os.Stdout
+cmd.Stderr = os.Stderr
+cmd.<span class="org-function-name">Run</span>()
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org682abc8" class="outline-2">
+<h2 id="org682abc8">Some Standard Library Packages</h2>
+<div class="outline-text-2" id="text-org682abc8">
+</div>
+<div id="outline-container-org16f915f" class="outline-3">
+<h3 id="org16f915f">time</h3>
+<div class="outline-text-3" id="text-org16f915f">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">import</span> <span class="org-string">"time"</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Current time
+</span><span class="org-variable-name">now</span> := time.<span class="org-function-name">Now</span>()
+fmt.<span class="org-function-name">Println</span>(now)
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Format time (specific layout)
+</span>fmt.<span class="org-function-name">Println</span>(now.<span class="org-function-name">Format</span>(<span class="org-string">"2006-01-02 15:04:05"</span>))  <span class="org-comment-delimiter">// </span><span class="org-comment">YYYY-MM-DD HH:MM:SS
+</span>fmt.<span class="org-function-name">Println</span>(now.<span class="org-function-name">Format</span>(time.RFC3339))           <span class="org-comment-delimiter">// </span><span class="org-comment">2024-01-15T14:30:00Z
+</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">Parse time
+</span><span class="org-variable-name">t</span>, <span class="org-variable-name">_</span> := time.<span class="org-function-name">Parse</span>(<span class="org-string">"2006-01-02"</span>, <span class="org-string">"2024-01-15"</span>)
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Duration
+</span>time.<span class="org-function-name">Sleep</span>(2 * time.Second)
+<span class="org-variable-name">duration</span> := 5 * time.Minute
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Add/Sub time
+</span><span class="org-variable-name">tomorrow</span> := now.<span class="org-function-name">Add</span>(24 * time.Hour)
+<span class="org-variable-name">yesterday</span> := now.<span class="org-function-name">Add</span>(-24 * time.Hour)
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Compare
+</span><span class="org-keyword">if</span> now.<span class="org-function-name">After</span>(t) { }
+<span class="org-keyword">if</span> now.<span class="org-function-name">Before</span>(t) { }
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org3e0f95a" class="outline-3">
+<h3 id="org3e0f95a">filepath</h3>
+<div class="outline-text-3" id="text-org3e0f95a">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">import</span> <span class="org-string">"path/filepath"</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Join paths (OS-specific separator)
+</span><span class="org-variable-name">path</span> := filepath.<span class="org-function-name">Join</span>(<span class="org-string">"dir"</span>, <span class="org-string">"subdir"</span>, <span class="org-string">"file.txt"</span>)
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Get directory and filename
+</span><span class="org-variable-name">dir</span> := filepath.<span class="org-function-name">Dir</span>(<span class="org-string">"/home/user/file.txt"</span>)   <span class="org-comment-delimiter">// </span><span class="org-comment">/home/user
+</span><span class="org-variable-name">file</span> := filepath.<span class="org-function-name">Base</span>(<span class="org-string">"/home/user/file.txt"</span>) <span class="org-comment-delimiter">// </span><span class="org-comment">file.txt
+</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">Extension
+</span><span class="org-variable-name">ext</span> := filepath.<span class="org-function-name">Ext</span>(<span class="org-string">"file.txt"</span>)  <span class="org-comment-delimiter">// </span><span class="org-comment">.txt
+</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">Absolute path
+</span><span class="org-variable-name">abs</span>, <span class="org-variable-name">_</span> := filepath.<span class="org-function-name">Abs</span>(<span class="org-string">"../file.txt"</span>)
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Walk directory tree
+</span>filepath.<span class="org-function-name">Walk</span>(<span class="org-string">"."</span>, <span class="org-keyword">func</span>(<span class="org-variable-name">path</span> <span class="org-type">string</span>, <span class="org-variable-name">info</span> <span class="org-type">os.FileInfo</span>, <span class="org-variable-name">err</span> <span class="org-type">error</span>) <span class="org-type">error</span> {
+    <span class="org-keyword">if</span> <span class="org-negation-char">!</span>info.<span class="org-function-name">IsDir</span>() {
+        fmt.<span class="org-function-name">Println</span>(path)
+    }
+    <span class="org-keyword">return</span> <span class="org-constant">nil</span>
+})
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orga4fbecf" class="outline-3">
+<h3 id="orga4fbecf">net/http (Quick HTTP server)</h3>
+<div class="outline-text-3" id="text-orga4fbecf">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">import</span> <span class="org-string">"net/http"</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Simple server
+</span>http.<span class="org-function-name">HandleFunc</span>(<span class="org-string">"/"</span>, <span class="org-keyword">func</span>(<span class="org-variable-name">w</span> <span class="org-type">http.ResponseWriter</span>, <span class="org-variable-name">r</span> *<span class="org-type">http.Request</span>) {
+    fmt.<span class="org-function-name">Fprintf</span>(w, <span class="org-string">"Hello, World!"</span>)
+})
+log.<span class="org-function-name">Fatal</span>(http.<span class="org-function-name">ListenAndServe</span>(<span class="org-string">":8080"</span>, <span class="org-constant">nil</span>))
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">HTTP request
+</span><span class="org-variable-name">resp</span>, <span class="org-variable-name">err</span> := http.<span class="org-function-name">Get</span>(<span class="org-string">"https://api.github.com"</span>)
+<span class="org-keyword">if</span> err != <span class="org-constant">nil</span> {
+    log.<span class="org-function-name">Fatal</span>(err)
+}
+<span class="org-keyword">defer</span> resp.Body.<span class="org-function-name">Close</span>()
+<span class="org-variable-name">body</span>, <span class="org-variable-name">_</span> := io.<span class="org-function-name">ReadAll</span>(resp.Body)
+</pre>
+</div>
 </div>
 </div>
 </div>
